@@ -13,7 +13,7 @@ to setup
 end
 
 to setup-documents
-  create-documents num-documents [
+  create-documents ((documents-proportion / 100) * num-people) [
     set properties (list)                          ;;Un documento tiene varias propiedades
     ;setxy random-xcor random-ycor
     hide-turtle                                    ;;No nos interesa ver el documento (por ahora)
@@ -34,7 +34,7 @@ end
 to go
   ;;Log
   type "time: " print ticks
-  let selection n-of size-selection people   ;;Seleccionar un grupo de personas aleatoria
+  let selection n-of ((size-selection / 100) * num-people) people   ;;Seleccionar un grupo de personas aleatoria
   
   ask documents [                            ;;Realizar el conteo de votos por documento y los enlaces entre las personas que votan en un mismo documento
     let doc-properties properties            ;;Las propiedades del documento actual
@@ -50,12 +50,13 @@ to go
     set votes doc-votes
     
     ;;Log
-    type "Voters for document " type who type ":" print sort voters
+    type "Voters for document " type who type ":" type sort voters type ", total:" print votes
     
     ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
       create-links-with other voters
     ]
   ]
+  
   tick
 end
 
@@ -149,14 +150,14 @@ SLIDER
 133
 256
 166
-num-documents
-num-documents
-0
+documents-proportion
+documents-proportion
+1
 100
 10
 1
 1
-NIL
+%
 HORIZONTAL
 
 SLIDER
@@ -166,12 +167,12 @@ SLIDER
 209
 size-selection
 size-selection
-2
-num-people
-3
+1
+100
+10
 1
 1
-NIL
+%
 HORIZONTAL
 
 BUTTON
