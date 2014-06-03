@@ -32,6 +32,8 @@ to setup-people
 end
 
 to go
+  ;;Log
+  type "time: " print ticks
   let selection n-of size-selection people   ;;Seleccionar un grupo de personas aleatoria
   
   ask documents [                            ;;Realizar el conteo de votos por documento y los enlaces entre las personas que votan en un mismo documento
@@ -47,16 +49,15 @@ to go
     ]
     set votes doc-votes
     
+    ;;Log
+    type "Voters for document " type who type ":" print sort voters
+    
     ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
       create-links-with other voters
     ]
   ]
   tick
 end
-
-;to layout
-;  layout-spring (people with [any? link-neighbors]) links 0.7 10 2
-;end
 
 to layout
   ;; the number 3 here is arbitrary; more repetitions slows down the
@@ -137,7 +138,7 @@ num-people
 num-people
 0
 100
-100
+10
 1
 1
 NIL
@@ -152,7 +153,7 @@ num-documents
 num-documents
 0
 100
-20
+10
 1
 1
 NIL
@@ -167,7 +168,7 @@ size-selection
 size-selection
 2
 num-people
-35
+3
 1
 1
 NIL
