@@ -1,3 +1,4 @@
+globals [selected-documents]
 breed [documents document]
 breed [people person]
 
@@ -22,6 +23,7 @@ to setup-documents
       set properties lput (random 10) properties   ;;Agregar propiedades aleatorias al docuemnto
     ]
   ]
+  set selected-documents documents
 end
 
 to setup-people
@@ -54,6 +56,14 @@ to go
     
     ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
       create-links-with other voters
+    ]
+  ]
+  
+  if reduce-documents? [
+    ask documents [
+      if votes < vote-threshold [
+        ;Sacar el documento del agentset
+      ]
     ]
   ]
   
@@ -225,6 +235,28 @@ NIL
 NIL
 NIL
 1
+
+SWITCH
+17
+219
+217
+252
+reduce-documents?
+reduce-documents?
+1
+1
+-1000
+
+INPUTBOX
+17
+262
+138
+322
+vote-threshold
+0
+1
+0
+Number
 
 @#$#@#$#@
 ## WHAT IS IT?
