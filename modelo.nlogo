@@ -1,3 +1,4 @@
+globals [selected-documents]
 breed [documents document]
 breed [people person]
 
@@ -22,6 +23,7 @@ to setup-documents
       set properties lput (random 10) properties   ;;Agregar propiedades aleatorias al docuemnto
     ]
   ]
+  set selected-documents documents
 end
 
 to setup-people
@@ -36,9 +38,9 @@ to go
   type "time: " print ticks
   let selection n-of ((size-selection / 100) * num-people) people   ;;Seleccionar un grupo de personas aleatoria
   
-  ask documents [                            ;;Realizar el conteo de votos por documento y los enlaces entre las personas que votan en un mismo documento
+  ask selected-documents [                   ;;Realizar el conteo de votos por documento y los enlaces entre las personas que votan en un mismo documento
     let doc-properties properties            ;;Las propiedades del documento actual
-    let doc-votes votes                      ;;Los votos del documento actual
+    let doc-votes 0                          ;;Los votos del documento actual
     let voters no-turtles                    ;;Los agentes que pueden votar en el documento actual
 
     ask selection [                          ;;Verificar si cada persona de la selección aleatoria puede votar en el documento actual
@@ -47,13 +49,19 @@ to go
         set doc-votes doc-votes + 1          ;;Se aumenta un voto al documento actual
       ]
     ]
-    set votes doc-votes
+    set votes votes + doc-votes
     
     ;;Log
     type "Voters for document " type who type ":" type sort voters type ", total:" print votes
     
     ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
       create-links-with other voters
+    ]
+    
+    if reduce-documents? [
+      if doc-votes < vote-threshold [
+        set selected-documents other selected-documents
+      ]
     ]
   ]
   
@@ -139,7 +147,7 @@ num-people
 num-people
 0
 100
-10
+50
 1
 1
 NIL
@@ -225,6 +233,28 @@ NIL
 NIL
 NIL
 1
+
+SWITCH
+17
+219
+217
+252
+reduce-documents?
+reduce-documents?
+0
+1
+-1000
+
+INPUTBOX
+17
+262
+138
+322
+vote-threshold
+2
+1
+0
+Number
 
 @#$#@#$#@
 ## WHAT IS IT?
