@@ -1,9 +1,13 @@
-globals [selected-documents]
+globals [
+   clustering-coefficient               ;; the clustering coefficient of the network; this is the
+                                        ;; average of clustering coefficients of all turtles
+   selected-documents                   ;; Los documentos que son votados en cada iteración
+]
 breed [documents document]
 breed [people person]
 
-people-own [property]              ;;Las personas sólo tienen una propiedad
-documents-own [properties votes]   ;;Los documentos tienen un conjunto de propiedades
+people-own [property node-clustering-coefficient]            ;;Las personas tienen una propiedad y un valor para el coeficiente de clustering
+documents-own [properties votes]                             ;;Los documentos tienen un conjunto de propiedades
 
 to setup
   clear-all
@@ -38,7 +42,8 @@ to go
   type "time: " print ticks
   let selection n-of ((size-selection / 100) * num-people) people   ;;Seleccionar un grupo de personas aleatoria
   
-  ask selected-documents [                   ;;Realizar el conteo de votos por documento y los enlaces entre las personas que votan en un mismo documento
+  ;;Realizar el conteo de votos por documento y los enlaces entre las personas que votan en un mismo documento
+  ask selected-documents [
     let doc-properties properties            ;;Las propiedades del documento actual
     let doc-votes 0                          ;;Los votos del documento actual
     let voters no-turtles                    ;;Los agentes que pueden votar en el documento actual
@@ -58,6 +63,7 @@ to go
       create-links-with other voters
     ]
     
+    ;;Reducir los documentos si es el caso
     if reduce-documents? [
       if doc-votes < vote-threshold [
         set selected-documents other selected-documents
@@ -65,16 +71,49 @@ to go
     ]
   ]
   
+  ;;Calcular el coeficiente de clustering
+  find-clustering-coefficient
+  
   tick
 end
 
+;;Funciones tomada del modelo: Smal worlds
+to-report in-neighborhood? [ hood ]
+  report ( member? end1 hood and member? end2 hood )
+end
+
+to find-clustering-coefficient
+  ifelse all? people [count link-neighbors <= 1]
+  [
+    ;; it is undefined
+    ;; what should this be?
+    set clustering-coefficient 0
+  ]
+  [
+    let total 0
+    ask people with [ count link-neighbors <= 1]
+      [ set node-clustering-coefficient "undefined" ]
+    ask people with [ count link-neighbors > 1]
+    [
+      let hood link-neighbors
+      set node-clustering-coefficient (2 * count links with [ in-neighborhood? hood ] /
+                                         ((count hood) * (count hood - 1)) )
+      ;; find the sum for the value at turtles
+      set total total + node-clustering-coefficient
+    ]
+    ;; take the average
+    set clustering-coefficient total / count people with [count link-neighbors > 1]
+  ]
+end
+
+;;Función tomada del modelo: Preferential Attachment
 to layout
   ;; the number 3 here is arbitrary; more repetitions slows down the
   ;; model, but too few gives poor layouts
   repeat 3 [
     ;; the more people we have to fit into the same amount of space,
     ;; the smaller the inputs to layout-spring we'll need to use
-    let factor sqrt count turtles
+    let factor sqrt count people
     ;; numbers here are arbitrarily chosen for pleasing appearance
     layout-spring people links (1 / factor) (7 / factor) (1 / factor)
     display  ;; for smooth animation
@@ -147,7 +186,7 @@ num-people
 num-people
 0
 100
-50
+10
 1
 1
 NIL
@@ -177,7 +216,7 @@ size-selection
 size-selection
 1
 100
-10
+30
 1
 1
 %
@@ -241,7 +280,7 @@ SWITCH
 252
 reduce-documents?
 reduce-documents?
-0
+1
 1
 -1000
 
@@ -251,10 +290,21 @@ INPUTBOX
 138
 322
 vote-threshold
-2
+1
 1
 0
 Number
+
+MONITOR
+945
+11
+1094
+56
+NIL
+clustering-coefficient
+3
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
