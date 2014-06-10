@@ -2,6 +2,10 @@ globals [
    clustering-coefficient               ;; the clustering coefficient of the network; this is the
                                         ;; average of clustering coefficients of all turtles
    selected-documents                   ;; Los documentos que son votados en cada iteración
+   num-documents                        ;; La cantidad de documentos
+   num-selection                        ;; La cantidad de personas que votan en cada iteración
+   universe                             ;; Cantidad de posibles valores para las propiedades
+   properties-per-document
 ]
 breed [documents document]
 breed [people person]
@@ -12,27 +16,38 @@ documents-own [properties votes]                             ;;Los documentos ti
 to setup
   clear-all
   set-default-shape people "circle"
+  ;set num-documents round ((documents-proportion / 100) * num-people)
+  set num-documents num-people
+  set num-selection round ((size-selection / 100) * num-people)
+  set properties-per-document (num-documents * (properties-proportion / 100))
+  set universe properties-per-document * 3                   ;; 3: REVISAR este valor, es un valor arbitrario
   setup-documents
   setup-people
+  
+  show universe
+  show num-selection
   reset-ticks
 end
 
 to setup-documents
-  create-documents ((documents-proportion / 100) * num-people) [
+  create-documents num-documents [
     set properties (list)                          ;;Un documento tiene varias propiedades
     ;setxy random-xcor random-ycor
     hide-turtle                                    ;;No nos interesa ver el documento (por ahora)
-    let amount (random 10) + 1                     ;;La cantidad de propiedades que tiene un documento
-    repeat amount [
-      set properties lput (random 10) properties   ;;Agregar propiedades aleatorias al docuemnto
+    ;let amount (random 10) + 1                     ;;La cantidad de propiedades que tiene un documento
+    repeat properties-per-document [
+      set properties lput (random universe) properties   ;;Agregar propiedades aleatorias al docuemnto
     ]
   ]
   set selected-documents documents
+  ask documents [
+    show properties
+  ]
 end
 
 to setup-people
   create-people num-people [
-    set property random 10          ;;Asignar una única propiedad aleatoria a la persona
+    set property random universe          ;;Asignar una única propiedad aleatoria a la persona
     setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
   ]
 end
@@ -40,7 +55,7 @@ end
 to go
   ;;Log
   type "time: " print ticks
-  let selection n-of ((size-selection / 100) * num-people) people   ;;Seleccionar un grupo de personas aleatoria
+  let selection n-of num-selection people   ;;Seleccionar un grupo de personas aleatoria
   
   ;;Realizar el conteo de votos por documento y los enlaces entre las personas que votan en un mismo documento
   ask selected-documents [
@@ -77,7 +92,7 @@ to go
   tick
 end
 
-;;Funciones tomada del modelo: Smal worlds
+;;Funciones tomada del modelo: Small worlds
 to-report in-neighborhood? [ hood ]
   report ( member? end1 hood and member? end2 hood )
 end
@@ -186,7 +201,7 @@ num-people
 num-people
 0
 100
-10
+100
 1
 1
 NIL
@@ -197,11 +212,11 @@ SLIDER
 133
 256
 166
-documents-proportion
-documents-proportion
+properties-proportion
+properties-proportion
 1
 100
-10
+5
 1
 1
 %
@@ -216,7 +231,7 @@ size-selection
 size-selection
 1
 100
-30
+5
 1
 1
 %
@@ -280,7 +295,7 @@ SWITCH
 252
 reduce-documents?
 reduce-documents?
-1
+0
 1
 -1000
 
@@ -290,7 +305,7 @@ INPUTBOX
 138
 322
 vote-threshold
-1
+2
 1
 0
 Number
