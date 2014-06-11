@@ -28,29 +28,27 @@ to setup
   set infinity 99999                                         ;; just an arbitrary choice for a large number
   
   set num-documents num-people
-  set num-selection round ((size-selection / 100) * num-people)
+  set num-selection round ((selection-size / 100) * num-people)
   set properties-per-document (num-documents * (properties-proportion / 100))
   set universe properties-per-document * 3                   ;; 3: REVISAR este valor, es un valor arbitrario
   
   setup-documents
   setup-people
   
-  show universe
-  show num-selection
+  type "Universe size: " print universe
+  type "Selection size: " print num-selection
   reset-ticks
 end
 
 to setup-documents
   create-documents num-documents [
-    set properties (list)                          ;;Un documento tiene varias propiedades
+    let available-properties n-values universe [?]                       ;;La "bolsa" con las propiedades disponibles
+    set properties n-of properties-per-document available-properties     ;;Agregar propiedades aleatorias al docuemnto
     ;setxy random-xcor random-ycor
-    hide-turtle                                    ;;No nos interesa ver el documento (por ahora)
-    ;let amount (random 10) + 1                     ;;La cantidad de propiedades que tiene un documento
-    repeat properties-per-document [
-      set properties lput (random universe) properties   ;;Agregar propiedades aleatorias al docuemnto
-    ]
+    hide-turtle                                                          ;;No nos interesa ver el documento (por ahora)
   ]
   set selected-documents documents
+  ;;Log
   ask documents [
     show properties
   ]
@@ -105,11 +103,12 @@ to go
   tick
 end
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Funciones tomada del modelo: Small worlds;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Funciones tomadas del modelo: Small worlds;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;Funciones para calcular el clustering coefficient
+;Funciones para calcular el clustering coefficient;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 to find-clustering-coefficient
   ifelse all? people [count link-neighbors <= 1]
   [
@@ -138,7 +137,8 @@ to-report in-neighborhood? [ hood ]
   report ( member? end1 hood and member? end2 hood )
 end
 
-;Función modificada para calcular el largo de camino promedio
+;Funciones para calcular el largo de camino promedio;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 to calculate-average-path-length
   
   ;; find the path lengths in the network
@@ -360,8 +360,8 @@ SLIDER
 176
 257
 209
-size-selection
-size-selection
+selection-size
+selection-size
 1
 100
 10
