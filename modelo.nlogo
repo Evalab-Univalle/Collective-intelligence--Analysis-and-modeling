@@ -455,15 +455,51 @@ clustering-coefficient
 11
 
 MONITOR
-945
-66
-1089
-111
+1102
+11
+1246
+56
 NIL
 average-path-length
 3
 1
 11
+
+PLOT
+944
+66
+1248
+252
+Degree Distribution
+degree
+# of nodes
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" "let max-degree max [count link-neighbors] of people\nplot-pen-reset  ;; erase what we plotted before\nset-plot-x-range 0 (max-degree + 1)  ;; + 1 to make room for the width of the last bar\nhistogram [count link-neighbors] of people"
+
+PLOT
+945
+273
+1249
+468
+Degree Distribution (log-log)
+log (degree)
+log (# of nodes)
+0.0
+0.3
+0.0
+0.3
+true
+false
+"" ""
+PENS
+"default" 1.0 2 -16777216 true "" "let max-degree max [count link-neighbors] of people\n;; for this plot, the axes are logarithmic, so we can't\n;; use \"histogram-from\"; we have to plot the points\n;; ourselves one at a time\nplot-pen-reset  ;; erase what we plotted before\n;; the way we create the network there is never a zero degree node,\n;; so start plotting at degree one\nlet degree 1\nwhile [degree <= max-degree] [\n  let matches people with [count link-neighbors = degree]\n  if any? matches\n    [ plotxy log degree 10\n             log (count matches) 10 ]\n  set degree degree + 1\n]"
 
 @#$#@#$#@
 ## WHAT IS IT?
