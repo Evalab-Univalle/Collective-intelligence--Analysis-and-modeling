@@ -1,26 +1,37 @@
 globals [
    clustering-coefficient               ;; the clustering coefficient of the network; this is the
-                                        ;; average of clustering coefficients of all turtles
+                                         ;; average of clustering coefficients of all turtles
+   average-path-length                  ;; average path length of the network
+   infinity                             ;; a very large number.
+                                         ;; used to denote distance between two turtles which
+                                         ;; don't have a connected or unconnected path between them
+   
    selected-documents                   ;; Los documentos que son votados en cada iteración
    num-documents                        ;; La cantidad de documentos
    num-selection                        ;; La cantidad de personas que votan en cada iteración
    universe                             ;; Cantidad de posibles valores para las propiedades
-   properties-per-document
+   properties-per-document              ;; Cantidad de propiedades en cada documento
 ]
 breed [documents document]
 breed [people person]
 
-people-own [property node-clustering-coefficient]            ;;Las personas tienen una propiedad y un valor para el coeficiente de clustering
+people-own [
+  property
+  node-clustering-coefficient            ;;Las personas tienen una propiedad y un valor para el coeficiente de clustering
+  distance-from-other-people             ;; list of distances of this node from other turtles
+]
 documents-own [properties votes]                             ;;Los documentos tienen un conjunto de propiedades
 
 to setup
   clear-all
   set-default-shape people "circle"
-  ;set num-documents round ((documents-proportion / 100) * num-people)
+  set infinity 99999                                         ;; just an arbitrary choice for a large number
+  
   set num-documents num-people
   set num-selection round ((size-selection / 100) * num-people)
   set properties-per-document (num-documents * (properties-proportion / 100))
   set universe properties-per-document * 3                   ;; 3: REVISAR este valor, es un valor arbitrario
+  
   setup-documents
   setup-people
   
@@ -87,16 +98,18 @@ to go
   ]
   
   ;;Calcular el coeficiente de clustering
-  find-clustering-coefficient
+  find-clustering-coefficient               ;;Vale la pena considerar sólo los nodos conectados?, verificar por que sólo empieza a sumar desde ciertas uniones
+  ;;Calcular el largo promedio de caminos
+  calculate-average-path-length             ;;Hasta que no se conecten todos los nodos será infinito
   
   tick
 end
 
-;;Funciones tomada del modelo: Small worlds
-to-report in-neighborhood? [ hood ]
-  report ( member? end1 hood and member? end2 hood )
-end
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Funciones tomada del modelo: Small worlds;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;Funciones para calcular el clustering coefficient
 to find-clustering-coefficient
   ifelse all? people [count link-neighbors <= 1]
   [
@@ -121,7 +134,127 @@ to find-clustering-coefficient
   ]
 end
 
-;;Función tomada del modelo: Preferential Attachment
+to-report in-neighborhood? [ hood ]
+  report ( member? end1 hood and member? end2 hood )
+end
+
+;Función modificada para calcular el largo de camino promedio
+to calculate-average-path-length
+  
+  ;; find the path lengths in the network
+  find-path-lengths
+
+  let num-connected-pairs sum [length remove infinity (remove 0 distance-from-other-people)] of people
+
+  ;; In a connected network on N nodes, we should have N(N-1) measurements of distances between pairs,
+  ;; and none of those distances should be infinity.
+  ;; If there were any "infinity" length paths between nodes, then the network is disconnected.
+  ;; In that case, calculating the average-path-length doesn't really make sense.
+  ifelse ( num-connected-pairs != (count people * (count people - 1) ))
+  [
+      set average-path-length infinity
+      ;; report that the network is not connected
+      ;set connected? false
+  ]
+  [
+    set average-path-length (sum [sum distance-from-other-people] of people) / (num-connected-pairs)
+  ]
+end
+
+;;; Path length computations
+;; Implements the Floyd Warshall algorithm for All Pairs Shortest Paths
+;; It is a dynamic programming algorithm which builds bigger solutions
+;; from the solutions of smaller subproblems using memoization that
+;; is storing the results.
+;; It keeps finding incrementally if there is shorter path through
+;; the kth node.
+;; Since it iterates over all turtles through k,
+;; so at the end we get the shortest possible path for each i and j.
+
+to find-path-lengths
+  ;; reset the distance list
+  ask people
+  [
+    set distance-from-other-people []
+  ]
+
+  let i 0
+  let j 0
+  let k 0
+  let node1 one-of people
+  let node2 one-of people
+  let node-count count people
+  let list-people sort people
+  
+  ;; initialize the distance lists
+  while [i < node-count]
+  [
+    set j 0
+    while [j < node-count]
+    [
+      set node1 item i list-people
+      set node2 item j list-people
+      ;; zero from a node to itself
+      ifelse i = j
+      [
+        ask node1 [
+          set distance-from-other-people lput 0 distance-from-other-people
+        ]
+      ]
+      [
+        ;; 1 from a node to it's neighbor
+        ifelse [ link-neighbor? node1 ] of node2
+        [
+          ask node1 [
+            set distance-from-other-people lput 1 distance-from-other-people
+          ]
+        ]
+        ;; infinite to everyone else
+        [
+          ask node1 [
+            set distance-from-other-people lput infinity distance-from-other-people
+          ]
+        ]
+      ]
+      set j j + 1
+    ]
+    set i i + 1
+  ]
+  set i 0
+  set j 0
+  let dummy 0
+  while [k < node-count]
+  [
+    set i 0
+    while [i < node-count]
+    [
+      set j 0
+      while [j < node-count]
+      [
+        ;; alternate path length through kth node
+        set dummy ( (item k [distance-from-other-people] of item i list-people) +
+                    (item j [distance-from-other-people] of item k list-people))
+        ;; is the alternate path shorter?
+        if dummy < (item j [distance-from-other-people] of item i list-people)
+        [
+          ask item i list-people [
+            set distance-from-other-people replace-item j distance-from-other-people dummy
+          ]
+        ]
+        set j j + 1
+      ]
+      set i i + 1
+    ]
+    set k k + 1
+  ]
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Función tomada del modelo: Preferential Attachment;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;Función para organizar la vista de la red
 to layout
   ;; the number 3 here is arbitrary; more repetitions slows down the
   ;; model, but too few gives poor layouts
@@ -201,7 +334,7 @@ num-people
 num-people
 0
 100
-100
+20
 1
 1
 NIL
@@ -216,7 +349,7 @@ properties-proportion
 properties-proportion
 1
 100
-5
+10
 1
 1
 %
@@ -231,7 +364,7 @@ size-selection
 size-selection
 1
 100
-5
+10
 1
 1
 %
@@ -295,7 +428,7 @@ SWITCH
 252
 reduce-documents?
 reduce-documents?
-0
+1
 1
 -1000
 
@@ -317,6 +450,17 @@ MONITOR
 56
 NIL
 clustering-coefficient
+3
+1
+11
+
+MONITOR
+945
+66
+1089
+111
+NIL
+average-path-length
 3
 1
 11
