@@ -58,6 +58,7 @@ to setup-people
   create-people num-people [
     set property random universe          ;;Asignar una única propiedad aleatoria a la persona
     setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
+    set color blue
   ]
 end
 
@@ -119,15 +120,24 @@ to find-clustering-coefficient
   [
     let total 0
     ask people with [ count link-neighbors <= 1]
-      [ set node-clustering-coefficient "undefined" ]
+      [ 
+        set node-clustering-coefficient "undefined"
+      ]
     ask people with [ count link-neighbors > 1]
     [
       let hood link-neighbors
+      
+      ;type "hood: " print hood
+      ;show count links with [ in-neighborhood? hood ]
+      
+      ask link-neighbors [ set color red ]
       set node-clustering-coefficient (2 * count links with [ in-neighborhood? hood ] /
                                          ((count hood) * (count hood - 1)) )
       ;; find the sum for the value at turtles
       set total total + node-clustering-coefficient
+      ;type "node-clustering-coefficient: " print node-clustering-coefficient
     ]
+    ;show total
     ;; take the average
     set clustering-coefficient total / count people with [count link-neighbors > 1]
   ]
@@ -334,7 +344,7 @@ num-people
 num-people
 0
 100
-20
+10
 1
 1
 NIL
@@ -349,7 +359,7 @@ properties-proportion
 properties-proportion
 1
 100
-10
+20
 1
 1
 %
@@ -364,7 +374,7 @@ selection-size
 selection-size
 1
 100
-10
+20
 1
 1
 %
@@ -428,7 +438,7 @@ SWITCH
 252
 reduce-documents?
 reduce-documents?
-1
+0
 1
 -1000
 
@@ -438,7 +448,7 @@ INPUTBOX
 138
 322
 vote-threshold
-2
+1
 1
 0
 Number
