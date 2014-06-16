@@ -1,45 +1,54 @@
 globals [
    clustering-coefficient               ;; the clustering coefficient of the network; this is the
-                                        ;; average of clustering coefficients of all turtles
+                                         ;; average of clustering coefficients of all turtles
+   average-path-length                  ;; average path length of the network
+   infinity                             ;; a very large number.
+                                         ;; used to denote distance between two turtles which
+                                         ;; don't have a connected or unconnected path between them
+   
    selected-documents                   ;; Los documentos que son votados en cada iteración
    num-documents                        ;; La cantidad de documentos
    num-selection                        ;; La cantidad de personas que votan en cada iteración
    universe                             ;; Cantidad de posibles valores para las propiedades
-   properties-per-document
+   properties-per-document              ;; Cantidad de propiedades en cada documento
 ]
 breed [documents document]
 breed [people person]
 
-people-own [property node-clustering-coefficient]            ;;Las personas tienen una propiedad y un valor para el coeficiente de clustering
+people-own [
+  property
+  node-clustering-coefficient            ;;Las personas tienen una propiedad y un valor para el coeficiente de clustering
+  distance-from-other-people             ;; list of distances of this node from other turtles
+]
 documents-own [properties votes]                             ;;Los documentos tienen un conjunto de propiedades
 
 to setup
   clear-all
   set-default-shape people "circle"
-  ;set num-documents round ((documents-proportion / 100) * num-people)
+  set infinity 99999                                         ;; just an arbitrary choice for a large number
+  
   set num-documents num-people
-  set num-selection round ((size-selection / 100) * num-people)
+  set num-selection round ((selection-size / 100) * num-people)
   set properties-per-document (num-documents * (properties-proportion / 100))
   set universe properties-per-document * 3                   ;; 3: REVISAR este valor, es un valor arbitrario
+  
   setup-documents
   setup-people
   
-  show universe
-  show num-selection
+  type "Universe size: " print universe
+  type "Selection size: " print num-selection
   reset-ticks
 end
 
 to setup-documents
   create-documents num-documents [
-    set properties (list)                          ;;Un documento tiene varias propiedades
+    let available-properties n-values universe [?]                       ;;La "bolsa" con las propiedades disponibles
+    set properties n-of properties-per-document available-properties     ;;Agregar propiedades aleatorias al docuemnto
     ;setxy random-xcor random-ycor
-    hide-turtle                                    ;;No nos interesa ver el documento (por ahora)
-    ;let amount (random 10) + 1                     ;;La cantidad de propiedades que tiene un documento
-    repeat properties-per-document [
-      set properties lput (random universe) properties   ;;Agregar propiedades aleatorias al docuemnto
-    ]
+    hide-turtle                                                          ;;No nos interesa ver el documento (por ahora)
   ]
   set selected-documents documents
+  ;;Log
   ask documents [
     show properties
   ]
@@ -49,6 +58,7 @@ to setup-people
   create-people num-people [
     set property random universe          ;;Asignar una única propiedad aleatoria a la persona
     setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
+    set color blue
   ]
 end
 
@@ -87,16 +97,19 @@ to go
   ]
   
   ;;Calcular el coeficiente de clustering
-  find-clustering-coefficient
+  find-clustering-coefficient               ;;Vale la pena considerar sólo los nodos conectados?, verificar por que sólo empieza a sumar desde ciertas uniones
+  ;;Calcular el largo promedio de caminos
+  calculate-average-path-length             ;;Hasta que no se conecten todos los nodos será infinito
   
   tick
 end
 
-;;Funciones tomada del modelo: Small worlds
-to-report in-neighborhood? [ hood ]
-  report ( member? end1 hood and member? end2 hood )
-end
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Funciones tomadas del modelo: Small worlds;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;Funciones para calcular el clustering coefficient;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 to find-clustering-coefficient
   ifelse all? people [count link-neighbors <= 1]
   [
@@ -107,21 +120,151 @@ to find-clustering-coefficient
   [
     let total 0
     ask people with [ count link-neighbors <= 1]
-      [ set node-clustering-coefficient "undefined" ]
+      [ 
+        set node-clustering-coefficient "undefined"
+      ]
     ask people with [ count link-neighbors > 1]
     [
       let hood link-neighbors
+      
+      ;type "hood: " print hood
+      ;show count links with [ in-neighborhood? hood ]
+      
+      ask link-neighbors [ set color red ]
       set node-clustering-coefficient (2 * count links with [ in-neighborhood? hood ] /
                                          ((count hood) * (count hood - 1)) )
       ;; find the sum for the value at turtles
       set total total + node-clustering-coefficient
+      ;type "node-clustering-coefficient: " print node-clustering-coefficient
     ]
+    ;show total
     ;; take the average
     set clustering-coefficient total / count people with [count link-neighbors > 1]
   ]
 end
 
-;;Función tomada del modelo: Preferential Attachment
+to-report in-neighborhood? [ hood ]
+  report ( member? end1 hood and member? end2 hood )
+end
+
+;Funciones para calcular el largo de camino promedio;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+to calculate-average-path-length
+  
+  ;; find the path lengths in the network
+  find-path-lengths
+
+  let num-connected-pairs sum [length remove infinity (remove 0 distance-from-other-people)] of people
+
+  ;; In a connected network on N nodes, we should have N(N-1) measurements of distances between pairs,
+  ;; and none of those distances should be infinity.
+  ;; If there were any "infinity" length paths between nodes, then the network is disconnected.
+  ;; In that case, calculating the average-path-length doesn't really make sense.
+  ifelse ( num-connected-pairs != (count people * (count people - 1) ))
+  [
+      set average-path-length infinity
+      ;; report that the network is not connected
+      ;set connected? false
+  ]
+  [
+    set average-path-length (sum [sum distance-from-other-people] of people) / (num-connected-pairs)
+  ]
+end
+
+;;; Path length computations
+;; Implements the Floyd Warshall algorithm for All Pairs Shortest Paths
+;; It is a dynamic programming algorithm which builds bigger solutions
+;; from the solutions of smaller subproblems using memoization that
+;; is storing the results.
+;; It keeps finding incrementally if there is shorter path through
+;; the kth node.
+;; Since it iterates over all turtles through k,
+;; so at the end we get the shortest possible path for each i and j.
+
+to find-path-lengths
+  ;; reset the distance list
+  ask people
+  [
+    set distance-from-other-people []
+  ]
+
+  let i 0
+  let j 0
+  let k 0
+  let node1 one-of people
+  let node2 one-of people
+  let node-count count people
+  let list-people sort people
+  
+  ;; initialize the distance lists
+  while [i < node-count]
+  [
+    set j 0
+    while [j < node-count]
+    [
+      set node1 item i list-people
+      set node2 item j list-people
+      ;; zero from a node to itself
+      ifelse i = j
+      [
+        ask node1 [
+          set distance-from-other-people lput 0 distance-from-other-people
+        ]
+      ]
+      [
+        ;; 1 from a node to it's neighbor
+        ifelse [ link-neighbor? node1 ] of node2
+        [
+          ask node1 [
+            set distance-from-other-people lput 1 distance-from-other-people
+          ]
+        ]
+        ;; infinite to everyone else
+        [
+          ask node1 [
+            set distance-from-other-people lput infinity distance-from-other-people
+          ]
+        ]
+      ]
+      set j j + 1
+    ]
+    set i i + 1
+  ]
+  set i 0
+  set j 0
+  let dummy 0
+  while [k < node-count]
+  [
+    set i 0
+    while [i < node-count]
+    [
+      set j 0
+      while [j < node-count]
+      [
+        ;; alternate path length through kth node
+        set dummy ( (item k [distance-from-other-people] of item i list-people) +
+                    (item j [distance-from-other-people] of item k list-people))
+        ;; is the alternate path shorter?
+        if dummy < (item j [distance-from-other-people] of item i list-people)
+        [
+          ask item i list-people [
+            set distance-from-other-people replace-item j distance-from-other-people dummy
+          ]
+        ]
+        set j j + 1
+      ]
+      set i i + 1
+    ]
+    set k k + 1
+  ]
+
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Función tomada del modelo: Preferential Attachment;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;Función para organizar la vista de la red
 to layout
   ;; the number 3 here is arbitrary; more repetitions slows down the
   ;; model, but too few gives poor layouts
@@ -201,7 +344,7 @@ num-people
 num-people
 0
 100
-100
+10
 1
 1
 NIL
@@ -216,7 +359,7 @@ properties-proportion
 properties-proportion
 1
 100
-5
+20
 1
 1
 %
@@ -227,11 +370,11 @@ SLIDER
 176
 257
 209
-size-selection
-size-selection
+selection-size
+selection-size
 1
 100
-5
+20
 1
 1
 %
@@ -305,7 +448,7 @@ INPUTBOX
 138
 322
 vote-threshold
-2
+1
 1
 0
 Number
@@ -320,6 +463,53 @@ clustering-coefficient
 3
 1
 11
+
+MONITOR
+1102
+11
+1246
+56
+NIL
+average-path-length
+3
+1
+11
+
+PLOT
+944
+66
+1248
+252
+Degree Distribution
+degree
+# of nodes
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" "let max-degree max [count link-neighbors] of people\nplot-pen-reset  ;; erase what we plotted before\nset-plot-x-range 0 (max-degree + 1)  ;; + 1 to make room for the width of the last bar\nhistogram [count link-neighbors] of people"
+
+PLOT
+945
+273
+1249
+468
+Degree Distribution (log-log)
+log (degree)
+log (# of nodes)
+0.0
+0.3
+0.0
+0.3
+true
+false
+"" ""
+PENS
+"default" 1.0 2 -16777216 true "" "let max-degree max [count link-neighbors] of people\n;; for this plot, the axes are logarithmic, so we can't\n;; use \"histogram-from\"; we have to plot the points\n;; ourselves one at a time\nplot-pen-reset  ;; erase what we plotted before\n;; the way we create the network there is never a zero degree node,\n;; so start plotting at degree one\nlet degree 1\nwhile [degree <= max-degree] [\n  let matches people with [count link-neighbors = degree]\n  if any? matches\n    [ plotxy log degree 10\n             log (count matches) 10 ]\n  set degree degree + 1\n]"
 
 @#$#@#$#@
 ## WHAT IS IT?
