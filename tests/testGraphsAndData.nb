@@ -10,16 +10,34 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    128666,       2340]
-NotebookOptionsPosition[    127489,       2299]
-NotebookOutlinePosition[    127824,       2314]
-CellTagsIndexPosition[    127781,       2311]
+NotebookDataLength[    129845,       2411]
+NotebookOptionsPosition[    128050,       2342]
+NotebookOutlinePosition[    128385,       2357]
+CellTagsIndexPosition[    128342,       2354]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["Inicializaci\[OAcute]n netlogo", "Text",
- CellChangeTimes->{{3.613904229594448*^9, 3.6139042451492434`*^9}}],
+
+Cell[CellGroupData[{
+Cell["\<\
+Pruebas de gr\[AAcute]ficas y recolecci\[OAcute]n de datos de experimentos\
+\>", "Title",
+ CellChangeTimes->{{3.6139369320836363`*^9, 3.6139369478934383`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Conexi\[OAcute]n con Netlogo :", "Section",
+ CellChangeTimes->{{3.613936958959099*^9, 3.613936979185954*^9}}],
+
+Cell["\<\
+Hay que editar los valores de $NLHome (carpeta del ejecutable de netlogo) y \
+$NLModel (carpeta donde est\[AAcute]) con los de la m\[AAcute]quina local.\
+\>", "Text",
+ CellChangeTimes->{{3.613858257223709*^9, 3.613858314523345*^9}, {
+  3.613858550996646*^9, 3.613858592076119*^9}},
+ Background->RGBColor[
+  0.9294117647058824, 0.9294117647058824, 0.9294117647058824]],
 
 Cell[BoxData[{
  RowBox[{"<<", "NetLogo`"}], "\[IndentingNewLine]", 
@@ -42,16 +60,24 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"{", "$NLModel", "}"}], ",", "\"\<modelo.nlogo\>\""}], "]"}], 
    "]"}], ";"}]}], "Input",
- CellChangeTimes->{3.613916090825285*^9}],
+ CellChangeTimes->{3.613916090825285*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Definici\[OAcute]n de experimentos", "Section",
+ CellChangeTimes->{{3.613937015471212*^9, 3.61393701997931*^9}}],
+
+Cell[CellGroupData[{
 
 Cell["\<\
-Definici\[OAcute]n de experimentos:
-People, selection-size\
-\>", "Text",
- CellChangeTimes->{{3.613904263214082*^9, 3.613904270819498*^9}, {
-  3.613904558206109*^9, 3.6139045707337*^9}}],
+ExpPeopleSize: Ajuste de par\[AAcute]metros: people, selection-size y \
+unidades de tiempo (por configuraci\[OAcute]n)\
+\>", "Subsection",
+ CellChangeTimes->{{3.6139370326774063`*^9, 3.613937067785678*^9}, {
+  3.6139372096145782`*^9, 3.613937210069921*^9}}],
 
-Cell[BoxData[{
+Cell[BoxData[
  RowBox[{
   RowBox[{
    RowBox[{"ExpPeopleSize", "[", 
@@ -69,54 +95,25 @@ Cell[BoxData[{
        RowBox[{"NLDoReport", "[", 
         RowBox[{
         "\"\<go\>\"", ",", "\"\<clustering-coefficient\>\"", ",", "n"}], 
-        "]"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"people", "=", 
-   RowBox[{"Table", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"i", ",", "j", ",", "2"}], "}"}], ",", 
-     RowBox[{"{", 
-      RowBox[{"i", ",", "10", ",", "100", ",", "10"}], "}"}], ",", 
-     RowBox[{"{", 
-      RowBox[{"j", ",", "1", ",", "100", ",", "20"}], "}"}]}], "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"NLCommand", "[", "\"\<no-display\>\"", "]"}], ";"}]}], "Input",
+        "]"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
  CellChangeTimes->{{3.613904379763122*^9, 3.613904429964048*^9}, {
   3.613904477773218*^9, 3.613904484117238*^9}, {3.6139045806132307`*^9, 
   3.613904589612647*^9}, {3.613905438262699*^9, 3.613905538124159*^9}, {
   3.613905611782536*^9, 3.613905631771031*^9}, {3.6139057637826033`*^9, 
   3.61390576610993*^9}, {3.613907260743299*^9, 3.6139072635592833`*^9}, {
   3.6139095277839003`*^9, 3.613909529552348*^9}, {3.613909600560789*^9, 
-  3.613909601320043*^9}}],
+  3.613909601320043*^9}, {3.6139370941200113`*^9, 3.6139370947001677`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+ExpPeopleProperties: Ajuste de par\[AAcute]metros: people, \
+properties-proportion y unidades de tiempo (por configuraci\[OAcute]n)\
+\>", "Subsection",
+ CellChangeTimes->{{3.613937197776916*^9, 3.613937236007468*^9}}],
 
 Cell[BoxData[
- RowBox[{
-  RowBox[{"clusteringData", "=", 
-   RowBox[{"Table", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"Apply", "[", 
-       RowBox[{"ExpPeopleSize", ",", 
-        RowBox[{
-         RowBox[{"Flatten", "[", 
-          RowBox[{"people", ",", "1"}], "]"}], "[", 
-         RowBox[{"[", "i", "]"}], "]"}]}], "]"}], "}"}], ",", 
-     RowBox[{"{", 
-      RowBox[{"i", ",", "1", ",", 
-       RowBox[{"Length", "[", 
-        RowBox[{"Flatten", "[", 
-         RowBox[{"people", ",", "1"}], "]"}], "]"}]}], "}"}]}], "]"}]}], 
-  ";"}]], "Input",
- CellChangeTimes->{{3.613909628751472*^9, 3.613909717573373*^9}, {
-  3.613909831430359*^9, 3.613909835101605*^9}}],
-
-Cell["People, properties-proportion", "Text",
- CellChangeTimes->{{3.6139046000677977`*^9, 3.61390462506948*^9}}],
-
-Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"ExpPeopleProperties", "[", 
@@ -134,8 +131,21 @@ Cell[BoxData[{
        RowBox[{"NLDoReport", "[", 
         RowBox[{
         "\"\<go\>\"", ",", "\"\<clustering-coefficient\>\"", ",", "n"}], 
-        "]"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
+        "]"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}]], "Input"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Recolecci\[OAcute]n de datos:", "Section",
+ CellChangeTimes->{{3.613937107893559*^9, 3.613937126667656*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["ExpPeopleSize", "Subsection",
+ CellChangeTimes->{3.613937290579245*^9}],
+
+Cell[BoxData[{
  RowBox[{
   RowBox[{"people", "=", 
    RowBox[{"Table", "[", 
@@ -148,11 +158,51 @@ Cell[BoxData[{
       RowBox[{"j", ",", "1", ",", "100", ",", "20"}], "}"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"NLCommand", "[", "\"\<no-display\>\"", "]"}], ";"}]}], "Input",
- CellChangeTimes->{{3.613904628461185*^9, 3.613904650052814*^9}, {
-  3.613912424312421*^9, 3.613912436647233*^9}}],
+  RowBox[{"NLCommand", "[", "\"\<no-display\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"clusteringData", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Apply", "[", 
+       RowBox[{"ExpPeopleSize", ",", 
+        RowBox[{
+         RowBox[{"Flatten", "[", 
+          RowBox[{"people", ",", "1"}], "]"}], "[", 
+         RowBox[{"[", "i", "]"}], "]"}]}], "]"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", 
+       RowBox[{"Length", "[", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"people", ",", "1"}], "]"}], "]"}]}], "}"}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.613909628751472*^9, 3.613909717573373*^9}, {
+  3.613909831430359*^9, 3.613909835101605*^9}, {3.613937097051094*^9, 
+  3.613937098909482*^9}}]
+}, Open  ]],
 
-Cell[BoxData[
+Cell[CellGroupData[{
+
+Cell["ExpPeopleProperties", "Subsection",
+ CellChangeTimes->{{3.6139046000677977`*^9, 3.61390462506948*^9}, {
+  3.613937295357432*^9, 3.61393731112085*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"people", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"i", ",", "j", ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "10", ",", "100", ",", "10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "1", ",", "100", ",", "20"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"NLCommand", "[", "\"\<no-display\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"clusteringData2", "=", 
    RowBox[{"Table", "[", 
@@ -169,11 +219,22 @@ Cell[BoxData[
        RowBox[{"Length", "[", 
         RowBox[{"Flatten", "[", 
          RowBox[{"people", ",", "1"}], "]"}], "]"}]}], "}"}]}], "]"}]}], 
-  ";"}]], "Input",
- CellChangeTimes->{{3.613912450847021*^9, 3.6139124573385353`*^9}}],
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.613912450847021*^9, 3.6139124573385353`*^9}, {
+  3.613937256772566*^9, 3.613937257373724*^9}}]
+}, Open  ]]
+}, Open  ]],
 
-Cell["Graficas :", "Text",
- CellChangeTimes->{{3.6139123867464647`*^9, 3.613912395110669*^9}}],
+Cell[CellGroupData[{
+
+Cell["Gr\[AAcute]ficas :", "Section",
+ CellChangeTimes->{{3.6139123867464647`*^9, 3.613912395110669*^9}, {
+  3.613937322153448*^9, 3.6139373225292892`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["ExpPeopleSize", "Subsection",
+ CellChangeTimes->{3.613937345027936*^9}],
 
 Cell[BoxData[{
  RowBox[{
@@ -1104,7 +1165,7 @@ U///X/6f5f8Hb6vFfw==
     Scaled[0.02], 
     Scaled[0.02], 
     Scaled[0.02]},
-  ViewPoint->{-0.9526539852678492, -3.1485918881447605`, 0.7929814034782212},
+  ViewPoint->{-2.968648780056095, -0.7613028999940052, 1.4344135788301147`},
   ViewVertical->{0., 0., 1.}]], "Output",
  CellChangeTimes->{
   3.613906990411935*^9, 3.613907046625328*^9, 3.6139070868214912`*^9, {
@@ -1132,21 +1193,6 @@ Cell[BoxData[
    3.613911843524762*^9, {3.613911884572628*^9, 3.613911902645647*^9}, {
    3.613911973390114*^9, 3.613911974142098*^9}, {3.613912111105344*^9, 
    3.613912175742774*^9}, {3.6139122277591963`*^9, 3.613912229055317*^9}}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"VertexColors", "::", "errlistcol"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"\[NoBreak]\\!\\({\\(\\(RGBColor[\\(\\(1, 0, \
-0\\)\\)]\\)\\), \\(\\(RGBColor[\\(\\(0, 1, 0\\)\\)]\\)\\), \\(\\(RGBColor[\\(\
-\\(1, 1, 0\\)\\)]\\)\\), \\(\\(RGBColor[\\(\\(0, 0, 1\\)\\)]\\)\\)}\\)\
-\[NoBreak] must be a list of colors of length \
-\[NoBreak]\\!\\(50\\)\[NoBreak]. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
-ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/VertexColors\\\", ButtonNote -> \
-\\\"VertexColors::errlistcol\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.613912230702717*^9, 3.6139162229713573`*^9}],
 
 Cell[BoxData[
  GraphicsBox[GraphicsComplexBox[CompressedData["
@@ -1269,14 +1315,23 @@ spDo9AUEsH+TbHUre/uL63kg0/ke1/Xiev3ZmmdyPe/ieh7C9XuZ6/cU1/02
   PlotRange->{All, All},
   PlotRangeClipping->True,
   PlotRangePadding->{Automatic, Automatic}]], "Output",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
  CellChangeTimes->{{3.613906680736332*^9, 3.613906716039016*^9}, 
    3.613906765668029*^9, 3.613906798907463*^9, 3.613906886916362*^9, {
    3.6139090515321617`*^9, 3.613909074051137*^9}, 3.613911084301969*^9, 
    3.613911624078815*^9, {3.6139117525634613`*^9, 3.613911765662359*^9}, 
    3.613911812710856*^9, {3.613911886487146*^9, 3.613911904256031*^9}, 
    3.613911975305463*^9, {3.61391213119814*^9, 3.613912177011297*^9}, 
-   3.613912230707714*^9, 3.6139162230071373`*^9}]
+   3.613912230707714*^9, 3.6139162230071373`*^9, {3.613937415445499*^9, 
+   3.6139374200144653`*^9}}]
+}, Open  ]]
 }, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["ExpPeopleProperties", "Subsection",
+ CellChangeTimes->{3.6139373670713177`*^9}],
 
 Cell[BoxData[
  RowBox[{
@@ -2163,21 +2218,6 @@ Cell[BoxData[
  CellChangeTimes->{3.613912852854341*^9}],
 
 Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"VertexColors", "::", "errlistcol"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"\[NoBreak]\\!\\({\\(\\(RGBColor[\\(\\(1, 0, \
-0\\)\\)]\\)\\), \\(\\(RGBColor[\\(\\(0, 1, 0\\)\\)]\\)\\), \\(\\(RGBColor[\\(\
-\\(1, 1, 0\\)\\)]\\)\\), \\(\\(RGBColor[\\(\\(0, 0, 1\\)\\)]\\)\\)}\\)\
-\[NoBreak] must be a list of colors of length \
-\[NoBreak]\\!\\(50\\)\[NoBreak]. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
-ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/VertexColors\\\", ButtonNote -> \
-\\\"VertexColors::errlistcol\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.613912854136716*^9, 3.613916592225416*^9}],
-
-Cell[BoxData[
  GraphicsBox[GraphicsComplexBox[CompressedData["
 1:eJyVlzFOw1AQRD80tBwBpOiX9KlsmkiRG4hAKC0SNUcgR8uRuAEoyt+VPPvH
 s04Tvczs5M/KcZLHz+/D120p5f6mlMvz9fE0Xp/ruMzDOv20X6efX9fpztvk
@@ -2296,9 +2336,12 @@ ZyqOpOJi7PMx9rzL2PMQY7+Xjf2eMna/bex+zNj3NVP1nKn/i+7+vwDelXcl
   PlotRangePadding->{Automatic, Automatic}]], "Output",
  CellChangeTimes->{3.6139128541562557`*^9, 3.6139165922512293`*^9}]
 }, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
 },
-WindowSize->{832, 1022},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{1364, 747},
+WindowMargins->{{0, Automatic}, {2, Automatic}},
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
 StyleDefinitions->"Default.nb"
 ]
@@ -2313,34 +2356,62 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[557, 20, 114, 1, 31, "Text"],
-Cell[674, 23, 738, 21, 165, "Input"],
-Cell[1415, 46, 195, 5, 51, "Text"],
-Cell[1613, 53, 1604, 39, 143, "Input"],
-Cell[3220, 94, 675, 19, 55, "Input"],
-Cell[3898, 115, 112, 1, 30, "Text"],
-Cell[4013, 118, 1276, 34, 143, "Input"],
-Cell[5292, 154, 635, 18, 55, "Input"],
-Cell[5930, 174, 94, 1, 30, "Text"],
-Cell[6027, 177, 1017, 29, 55, "Input"],
 Cell[CellGroupData[{
-Cell[7069, 210, 420, 8, 32, "Input"],
-Cell[7492, 220, 52610, 892, 471, "Output"]
+Cell[579, 22, 169, 3, 148, "Title"],
+Cell[CellGroupData[{
+Cell[773, 29, 115, 1, 80, "Section"],
+Cell[891, 32, 377, 7, 49, "Text"],
+Cell[1271, 41, 738, 21, 143, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[60139, 1117, 876, 16, 55, "Input"],
-Cell[61018, 1135, 695, 13, 40, "Message"],
-Cell[61716, 1150, 7598, 127, 374, "Output"]
-}, Open  ]],
-Cell[69329, 1280, 881, 26, 55, "Input"],
+Cell[2046, 67, 118, 1, 80, "Section"],
 Cell[CellGroupData[{
-Cell[70235, 1310, 205, 5, 32, "Input"],
-Cell[70443, 1317, 48889, 829, 305, "Output"]
+Cell[2189, 72, 267, 5, 44, "Subsection"],
+Cell[2459, 79, 1191, 25, 99, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[119369, 2151, 488, 11, 55, "Input"],
-Cell[119860, 2164, 693, 13, 40, "Message"],
-Cell[120556, 2179, 6917, 117, 406, "Output"]
+Cell[3687, 109, 227, 4, 44, "Subsection"],
+Cell[3917, 115, 698, 18, 99, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4664, 139, 114, 1, 80, "Section"],
+Cell[CellGroupData[{
+Cell[4803, 144, 77, 1, 44, "Subsection"],
+Cell[4883, 147, 1187, 34, 77, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6107, 186, 156, 2, 44, "Subsection"],
+Cell[6266, 190, 1147, 33, 77, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7462, 229, 156, 2, 80, "Section"],
+Cell[CellGroupData[{
+Cell[7643, 235, 77, 1, 44, "Subsection"],
+Cell[7723, 238, 1017, 29, 55, "Input"],
+Cell[CellGroupData[{
+Cell[8765, 271, 420, 8, 32, "Input"],
+Cell[9188, 281, 52609, 892, 471, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[61834, 1178, 876, 16, 55, "Input"],
+Cell[62713, 1196, 7700, 130, 372, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[70462, 1332, 85, 1, 44, "Subsection"],
+Cell[70550, 1335, 881, 26, 55, "Input"],
+Cell[CellGroupData[{
+Cell[71456, 1365, 205, 5, 32, "Input"],
+Cell[71664, 1372, 48889, 829, 304, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[120590, 2206, 488, 11, 55, "Input"],
+Cell[121081, 2219, 6917, 117, 372, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 }
 ]

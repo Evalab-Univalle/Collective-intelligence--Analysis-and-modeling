@@ -10,25 +10,38 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[      9299,        262]
-NotebookOptionsPosition[      8576,        233]
-NotebookOutlinePosition[      8910,        248]
-CellTagsIndexPosition[      8867,        245]
+NotebookDataLength[     10302,        302]
+NotebookOptionsPosition[      9323,        262]
+NotebookOutlinePosition[      9658,        277]
+CellTagsIndexPosition[      9615,        274]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
 Cell[TextData[{
- StyleBox["Hay que editar los valores de $NLHome (carpeta del ejecutable de \
-netlogo) y $NLModel (carpeta donde est",
-  FontWeight->"Bold"],
- "\[AAcute]",
- StyleBox[") con los de la m\[AAcute]quina local.",
-  FontWeight->"Bold"]
-}], "Text",
+ "Prueba de la conexi\[OAcute]n de ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " con Netlogo y de formulaci",
+ "\[OAcute]n de experimentos."
+}], "Title",
+ CellChangeTimes->{{3.613935917658515*^9, 3.613935977341213*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Conexi\[OAcute]n con Netlogo:", "Section",
+ CellChangeTimes->{{3.6139363435989847`*^9, 3.613936359142041*^9}}],
+
+Cell["\<\
+Hay que editar los valores de $NLHome (carpeta del ejecutable de netlogo) y \
+$NLModel (carpeta donde est\[AAcute]) con los de la m\[AAcute]quina local.\
+\>", "Text",
  CellChangeTimes->{{3.613858257223709*^9, 3.613858314523345*^9}, {
   3.613858550996646*^9, 3.613858592076119*^9}},
- Background->RGBColor[0.87, 0.94, 1]],
+ Background->RGBColor[
+  0.9294117647058824, 0.9294117647058824, 0.9294117647058824]],
 
 Cell[BoxData[{
  RowBox[{"<<", "NetLogo`"}], "\[IndentingNewLine]", 
@@ -58,7 +71,20 @@ CSDaoeXyRBA9P616Doh2ieKdB6KPdR7qewSku5LZJoNoDk2dGSCa8YIXmJY4
 GzsXRJ8y7QTTb5RfrgTRUho1q0B00OHQdSDa1yYOTLs4pd4C0Saf88A024uk
 JyD61zaptyB6LpOI0mMgrfP3oQ6IvsJh4wWiOwMX+IDoEvNvQSD6YOhfMP3s
 qnw4iM5NtQXTAMZmvLQ=
-  "]],
+  "]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Formulaci\[OAcute]n de Experimentos:", "Section",
+ CellChangeTimes->{{3.613936413545224*^9, 3.613936419212038*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Experimento1: Ajustando el par\[AAcute]metro people\
+\>", "Subsection",
+ CellChangeTimes->{{3.61393643259521*^9, 3.613936454182686*^9}}],
 
 Cell[BoxData[{
  RowBox[{
@@ -127,7 +153,16 @@ Cell[BoxData[
   PlotRangePadding->{{0.2, 0.2}, {0.02, 0.02}}]], "Output",
  CellChangeTimes->{{3.61382681199193*^9, 3.6138268284223337`*^9}, {
    3.613827395617031*^9, 3.6138274034626713`*^9}, 3.6138577107168283`*^9}]
+}, Open  ]]
 }, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Experimento2: Ajustando el par\[AAcute]metro people y reduciendo los \
+documentos\
+\>", "Subsection",
+ CellChangeTimes->{{3.613936469779521*^9, 3.61393649807458*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -220,19 +255,13 @@ Cell[BoxData[
  CellChangeTimes->{{3.613827090909603*^9, 3.613827105230468*^9}, 
    3.613827171962585*^9, {3.613827295269116*^9, 3.6138273165947237`*^9}, 
    3.6138273648064747`*^9, {3.613827476075429*^9, 3.613827536898692*^9}}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData["hola"], "Input",
- CellChangeTimes->{{3.613828150856245*^9, 3.613828153283601*^9}}],
-
-Cell[BoxData["hola"], "Output",
- CellChangeTimes->{3.61382815610711*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 },
-WindowSize->{681, 747},
-WindowMargins->{{Automatic, 2}, {2, Automatic}},
+WindowSize->{1364, 747},
+WindowMargins->{{0, Automatic}, {2, Automatic}},
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
 StyleDefinitions->"Default.nb"
 ]
@@ -247,22 +276,33 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[557, 20, 410, 10, 71, "Text"],
-Cell[970, 32, 1065, 28, 187, "Input"],
-Cell[2038, 62, 1727, 40, 165, "Input"],
 Cell[CellGroupData[{
-Cell[3790, 106, 252, 5, 32, "Input"],
-Cell[4045, 113, 648, 15, 245, "Output"]
-}, Open  ]],
-Cell[4708, 131, 1049, 23, 143, "Input"],
-Cell[5760, 156, 655, 18, 99, "Input"],
+Cell[579, 22, 244, 7, 148, "Title"],
 Cell[CellGroupData[{
-Cell[6440, 178, 718, 17, 55, "Input"],
-Cell[7161, 197, 1191, 24, 245, "Output"]
+Cell[848, 33, 116, 1, 80, "Section"],
+Cell[967, 36, 377, 7, 49, "Text"],
+Cell[1347, 45, 1065, 28, 143, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[8389, 226, 96, 1, 32, "Input"],
-Cell[8488, 229, 72, 1, 32, "Output"]
+Cell[2449, 78, 121, 1, 80, "Section"],
+Cell[CellGroupData[{
+Cell[2595, 83, 146, 3, 44, "Subsection"],
+Cell[2744, 88, 1727, 40, 165, "Input"],
+Cell[CellGroupData[{
+Cell[4496, 132, 252, 5, 32, "Input"],
+Cell[4751, 139, 648, 15, 245, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5448, 160, 176, 4, 44, "Subsection"],
+Cell[5627, 166, 1049, 23, 99, "Input"],
+Cell[6679, 191, 655, 18, 99, "Input"],
+Cell[CellGroupData[{
+Cell[7359, 213, 718, 17, 32, "Input"],
+Cell[8080, 232, 1191, 24, 245, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 }
 ]
