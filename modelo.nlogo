@@ -149,6 +149,7 @@ end
 
 ;Funciones para calcular el largo de camino promedio;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Hay problemas con esta función, revisar que se puede hacer para definir un camino aunqeu no estén todos los nodos juntos
 to calculate-average-path-length
   
   ;; find the path lengths in the network
@@ -160,7 +161,8 @@ to calculate-average-path-length
   ;; and none of those distances should be infinity.
   ;; If there were any "infinity" length paths between nodes, then the network is disconnected.
   ;; In that case, calculating the average-path-length doesn't really make sense.
-  ifelse ( num-connected-pairs != (count people * (count people - 1) ))
+  ;ifelse ( num-connected-pairs != (count people * (count people - 1) ))
+  ifelse ( num-connected-pairs <= 0)
   [
       set average-path-length infinity
       ;; report that the network is not connected
@@ -292,11 +294,11 @@ to-report limit-magnitude [number limit]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-261
-10
-934
-470
-25
+330
+12
+899
+472
+21
 16
 13.0
 1
@@ -308,20 +310,27 @@ GRAPHICS-WINDOW
 1
 1
 1
--25
-25
+-21
+21
 -16
 16
 0
 0
 1
 ticks
-30.0
+
+CC-WINDOW
+5
+486
+1250
+581
+Command Center
+0
 
 BUTTON
-13
+24
 10
-86
+97
 43
 NIL
 setup
@@ -333,57 +342,11 @@ NIL
 NIL
 NIL
 NIL
-1
-
-SLIDER
-15
-90
-255
-123
-num-people
-num-people
-0
-100
-10
-1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-16
-133
-256
-166
-properties-proportion
-properties-proportion
-1
-100
-20
-1
-1
-%
-HORIZONTAL
-
-SLIDER
-16
-176
-257
-209
-selection-size
-selection-size
-1
-100
-20
-1
-1
-%
-HORIZONTAL
 
 BUTTON
-94
+113
 10
-184
+203
 43
 go once
 go
@@ -395,13 +358,12 @@ NIL
 NIL
 NIL
 NIL
-0
 
 BUTTON
-192
-10
-255
-43
+231
+15
+294
+48
 NIL
 go
 T
@@ -412,12 +374,11 @@ NIL
 NIL
 NIL
 NIL
-0
 
 BUTTON
-94
+122
 51
-185
+197
 84
 NIL
 layout
@@ -429,35 +390,79 @@ NIL
 NIL
 NIL
 NIL
+
+SLIDER
+24
+92
+196
+125
+num-people
+num-people
 1
+100
+11
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+23
+134
+235
+167
+properties-proportion
+properties-proportion
+1
+100
+20
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+22
+178
+194
+211
+selection-size
+selection-size
+1
+100
+20
+1
+1
+NIL
+HORIZONTAL
 
 SWITCH
-17
-219
-217
-252
+27
+231
+227
+264
 reduce-documents?
 reduce-documents?
-0
+1
 1
 -1000
 
 INPUTBOX
-17
-262
-138
-322
+30
+279
+185
+339
 vote-threshold
-1
+0
 1
 0
 Number
 
 MONITOR
-945
-11
-1094
-56
+929
+24
+1078
+69
 NIL
 clustering-coefficient
 3
@@ -465,88 +470,71 @@ clustering-coefficient
 11
 
 MONITOR
-1102
-11
-1246
-56
+1097
+26
+1241
+71
 NIL
 average-path-length
 3
 1
 11
 
-PLOT
-944
-66
-1248
-252
-Degree Distribution
+MONITOR
+929
+89
+988
+134
 degree
-# of nodes
-0.0
-10.0
-0.0
-10.0
-true
-false
-"" ""
-PENS
-"default" 1.0 1 -16777216 true "" "let max-degree max [count link-neighbors] of people\nplot-pen-reset  ;; erase what we plotted before\nset-plot-x-range 0 (max-degree + 1)  ;; + 1 to make room for the width of the last bar\nhistogram [count link-neighbors] of people"
-
-PLOT
-945
-273
-1249
-468
-Degree Distribution (log-log)
-log (degree)
-log (# of nodes)
-0.0
-0.3
-0.0
-0.3
-true
-false
-"" ""
-PENS
-"default" 1.0 2 -16777216 true "" "let max-degree max [count link-neighbors] of people\n;; for this plot, the axes are logarithmic, so we can't\n;; use \"histogram-from\"; we have to plot the points\n;; ourselves one at a time\nplot-pen-reset  ;; erase what we plotted before\n;; the way we create the network there is never a zero degree node,\n;; so start plotting at degree one\nlet degree 1\nwhile [degree <= max-degree] [\n  let matches people with [count link-neighbors = degree]\n  if any? matches\n    [ plotxy log degree 10\n             log (count matches) 10 ]\n  set degree degree + 1\n]"
+mean [count link-neighbors] of people
+3
+1
+11
 
 @#$#@#$#@
-## WHAT IS IT?
+WHAT IS IT?
+-----------
+This section could give a general understanding of what the model is trying to show or explain.
 
-(a general understanding of what the model is trying to show or explain)
 
-## HOW IT WORKS
+HOW IT WORKS
+------------
+This section could explain what rules the agents use to create the overall behavior of the model.
 
-(what rules the agents use to create the overall behavior of the model)
 
-## HOW TO USE IT
+HOW TO USE IT
+-------------
+This section could explain how to use the model, including a description of each of the items in the interface tab.
 
-(how to use the model, including a description of each of the items in the Interface tab)
 
-## THINGS TO NOTICE
+THINGS TO NOTICE
+----------------
+This section could give some ideas of things for the user to notice while running the model.
 
-(suggested things for the user to notice while running the model)
 
-## THINGS TO TRY
+THINGS TO TRY
+-------------
+This section could give some ideas of things for the user to try to do (move sliders, switches, etc.) with the model.
 
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
 
-## EXTENDING THE MODEL
+EXTENDING THE MODEL
+-------------------
+This section could give some ideas of things to add or change in the procedures tab to make the model more complicated, detailed, accurate, etc.
 
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
 
-## NETLOGO FEATURES
+NETLOGO FEATURES
+----------------
+This section could point out any especially interesting or unusual features of NetLogo that the model makes use of, particularly in the Procedures tab.  It might also point out places where workarounds were needed because of missing features.
 
-(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
 
-## RELATED MODELS
+RELATED MODELS
+--------------
+This section could give the names of models in the NetLogo Models Library or elsewhere which are of related interest.
 
-(models in the NetLogo Models Library and elsewhere which are of related interest)
 
-## CREDITS AND REFERENCES
-
-(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
+CREDITS AND REFERENCES
+----------------------
+This section could contain a reference to the model's URL on the web if it has one, as well as any other necessary credits or references.
 @#$#@#$#@
 default
 true
@@ -740,22 +728,6 @@ Polygon -7500403 true true 135 105 90 60 45 45 75 105 135 135
 Polygon -7500403 true true 165 105 165 135 225 105 255 45 210 60
 Polygon -7500403 true true 135 90 120 45 150 15 180 45 165 90
 
-sheep
-false
-15
-Circle -1 true true 203 65 88
-Circle -1 true true 70 65 162
-Circle -1 true true 150 105 120
-Polygon -7500403 true false 218 120 240 165 255 165 278 120
-Circle -7500403 true false 214 72 67
-Rectangle -1 true true 164 223 179 298
-Polygon -1 true true 45 285 30 285 30 240 15 195 45 210
-Circle -1 true true 3 83 150
-Rectangle -1 true true 65 221 80 296
-Polygon -1 true true 195 285 210 285 210 240 240 210 195 210
-Polygon -7500403 true false 276 85 285 105 302 99 294 83
-Polygon -7500403 true false 219 85 210 105 193 99 201 83
-
 square
 false
 0
@@ -840,13 +812,6 @@ Line -7500403 true 40 84 269 221
 Line -7500403 true 40 216 269 79
 Line -7500403 true 84 40 221 269
 
-wolf
-false
-0
-Polygon -16777216 true false 253 133 245 131 245 133
-Polygon -7500403 true true 2 194 13 197 30 191 38 193 38 205 20 226 20 257 27 265 38 266 40 260 31 253 31 230 60 206 68 198 75 209 66 228 65 243 82 261 84 268 100 267 103 261 77 239 79 231 100 207 98 196 119 201 143 202 160 195 166 210 172 213 173 238 167 251 160 248 154 265 169 264 178 247 186 240 198 260 200 271 217 271 219 262 207 258 195 230 192 198 210 184 227 164 242 144 259 145 284 151 277 141 293 140 299 134 297 127 273 119 270 105
-Polygon -7500403 true true -1 195 14 180 36 166 40 153 53 140 82 131 134 133 159 126 188 115 227 108 236 102 238 98 268 86 269 92 281 87 269 103 269 113
-
 x
 false
 0
@@ -854,7 +819,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.0.5
+NetLogo 4.0.5
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -871,6 +836,4 @@ true
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
 
-@#$#@#$#@
-0
 @#$#@#$#@
