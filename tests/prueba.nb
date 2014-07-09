@@ -1,0 +1,250 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      8644,        241]
+NotebookOptionsPosition[      7959,        213]
+NotebookOutlinePosition[      8294,        228]
+CellTagsIndexPosition[      8251,        225]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"<<", "NetLogo`"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"$NLHome", "=", "\"\</home/erikasv/Downloads/netlogo-4.0.5/\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"NLStart", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"NLCommand", "[", "\"\<no-display\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"NLLoadModel", "[", 
+   RowBox[{"ToFileName", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"$NLHome", ",", "\"\<test\>\""}], "}"}], ",", 
+     "\"\<modelo.nlogo\>\""}], "]"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.613822026225775*^9, 3.6138220262267714`*^9}, {
+  3.613822285369289*^9, 3.6138222962351017`*^9}, {3.6138224702832003`*^9, 
+  3.613822525210575*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Experiment1", "[", "p_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"NLCommand", "[", 
+       RowBox[{"\"\<set num-people \>\"", ",", "p", ",", "\"\<setup\>\""}], 
+       "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Mean", "[", 
+       RowBox[{"NLDoReport", "[", 
+        RowBox[{
+        "\"\<go\>\"", ",", "\"\<clustering-coefficient\>\"", ",", "100"}], 
+        "]"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"people", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{"i", ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "10", ",", "1000", ",", "10"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"NLCommand", "[", "\"\<no-display\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"clusteringData", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"Experiment1", ",", "people"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.613822311765319*^9, 3.613822401561048*^9}, {
+   3.613822571315477*^9, 3.61382257402739*^9}, {3.613822632659217*^9, 
+   3.613822713476709*^9}, {3.613822756508934*^9, 3.613822979646159*^9}, {
+   3.613823044110567*^9, 3.6138230453814907`*^9}, {3.613823163382897*^9, 
+   3.6138231655667877`*^9}, {3.613826435025741*^9, 3.613826442176107*^9}, 
+   3.613826550943304*^9, {3.613826582505291*^9, 3.613826589416698*^9}, {
+   3.613826626792181*^9, 3.613826627586618*^9}, {3.613826799292328*^9, 
+   3.613826802076947*^9}, {3.61382755070551*^9, 3.613827565345475*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clusteringData", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.613826803603792*^9, 3.613826835492476*^9}, {
+  3.613827401924573*^9, 3.6138274022283363`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 0.3258333333333333}, {2., 0.8262116145092152}, {3., 
+     0.8087333092508315}, {4., 0.8329927283861439}, {5., 
+     0.8433645501750566}, {6., 0.8295473116567141}, {7., 
+     0.8430638032595542}, {8., 0.8447582098726582}, {9., 
+     0.8448618517495448}, {10., 0.8437619228586218}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0.7546959583180917},
+  Method->{},
+  PlotRange->{{0, 10.}, {0.7546959583180917, 0.8448618517495448}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.001803317868629062, 
+   0.001803317868629062}}]], "Output",
+ CellChangeTimes->{{3.61382681199193*^9, 3.6138268284223337`*^9}, {
+  3.613827395617031*^9, 3.6138274034626713`*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"Experiment2", "[", "p_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"NLCommand", "[", 
+       RowBox[{
+       "\"\<set num-people \>\"", ",", "p", ",", " ", 
+        "\"\<set reduce-documents? True\>\"", ",", " ", 
+        "\"\<set vote-threshold 3\>\"", ",", "\"\<setup\>\""}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Mean", "[", 
+       RowBox[{"NLDoReport", "[", 
+        RowBox[{
+        "\"\<go\>\"", ",", "\"\<clustering-coefficient\>\"", ",", "10"}], 
+        "]"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.613823030609823*^9, 3.613823031248569*^9}, {
+   3.613823467609419*^9, 3.613823526390552*^9}, 3.61382592734696*^9, 
+   3.613826025579494*^9, {3.61382668897386*^9, 3.6138267841028347`*^9}, {
+   3.613826865439362*^9, 3.613826871375751*^9}, {3.613827198263191*^9, 
+   3.613827215623321*^9}, {3.6138275752159767`*^9, 3.613827582103374*^9}}],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"people", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{"i", ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "10", ",", "10000", ",", "10"}], "}"}]}], "]"}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"NLCommand", "[", "\"\<no-display\>\"", "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"clusteringData1", "=", 
+     RowBox[{"Map", "[", 
+      RowBox[{"Experiment2", ",", "people"}], "]"}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.613826778283641*^9, 3.61382677926125*^9}, {
+  3.613827576710752*^9, 3.613827584206884*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"clusteringData", ",", "clusteringData1"}], "}"}], ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "10"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0.", ",", "1"}], "}"}]}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.613826730674584*^9, 3.613826734915547*^9}, {
+  3.61382702446115*^9, 3.613827040460486*^9}, {3.613827103716284*^9, 
+  3.613827103915586*^9}, {3.613827163900779*^9, 3.613827168524276*^9}, {
+  3.613827356213089*^9, 3.6138273632756653`*^9}, {3.613827458421228*^9, 
+  3.613827535813889*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{}, {}, 
+    {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+     LineBox[{{1., 0.3258333333333333}, {2., 0.8262116145092152}, {3., 
+      0.8087333092508315}, {4., 0.8329927283861439}, {5., 
+      0.8433645501750566}, {6., 0.8295473116567141}, {7., 
+      0.8430638032595542}, {8., 0.8447582098726582}, {9., 
+      0.8448618517495448}, {10., 0.8437619228586218}}]}, 
+    {RGBColor[0.6, 0.24, 0.4428931686004542], 
+     LineBox[{{1., 0.}, {2., 1.}, {3., 0.8833333333333334}, {4., 
+      0.8129019107481454}, {5., 0.8259338326638149}, {6., 
+      0.8274826116036709}, {7., 0.8587520419288633}, {8., 
+      0.8436944696064395}, {9., 0.860071932275979}, {10., 
+      0.8585127597242534}}]}}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10}, {0., 1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{{3.613827090909603*^9, 3.613827105230468*^9}, 
+   3.613827171962585*^9, {3.613827295269116*^9, 3.6138273165947237`*^9}, 
+   3.6138273648064747`*^9, {3.613827476075429*^9, 3.613827536898692*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["hola"], "Input",
+ CellChangeTimes->{{3.613828150856245*^9, 3.613828153283601*^9}}],
+
+Cell[BoxData["hola"], "Output",
+ CellChangeTimes->{3.61382815610711*^9}]
+}, Open  ]]
+},
+WindowSize->{832, 1022},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 762, 19, 121, "Input"],
+Cell[1322, 41, 1625, 38, 165, "Input"],
+Cell[CellGroupData[{
+Cell[2972, 83, 252, 5, 32, "Input"],
+Cell[3227, 90, 849, 18, 240, "Output"]
+}, Open  ]],
+Cell[4091, 111, 1049, 23, 121, "Input"],
+Cell[5143, 136, 655, 18, 99, "Input"],
+Cell[CellGroupData[{
+Cell[5823, 158, 718, 17, 55, "Input"],
+Cell[6544, 177, 1191, 24, 247, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7772, 206, 96, 1, 32, "Input"],
+Cell[7871, 209, 72, 1, 31, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
