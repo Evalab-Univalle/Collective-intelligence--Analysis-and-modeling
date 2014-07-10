@@ -322,7 +322,7 @@ ticks
 CC-WINDOW
 5
 486
-1250
+1089
 581
 Command Center
 0
@@ -470,10 +470,10 @@ clustering-coefficient
 11
 
 MONITOR
-1097
-26
-1241
-71
+931
+82
+1080
+127
 NIL
 average-path-length
 3
@@ -481,10 +481,10 @@ average-path-length
 11
 
 MONITOR
-929
-89
-988
-134
+932
+145
+991
+190
 degree
 mean [count link-neighbors] of people
 3

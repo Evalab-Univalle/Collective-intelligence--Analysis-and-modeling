@@ -1,3 +1,11 @@
+globals [
+  clustering-coefficient
+]
+
+turtles-own [
+  node-clustering-coefficient            ;;Valor para el coeficiente de clustering
+]
+
 to setup-simple-random
   clear-all
   ;; Make a circle of turtles
@@ -8,6 +16,9 @@ to setup-simple-random
     ;; Note that if the link already exists, nothing happens
     ask one-of turtles [ create-link-with one-of other turtles ]
   ]
+  
+  ;;Calcular el coeficiente de clustering
+  find-clustering-coefficient
 end
 
 to setup-erdos-renyi
@@ -22,6 +33,49 @@ to setup-erdos-renyi
     ;; is only considered once
     create-links-with turtles with [self > myself and random-float 1.0 < probability]
   ]
+  
+  ;;Calcular el coeficiente de clustering
+  find-clustering-coefficient
+end
+
+
+;Funciones para calcular el clustering coefficient;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+to find-clustering-coefficient
+  ifelse all? turtles [count link-neighbors <= 1]
+  [
+    ;; it is undefined
+    ;; what should this be?
+    set clustering-coefficient 0
+  ]
+  [
+    let total 0
+    ask turtles with [ count link-neighbors <= 1]
+      [ 
+        set node-clustering-coefficient "undefined"
+      ]
+    ask turtles with [ count link-neighbors > 1]
+    [
+      let hood link-neighbors
+      
+      ;type "hood: " print hood
+      ;show count links with [ in-neighborhood? hood ]
+      
+      ask link-neighbors [ set color red ]
+      set node-clustering-coefficient (2 * count links with [ in-neighborhood? hood ] /
+                                         ((count hood) * (count hood - 1)) )
+      ;; find the sum for the value at turtles
+      set total total + node-clustering-coefficient
+      ;type "node-clustering-coefficient: " print node-clustering-coefficient
+    ]
+    ;show total
+    ;; take the average
+    set clustering-coefficient total / count turtles with [count link-neighbors > 1]
+  ]
+end
+
+to-report in-neighborhood? [ hood ]
+  report ( member? end1 hood and member? end2 hood )
 end
 
 ; Public Domain:
@@ -64,39 +118,39 @@ Command Center
 
 SLIDER
 16
-21
+14
 188
-54
+47
 num-nodes
 num-nodes
 2
 500
-3
+18
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-20
-72
-192
-105
+15
+60
+188
+93
 num-links
 num-links
 0
 100
-3
+97
 1
 1
 NIL
 HORIZONTAL
 
 BUTTON
-8
-121
-198
-154
+26
+104
+184
+137
 NIL
 setup-simple-random
 NIL
@@ -109,10 +163,10 @@ NIL
 NIL
 
 SLIDER
-22
-202
-194
-235
+12
+159
+188
+192
 probability
 probability
 0
@@ -124,10 +178,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-29
-248
-191
-281
+19
+203
+181
+236
 NIL
 setup-erdos-renyi
 NIL
@@ -140,12 +194,23 @@ NIL
 NIL
 
 MONITOR
-71
-311
-154
-356
+59
+261
+142
+306
 NIL
 count links
+3
+1
+11
+
+MONITOR
+26
+321
+175
+366
+NIL
+clustering-coefficient
 3
 1
 11
