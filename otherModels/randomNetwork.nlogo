@@ -1,117 +1,48 @@
 globals [
-   clustering-coefficient               ;; the clustering coefficient of the network; this is the
-                                         ;; average of clustering coefficients of all turtles
-   average-path-length                  ;; average path length of the network
-   infinity                             ;; a very large number.
-                                         ;; used to denote distance between two turtles which
-                                         ;; don't have a connected or unconnected path between them
-   
-   selected-documents                   ;; Los documentos que son votados en cada iteración
-   num-documents                        ;; La cantidad de documentos
-   num-selection                        ;; La cantidad de personas que votan en cada iteración
-   universe                             ;; Cantidad de posibles valores para las propiedades
-   properties-per-document              ;; Cantidad de propiedades en cada documento
+  clustering-coefficient
 ]
-breed [documents document]
-breed [people person]
 
-people-own [
-  property
-  node-clustering-coefficient            ;;Las personas tienen una propiedad y un valor para el coeficiente de clustering
-  distance-from-other-people             ;; list of distances of this node from other turtles
+turtles-own [
+  node-clustering-coefficient            ;;Valor para el coeficiente de clustering
 ]
-documents-own [properties votes]                             ;;Los documentos tienen un conjunto de propiedades
 
-to setup
+to setup-simple-random
   clear-all
-  set-default-shape people "circle"
-  set infinity 99999                                         ;; just an arbitrary choice for a large number
-  
-  set num-documents num-people
-  set num-selection round ((selection-size / 100) * num-people)
-  set properties-per-document (num-documents * (properties-proportion / 100))
-  set universe properties-per-document * 3                   ;; 3: REVISAR este valor, es un valor arbitrario
-  
-  setup-documents
-  setup-people
-  
-  type "Universe size: " print universe
-  type "Selection size: " print num-selection
-  reset-ticks
-end
-
-to setup-documents
-  create-documents num-documents [
-    let available-properties n-values universe [?]                       ;;La "bolsa" con las propiedades disponibles
-    set properties n-of properties-per-document available-properties     ;;Agregar propiedades aleatorias al docuemnto
-    ;setxy random-xcor random-ycor
-    hide-turtle                                                          ;;No nos interesa ver el documento (por ahora)
-  ]
-  set selected-documents documents
-  ;;Log
-  ask documents [
-    show properties
-  ]
-end
-
-to setup-people
-  create-people num-people [
-    set property random universe          ;;Asignar una única propiedad aleatoria a la persona
-    setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
-    set color blue
-  ]
-end
-
-to go
-  ;;Log
-  type "time: " print ticks
-  let selection n-of num-selection people   ;;Seleccionar un grupo de personas aleatoria
-  
-  ;;Realizar el conteo de votos por documento y los enlaces entre las personas que votan en un mismo documento
-  ask selected-documents [
-    let doc-properties properties            ;;Las propiedades del documento actual
-    let doc-votes 0                          ;;Los votos del documento actual
-    let voters no-turtles                    ;;Los agentes que pueden votar en el documento actual
-
-    ask selection [                          ;;Verificar si cada persona de la selección aleatoria puede votar en el documento actual
-      if member? property doc-properties[
-        set voters (turtle-set voters self)  ;;Si puede votar es agregado al conjunto de votantes
-        set doc-votes doc-votes + 1          ;;Se aumenta un voto al documento actual
-      ]
-    ]
-    set votes votes + doc-votes
-    
-    ;;Log
-    type "Voters for document " type who type ":" type sort voters type ", total:" print votes
-    
-    ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
-      create-links-with other voters
-    ]
-    
-    ;;Reducir los documentos si es el caso
-    if reduce-documents? [
-      if doc-votes < vote-threshold [
-        set selected-documents other selected-documents
-      ]
-    ]
+  ;; Make a circle of turtles
+  create-turtles num-nodes
+  layout-circle turtles (max-pxcor - 2)
+  ;; Now make links one at a time until we have enough
+  while [count links < num-links] [
+    ;; Note that if the link already exists, nothing happens
+    ask one-of turtles [ create-link-with one-of other turtles ]
   ]
   
   ;;Calcular el coeficiente de clustering
-  find-clustering-coefficient               ;;Vale la pena considerar sólo los nodos conectados?, verificar por que sólo empieza a sumar desde ciertas uniones
-  ;;Calcular el largo promedio de caminos
-  calculate-average-path-length             ;;Hasta que no se conecten todos los nodos será infinito
-  
-  tick
+  find-clustering-coefficient
 end
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Funciones tomadas del modelo: Small worlds;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+to setup-erdos-renyi
+  clear-all
+  ;; Make a circle of turtles
+  create-turtles num-nodes
+  layout-circle turtles (max-pxcor - 2)
+  ;; Now give each pair of turtles an equal chance
+  ;; of creating a link
+  ask turtles [
+    ;; we use "self > myself" here so that each pair of turtles
+    ;; is only considered once
+    create-links-with turtles with [self > myself and random-float 1.0 < probability]
+  ]
+  
+  ;;Calcular el coeficiente de clustering
+  find-clustering-coefficient
+end
+
 
 ;Funciones para calcular el clustering coefficient;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 to find-clustering-coefficient
-  ifelse all? people [count link-neighbors <= 1]
+  ifelse all? turtles [count link-neighbors <= 1]
   [
     ;; it is undefined
     ;; what should this be?
@@ -119,11 +50,11 @@ to find-clustering-coefficient
   ]
   [
     let total 0
-    ask people with [ count link-neighbors <= 1]
+    ask turtles with [ count link-neighbors <= 1]
       [ 
         set node-clustering-coefficient "undefined"
       ]
-    ask people with [ count link-neighbors > 1]
+    ask turtles with [ count link-neighbors > 1]
     [
       let hood link-neighbors
       
@@ -139,7 +70,7 @@ to find-clustering-coefficient
     ]
     ;show total
     ;; take the average
-    set clustering-coefficient total / count people with [count link-neighbors > 1]
+    set clustering-coefficient total / count turtles with [count link-neighbors > 1]
   ]
 end
 
@@ -147,158 +78,16 @@ to-report in-neighborhood? [ hood ]
   report ( member? end1 hood and member? end2 hood )
 end
 
-;Funciones para calcular el largo de camino promedio;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Hay problemas con esta función, revisar que se puede hacer para definir un camino aunqeu no estén todos los nodos juntos
-to calculate-average-path-length
-  
-  ;; find the path lengths in the network
-  find-path-lengths
-
-  let num-connected-pairs sum [length remove infinity (remove 0 distance-from-other-people)] of people
-
-  ;; In a connected network on N nodes, we should have N(N-1) measurements of distances between pairs,
-  ;; and none of those distances should be infinity.
-  ;; If there were any "infinity" length paths between nodes, then the network is disconnected.
-  ;; In that case, calculating the average-path-length doesn't really make sense.
-  ;ifelse ( num-connected-pairs != (count people * (count people - 1) ))
-  ifelse ( num-connected-pairs <= 0)
-  [
-      set average-path-length infinity
-      ;; report that the network is not connected
-      ;set connected? false
-  ]
-  [
-    set average-path-length (sum [sum distance-from-other-people] of people) / (num-connected-pairs)
-  ]
-end
-
-;;; Path length computations
-;; Implements the Floyd Warshall algorithm for All Pairs Shortest Paths
-;; It is a dynamic programming algorithm which builds bigger solutions
-;; from the solutions of smaller subproblems using memoization that
-;; is storing the results.
-;; It keeps finding incrementally if there is shorter path through
-;; the kth node.
-;; Since it iterates over all turtles through k,
-;; so at the end we get the shortest possible path for each i and j.
-
-to find-path-lengths
-  ;; reset the distance list
-  ask people
-  [
-    set distance-from-other-people []
-  ]
-
-  let i 0
-  let j 0
-  let k 0
-  let node1 one-of people
-  let node2 one-of people
-  let node-count count people
-  let list-people sort people
-  
-  ;; initialize the distance lists
-  while [i < node-count]
-  [
-    set j 0
-    while [j < node-count]
-    [
-      set node1 item i list-people
-      set node2 item j list-people
-      ;; zero from a node to itself
-      ifelse i = j
-      [
-        ask node1 [
-          set distance-from-other-people lput 0 distance-from-other-people
-        ]
-      ]
-      [
-        ;; 1 from a node to it's neighbor
-        ifelse [ link-neighbor? node1 ] of node2
-        [
-          ask node1 [
-            set distance-from-other-people lput 1 distance-from-other-people
-          ]
-        ]
-        ;; infinite to everyone else
-        [
-          ask node1 [
-            set distance-from-other-people lput infinity distance-from-other-people
-          ]
-        ]
-      ]
-      set j j + 1
-    ]
-    set i i + 1
-  ]
-  set i 0
-  set j 0
-  let dummy 0
-  while [k < node-count]
-  [
-    set i 0
-    while [i < node-count]
-    [
-      set j 0
-      while [j < node-count]
-      [
-        ;; alternate path length through kth node
-        set dummy ( (item k [distance-from-other-people] of item i list-people) +
-                    (item j [distance-from-other-people] of item k list-people))
-        ;; is the alternate path shorter?
-        if dummy < (item j [distance-from-other-people] of item i list-people)
-        [
-          ask item i list-people [
-            set distance-from-other-people replace-item j distance-from-other-people dummy
-          ]
-        ]
-        set j j + 1
-      ]
-      set i i + 1
-    ]
-    set k k + 1
-  ]
-
-end
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Función tomada del modelo: Preferential Attachment;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;Función para organizar la vista de la red
-to layout
-  ;; the number 3 here is arbitrary; more repetitions slows down the
-  ;; model, but too few gives poor layouts
-  repeat 3 [
-    ;; the more people we have to fit into the same amount of space,
-    ;; the smaller the inputs to layout-spring we'll need to use
-    let factor sqrt count people
-    ;; numbers here are arbitrarily chosen for pleasing appearance
-    layout-spring people links (1 / factor) (7 / factor) (1 / factor)
-    display  ;; for smooth animation
-  ]
-  ;; don't bump the edges of the world
-  let x-offset max [xcor] of people + min [xcor] of people
-  let y-offset max [ycor] of people + min [ycor] of people
-  ;; big jumps look funny, so only adjust a little each time
-  set x-offset limit-magnitude x-offset 0.1
-  set y-offset limit-magnitude y-offset 0.1
-  ask people [ setxy (xcor - x-offset / 2) (ycor - y-offset / 2) ]
-end
-
-to-report limit-magnitude [number limit]
-  if number > limit [ report limit ]
-  if number < (- limit) [ report (- limit) ]
-  report number
-end
+; Public Domain:
+; To the extent possible under law, Uri Wilensky has waived all
+; copyright and related or neighboring rights to this model.
 @#$#@#$#@
 GRAPHICS-WINDOW
-330
-12
-899
-472
-21
+205
+10
+644
+470
+16
 16
 13.0
 1
@@ -307,11 +96,11 @@ GRAPHICS-WINDOW
 1
 1
 0
+0
+0
 1
-1
-1
--21
-21
+-16
+16
 -16
 16
 0
@@ -321,68 +110,50 @@ ticks
 
 CC-WINDOW
 5
-486
-1089
-581
+484
+653
+579
 Command Center
 0
 
-BUTTON
-24
-10
-97
-43
-NIL
-setup
-NIL
+SLIDER
+16
+14
+188
+47
+num-nodes
+num-nodes
+2
+500
+18
 1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-
-BUTTON
-113
-10
-203
-43
-go once
-go
-NIL
 1
-T
-OBSERVER
 NIL
-NIL
-NIL
-NIL
+HORIZONTAL
 
-BUTTON
-231
+SLIDER
 15
-294
-48
-NIL
-go
-T
+60
+188
+93
+num-links
+num-links
+0
+100
+97
 1
-T
-OBSERVER
+1
 NIL
-NIL
-NIL
-NIL
+HORIZONTAL
 
 BUTTON
-122
-51
-197
-84
+26
+104
+184
+137
 NIL
-layout
-T
+setup-simple-random
+NIL
 1
 T
 OBSERVER
@@ -392,101 +163,54 @@ NIL
 NIL
 
 SLIDER
-24
-92
-196
-125
-num-people
-num-people
-1
-100
-11
-1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-23
-134
-235
-167
-properties-proportion
-properties-proportion
-1
-100
-20
-1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-22
-178
-194
-211
-selection-size
-selection-size
-1
-100
-20
-1
-1
-NIL
-HORIZONTAL
-
-SWITCH
-27
-231
-227
-264
-reduce-documents?
-reduce-documents?
-1
-1
--1000
-
-INPUTBOX
-30
-279
-185
-339
-vote-threshold
+12
+159
+188
+192
+probability
+probability
 0
+1.0
+0.61
+0.01
 1
-0
-Number
+NIL
+HORIZONTAL
+
+BUTTON
+19
+203
+181
+236
+NIL
+setup-erdos-renyi
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
 
 MONITOR
-929
-24
-1078
-69
+59
+261
+142
+306
+NIL
+count links
+3
+1
+11
+
+MONITOR
+26
+321
+175
+366
 NIL
 clustering-coefficient
-3
-1
-11
-
-MONITOR
-931
-82
-1080
-127
-NIL
-average-path-length
-3
-1
-11
-
-MONITOR
-932
-145
-991
-190
-degree
-mean [count link-neighbors] of people
 3
 1
 11
