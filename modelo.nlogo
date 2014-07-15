@@ -1,16 +1,11 @@
 globals [
-   clustering-coefficient               ;; the clustering coefficient of the network; this is the
-                                         ;; average of clustering coefficients of all turtles
-   average-path-length                  ;; average path length of the network
-   infinity                             ;; a very large number.
-                                         ;; used to denote distance between two turtles which
-                                         ;; don't have a connected or unconnected path between them
-   
-   selected-documents                   ;; Los documentos que son votados en cada iteración
-   num-documents                        ;; La cantidad de documentos
-   num-selection                        ;; La cantidad de personas que votan en cada iteración
-   universe                             ;; Cantidad de posibles valores para las propiedades
-   properties-per-document              ;; Cantidad de propiedades en cada documento
+  clustering-coefficient               ;; the clustering coefficient of the network; this is the average of clustering coefficients of all turtles
+  average-path-length                  ;; average path length of the network
+  infinity                             ;; a very large number.Used to denote distance between two turtles which don't have a connected or unconnected path between them
+     
+  num-selection                        ;; La cantidad de personas que votan en cada iteración
+  available-properties                 ;; TEMPORAL: Mientras se determina si es definitivo, las propiedades posibles
+  available-rules                      ;; TEMPORAL: Mientras se determina si es definitivo, las reglas posibles
 ]
 breed [documents document]
 breed [people person]
@@ -19,35 +14,42 @@ people-own [
   property
   node-clustering-coefficient            ;;Las personas tienen una propiedad y un valor para el coeficiente de clustering
   distance-from-other-people             ;; list of distances of this node from other turtles
+  votes                                  ;;Cuantas veces ha votado
 ]
-documents-own [properties votes]                             ;;Los documentos tienen un conjunto de propiedades
+documents-own [
+  properties                             ;;Conjunto de propiedades
+]
 
 to setup
   clear-all
   set-default-shape people "circle"
   set infinity 99999                                         ;; just an arbitrary choice for a large number
   
-  set num-documents num-people
   set num-selection round ((selection-size / 100) * num-people)
-  set properties-per-document (num-documents * (properties-proportion / 100))
-  set universe properties-per-document * 3                   ;; 3: REVISAR este valor, es un valor arbitrario
+  
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;ESTOS DOS SON TEMPORALES;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  set available-properties (list "p" "q" "-p" "-q")
+  set available-rules (list (list "p" "q") (list "p" "-q") (list "-p" "q") (list "-p" "-q") 
+                      (list "p" "p") (list "p" "-p") (list "-p" "-p") 
+                      (list "q" "q") (list "q" "-q") (list "-q" "-q"))
   
   setup-documents
   setup-people
   
-  type "Universe size: " print universe
   type "Selection size: " print num-selection
   reset-ticks
 end
 
 to setup-documents
-  create-documents num-documents [
-    let available-properties n-values universe [?]                       ;;La "bolsa" con las propiedades disponibles
-    set properties n-of properties-per-document available-properties     ;;Agregar propiedades aleatorias al docuemnto
-    ;setxy random-xcor random-ycor
-    hide-turtle                                                          ;;No nos interesa ver el documento (por ahora)
+  let rules sublist available-rules 0 num-rules
+  foreach rules[
+    create-documents 1 [
+      set properties ?
+      hide-turtle
+    ]
   ]
-  set selected-documents documents
   ;;Log
   ask documents [
     show properties
@@ -56,9 +58,10 @@ end
 
 to setup-people
   create-people num-people [
-    set property random universe          ;;Asignar una única propiedad aleatoria a la persona
     setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
     set color blue
+    set property one-of available-properties
+    set votes 0
   ]
 end
 
@@ -68,33 +71,33 @@ to go
   let selection n-of num-selection people   ;;Seleccionar un grupo de personas aleatoria
   
   ;;Realizar el conteo de votos por documento y los enlaces entre las personas que votan en un mismo documento
-  ask selected-documents [
-    let doc-properties properties            ;;Las propiedades del documento actual
-    let doc-votes 0                          ;;Los votos del documento actual
-    let voters no-turtles                    ;;Los agentes que pueden votar en el documento actual
-
-    ask selection [                          ;;Verificar si cada persona de la selección aleatoria puede votar en el documento actual
-      if member? property doc-properties[
-        set voters (turtle-set voters self)  ;;Si puede votar es agregado al conjunto de votantes
-        set doc-votes doc-votes + 1          ;;Se aumenta un voto al documento actual
-      ]
-    ]
-    set votes votes + doc-votes
-    
-    ;;Log
-    type "Voters for document " type who type ":" type sort voters type ", total:" print votes
-    
-    ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
-      create-links-with other voters
-    ]
-    
-    ;;Reducir los documentos si es el caso
-    if reduce-documents? [
-      if doc-votes < vote-threshold [
-        set selected-documents other selected-documents
-      ]
-    ]
-  ]
+;  ask selected-documents [
+;    let doc-properties properties            ;;Las propiedades del documento actual
+;    let doc-votes 0                          ;;Los votos del documento actual
+;    let voters no-turtles                    ;;Los agentes que pueden votar en el documento actual
+;
+;    ask selection [                          ;;Verificar si cada persona de la selección aleatoria puede votar en el documento actual
+;      if member? property doc-properties[
+;        set voters (turtle-set voters self)  ;;Si puede votar es agregado al conjunto de votantes
+;        set doc-votes doc-votes + 1          ;;Se aumenta un voto al documento actual
+;      ]
+;    ]
+;    set votes votes + doc-votes
+;    
+;    ;;Log
+;    type "Voters for document " type who type ":" type sort voters type ", total:" print votes
+;    
+;    ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
+;      create-links-with other voters
+;    ]
+;    
+;    ;;Reducir los documentos si es el caso
+;    if reduce-documents? [
+;      if doc-votes < vote-threshold [
+;        set selected-documents other selected-documents
+;      ]
+;    ]
+;  ]
   
   ;;Calcular el coeficiente de clustering
   find-clustering-coefficient               ;;Vale la pena considerar sólo los nodos conectados?, verificar por que sólo empieza a sumar desde ciertas uniones
@@ -407,25 +410,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-23
-134
-235
-167
-properties-proportion
-properties-proportion
-1
-100
-20
-1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-22
-178
-194
-211
+24
+136
+196
+169
 selection-size
 selection-size
 1
@@ -435,28 +423,6 @@ selection-size
 1
 NIL
 HORIZONTAL
-
-SWITCH
-27
-231
-227
-264
-reduce-documents?
-reduce-documents?
-1
-1
--1000
-
-INPUTBOX
-30
-279
-185
-339
-vote-threshold
-0
-1
-0
-Number
 
 MONITOR
 929
@@ -490,6 +456,21 @@ mean [count link-neighbors] of people
 3
 1
 11
+
+SLIDER
+25
+189
+197
+222
+num-rules
+num-rules
+1
+10
+1
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 WHAT IS IT?
