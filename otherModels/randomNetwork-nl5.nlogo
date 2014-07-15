@@ -22,7 +22,7 @@ to setup-simple-random
     ask one-of turtles [ create-link-with one-of other turtles ]
   ]
   
-  nw:save-graphml graph-file
+  nw:save-graphml (word graph-file-location "red-" num-nodes "-" num-links ".graphml")
     
   ;;Calcular el coeficiente de clustering
   find-clustering-coefficient
@@ -45,7 +45,7 @@ to setup-erdos-renyi
     create-links-with turtles with [self > myself and random-float 1.0 < probability]
   ]
   
-  nw:save-graphml graph-file
+  nw:save-graphml (word graph-file-location "red-" num-nodes "-" probability ".graphml")
   
   ;;Calcular el coeficiente de clustering
   find-clustering-coefficient
@@ -228,8 +228,8 @@ INPUTBOX
 10
 647
 70
-graph-file
-/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/otherModels/red.graphml
+graph-file-location
+/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/otherModels/randomModel-netwroks/
 1
 0
 String
