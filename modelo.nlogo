@@ -1,8 +1,4 @@
 globals [
-  clustering-coefficient               ;; the clustering coefficient of the network; this is the average of clustering coefficients of all turtles
-  average-path-length                  ;; average path length of the network
-  infinity                             ;; a very large number.Used to denote distance between two turtles which don't have a connected or unconnected path between them
-     
   num-selection                        ;; La cantidad de personas que votan en cada iteración
   available-properties                 ;; TEMPORAL: Mientras se determina si es definitivo, las propiedades posibles
   available-rules                      ;; TEMPORAL: Mientras se determina si es definitivo, las reglas posibles
@@ -12,10 +8,9 @@ breed [people person]
 
 people-own [
   property
-  node-clustering-coefficient            ;;Las personas tienen una propiedad y un valor para el coeficiente de clustering
-  distance-from-other-people             ;; list of distances of this node from other turtles
   votes                                  ;;Cuantas veces ha votado
 ]
+
 documents-own [
   properties                             ;;Conjunto de propiedades
 ]
@@ -23,7 +18,6 @@ documents-own [
 to setup
   clear-all
   set-default-shape people "circle"
-  set infinity 99999                                         ;; just an arbitrary choice for a large number
   
   set num-selection round ((selection-size / 100) * num-people)
   
@@ -90,170 +84,7 @@ to go
     ]
   ]
   
-  ;;Calcular el coeficiente de clustering
-  find-clustering-coefficient               ;;Vale la pena considerar sólo los nodos conectados?, verificar por que sólo empieza a sumar desde ciertas uniones
-  ;;Calcular el largo promedio de caminos
-  calculate-average-path-length             ;;Hasta que no se conecten todos los nodos será infinito
-  
   tick
-end
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Funciones tomadas del modelo: Small worlds;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;Funciones para calcular el clustering coefficient;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-to find-clustering-coefficient
-  ifelse all? people [count link-neighbors <= 1]
-  [
-    ;; it is undefined
-    ;; what should this be?
-    set clustering-coefficient 0
-  ]
-  [
-    let total 0
-    ask people with [ count link-neighbors <= 1]
-      [ 
-        set node-clustering-coefficient "undefined"
-      ]
-    ask people with [ count link-neighbors > 1]
-    [
-      let hood link-neighbors
-      
-      ;type "hood: " print hood
-      ;show count links with [ in-neighborhood? hood ]
-      
-      ask link-neighbors [ set color red ]
-      set node-clustering-coefficient (2 * count links with [ in-neighborhood? hood ] /
-                                         ((count hood) * (count hood - 1)) )
-      ;; find the sum for the value at turtles
-      set total total + node-clustering-coefficient
-      ;type "node-clustering-coefficient: " print node-clustering-coefficient
-    ]
-    ;show total
-    ;; take the average
-    set clustering-coefficient total / count people with [count link-neighbors > 1]
-  ]
-end
-
-to-report in-neighborhood? [ hood ]
-  report ( member? end1 hood and member? end2 hood )
-end
-
-;Funciones para calcular el largo de camino promedio;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;Hay problemas con esta función, revisar que se puede hacer para definir un camino aunqeu no estén todos los nodos juntos
-to calculate-average-path-length
-  
-  ;; find the path lengths in the network
-  find-path-lengths
-
-  let num-connected-pairs sum [length remove infinity (remove 0 distance-from-other-people)] of people
-
-  ;; In a connected network on N nodes, we should have N(N-1) measurements of distances between pairs,
-  ;; and none of those distances should be infinity.
-  ;; If there were any "infinity" length paths between nodes, then the network is disconnected.
-  ;; In that case, calculating the average-path-length doesn't really make sense.
-  ;ifelse ( num-connected-pairs != (count people * (count people - 1) ))
-  ifelse ( num-connected-pairs <= 0)
-  [
-      set average-path-length infinity
-      ;; report that the network is not connected
-      ;set connected? false
-  ]
-  [
-    set average-path-length (sum [sum distance-from-other-people] of people) / (num-connected-pairs)
-  ]
-end
-
-;;; Path length computations
-;; Implements the Floyd Warshall algorithm for All Pairs Shortest Paths
-;; It is a dynamic programming algorithm which builds bigger solutions
-;; from the solutions of smaller subproblems using memoization that
-;; is storing the results.
-;; It keeps finding incrementally if there is shorter path through
-;; the kth node.
-;; Since it iterates over all turtles through k,
-;; so at the end we get the shortest possible path for each i and j.
-
-to find-path-lengths
-  ;; reset the distance list
-  ask people
-  [
-    set distance-from-other-people []
-  ]
-
-  let i 0
-  let j 0
-  let k 0
-  let node1 one-of people
-  let node2 one-of people
-  let node-count count people
-  let list-people sort people
-  
-  ;; initialize the distance lists
-  while [i < node-count]
-  [
-    set j 0
-    while [j < node-count]
-    [
-      set node1 item i list-people
-      set node2 item j list-people
-      ;; zero from a node to itself
-      ifelse i = j
-      [
-        ask node1 [
-          set distance-from-other-people lput 0 distance-from-other-people
-        ]
-      ]
-      [
-        ;; 1 from a node to it's neighbor
-        ifelse [ link-neighbor? node1 ] of node2
-        [
-          ask node1 [
-            set distance-from-other-people lput 1 distance-from-other-people
-          ]
-        ]
-        ;; infinite to everyone else
-        [
-          ask node1 [
-            set distance-from-other-people lput infinity distance-from-other-people
-          ]
-        ]
-      ]
-      set j j + 1
-    ]
-    set i i + 1
-  ]
-  set i 0
-  set j 0
-  let dummy 0
-  while [k < node-count]
-  [
-    set i 0
-    while [i < node-count]
-    [
-      set j 0
-      while [j < node-count]
-      [
-        ;; alternate path length through kth node
-        set dummy ( (item k [distance-from-other-people] of item i list-people) +
-                    (item j [distance-from-other-people] of item k list-people))
-        ;; is the alternate path shorter?
-        if dummy < (item j [distance-from-other-people] of item i list-people)
-        [
-          ask item i list-people [
-            set distance-from-other-people replace-item j distance-from-other-people dummy
-          ]
-        ]
-        set j j + 1
-      ]
-      set i i + 1
-    ]
-    set k k + 1
-  ]
-
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -316,7 +147,7 @@ ticks
 CC-WINDOW
 5
 486
-1089
+908
 581
 Command Center
 0
@@ -414,39 +245,6 @@ selection-size
 1
 NIL
 HORIZONTAL
-
-MONITOR
-929
-24
-1078
-69
-NIL
-clustering-coefficient
-3
-1
-11
-
-MONITOR
-931
-82
-1080
-127
-NIL
-average-path-length
-3
-1
-11
-
-MONITOR
-932
-145
-991
-190
-degree
-mean [count link-neighbors] of people
-3
-1
-11
 
 SLIDER
 25
