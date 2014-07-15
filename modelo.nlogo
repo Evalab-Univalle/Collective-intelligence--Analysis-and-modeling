@@ -70,34 +70,25 @@ to go
   type "time: " print ticks
   let selection n-of num-selection people   ;;Seleccionar un grupo de personas aleatoria
   
-  ;;Realizar el conteo de votos por documento y los enlaces entre las personas que votan en un mismo documento
-;  ask selected-documents [
-;    let doc-properties properties            ;;Las propiedades del documento actual
-;    let doc-votes 0                          ;;Los votos del documento actual
-;    let voters no-turtles                    ;;Los agentes que pueden votar en el documento actual
-;
-;    ask selection [                          ;;Verificar si cada persona de la selección aleatoria puede votar en el documento actual
-;      if member? property doc-properties[
-;        set voters (turtle-set voters self)  ;;Si puede votar es agregado al conjunto de votantes
-;        set doc-votes doc-votes + 1          ;;Se aumenta un voto al documento actual
-;      ]
-;    ]
-;    set votes votes + doc-votes
-;    
-;    ;;Log
-;    type "Voters for document " type who type ":" type sort voters type ", total:" print votes
-;    
-;    ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
-;      create-links-with other voters
-;    ]
-;    
-;    ;;Reducir los documentos si es el caso
-;    if reduce-documents? [
-;      if doc-votes < vote-threshold [
-;        set selected-documents other selected-documents
-;      ]
-;    ]
-;  ]
+  ;;Realizar las uniones entre las personas que votan en un mismo documento y aumentar las veces que ellas han votado
+  ask documents[
+    let doc-properties properties            ;;Las propiedades del documento actual
+    let voters no-turtles                    ;;Los agentes que pueden votar en el documento actual
+    
+    ask selection [                          ;;Verificar si cada persona de la selección aleatoria puede votar en el documento actual
+      if member? property doc-properties[
+        set voters (turtle-set voters self)  ;;Si puede votar es agregado al conjunto de votantes
+        set votes votes + 1          ;;Se aumenta un voto al documento actual
+      ]
+    ]
+    
+    ;;Log
+    type "Voters for document " type who type ":" type sort voters type ", total:" print length sort voters
+    
+    ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
+      create-links-with other voters
+    ]
+  ]
   
   ;;Calcular el coeficiente de clustering
   find-clustering-coefficient               ;;Vale la pena considerar sólo los nodos conectados?, verificar por que sólo empieza a sumar desde ciertas uniones
@@ -403,7 +394,7 @@ num-people
 num-people
 1
 100
-11
+50
 1
 1
 NIL
@@ -466,7 +457,7 @@ num-rules
 num-rules
 1
 10
-1
+3
 1
 1
 NIL
