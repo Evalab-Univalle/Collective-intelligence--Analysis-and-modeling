@@ -45,7 +45,7 @@ to setup-erdos-renyi
     create-links-with turtles with [self > myself and random-float 1.0 < probability]
   ]
   
-  nw:save-graphml (word graph-file-location "network-" num-nodes "-" probability ".graphml")
+  nw:save-graphml (word graph-file-location "network-" num-nodes "-" (precision probability 1) ".graphml")
   
   ;;Calcular el coeficiente de clustering
   find-clustering-coefficient
@@ -131,7 +131,7 @@ num-nodes
 num-nodes
 2
 500
-91
+100
 1
 1
 NIL
@@ -178,7 +178,7 @@ probability
 probability
 0
 1.0
-0.8
+0.81
 0.01
 1
 NIL
@@ -229,7 +229,7 @@ INPUTBOX
 647
 70
 graph-file-location
-/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/otherModels/randomModel-netwroks/
+/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/otherModels/randomModel-networks/
 1
 0
 String
@@ -565,7 +565,7 @@ NetLogo 5.0.5
     <enumeratedValueSet variable="graph-file-location">
       <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/otherModels/randomModel-netwroks/&quot;"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="num-nodes" first="1" step="10" last="100"/>
+    <steppedValueSet variable="num-nodes" first="0" step="10" last="100"/>
     <steppedValueSet variable="probability" first="0.1" step="0.1" last="1"/>
   </experiment>
 </experiments>
