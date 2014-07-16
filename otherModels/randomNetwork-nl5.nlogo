@@ -1,11 +1,4 @@
 extensions [nw]
-globals [
-  clustering-coefficient
-]
-
-turtles-own [
-  node-clustering-coefficient            ;;Valor para el coeficiente de clustering
-]
 
 to setup-simple-random
   ;; (for this model to work with NetLogo's new plotting features,
@@ -22,10 +15,7 @@ to setup-simple-random
     ask one-of turtles [ create-link-with one-of other turtles ]
   ]
   
-  nw:save-graphml (word graph-file-location "red-" num-nodes "-" num-links ".graphml")
-    
-  ;;Calcular el coeficiente de clustering
-  find-clustering-coefficient
+  nw:save-graphml (word graph-file-location "network-" num-nodes "-" num-links ".graphml")
 end
 
 to setup-erdos-renyi
@@ -46,49 +36,6 @@ to setup-erdos-renyi
   ]
   
   nw:save-graphml (word graph-file-location "network-" num-nodes "-" (precision probability 1) ".graphml")
-  
-  ;;Calcular el coeficiente de clustering
-  find-clustering-coefficient
-end
-
-
-;Funciones para calcular el clustering coefficient;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-to find-clustering-coefficient
-  ifelse all? turtles [count link-neighbors <= 1]
-  [
-    ;; it is undefined
-    ;; what should this be?
-    set clustering-coefficient 0
-  ]
-  [
-    let total 0
-    ask turtles with [ count link-neighbors <= 1]
-      [ 
-        set node-clustering-coefficient "undefined"
-      ]
-    ask turtles with [ count link-neighbors > 1]
-    [
-      let hood link-neighbors
-      
-      ;type "hood: " print hood
-      ;show count links with [ in-neighborhood? hood ]
-      
-      ask link-neighbors [ set color red ]
-      set node-clustering-coefficient (2 * count links with [ in-neighborhood? hood ] /
-                                         ((count hood) * (count hood - 1)) )
-      ;; find the sum for the value at turtles
-      set total total + node-clustering-coefficient
-      ;type "node-clustering-coefficient: " print node-clustering-coefficient
-    ]
-    ;show total
-    ;; take the average
-    set clustering-coefficient total / count turtles with [count link-neighbors > 1]
-  ]
-end
-
-to-report in-neighborhood? [ hood ]
-  report ( member? end1 hood and member? end2 hood )
 end
 
 ; Public Domain:
@@ -96,9 +43,9 @@ end
 ; copyright and related or neighboring rights to this model.
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
+256
 79
-649
+695
 539
 16
 16
@@ -123,10 +70,10 @@ ticks
 30.0
 
 SLIDER
-10
-83
-182
-116
+40
+84
+212
+117
 num-nodes
 num-nodes
 2
@@ -138,10 +85,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-9
-129
-182
-162
+39
+130
+212
+163
 num-links
 num-links
 0
@@ -153,10 +100,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-20
-173
-178
-206
+50
+174
+208
+207
 NIL
 setup-simple-random
 NIL
@@ -170,10 +117,10 @@ NIL
 1
 
 SLIDER
-6
-228
-182
-261
+36
+229
+212
+262
 probability
 probability
 0
@@ -185,10 +132,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-13
-272
-175
-305
+43
+273
+205
+306
 NIL
 setup-erdos-renyi
 NIL
@@ -202,23 +149,12 @@ NIL
 1
 
 MONITOR
-53
-330
-136
-375
+83
+331
+166
+376
 NIL
 count links
-3
-1
-11
-
-MONITOR
-20
-390
-169
-435
-NIL
-clustering-coefficient
 3
 1
 11
@@ -226,7 +162,7 @@ clustering-coefficient
 INPUTBOX
 10
 10
-647
+694
 70
 graph-file-location
 /home/erikasv/github/Collective-intelligence--Analysis-and-modeling/otherModels/randomModel-networks/
