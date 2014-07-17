@@ -102,7 +102,7 @@ to go
   foreach agents [
     ask ? [
       if total-votes != 0 [
-        set probability votes / total-votes
+        set probability (votes + 1) / (total-votes + num-people)
       ]
     ]
   ]
