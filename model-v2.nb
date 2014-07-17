@@ -1,0 +1,227 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      7489,        218]
+NotebookOptionsPosition[      6821,        189]
+NotebookOutlinePosition[      7155,        204]
+CellTagsIndexPosition[      7112,        201]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Modelo versi\[OAcute]n 2", "Title",
+ CellChangeTimes->{{3.614602255093151*^9, 3.6146022656100817`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Importaci\[OAcute]n de la red:", "Section",
+ CellChangeTimes->{{3.6144527697021303`*^9, 3.61445278458307*^9}, 
+   3.614452855844709*^9}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Pasar a SetDirectory el directorio en donde se encuentra el archivo .graphml \
+para facilidad\
+\>", "Item",
+ CellChangeTimes->{{3.613858257223709*^9, 3.613858314523345*^9}, {
+  3.613858550996646*^9, 3.613858592076119*^9}, {3.6144530653078747`*^9, 
+  3.614453106996235*^9}, {3.6146064288897457`*^9, 3.614606451744883*^9}},
+ Background->RGBColor[
+  0.9294117647058824, 0.9294117647058824, 0.9294117647058824]],
+
+Cell["\<\
+Tener en cuenta que i debe cumplir con los valores de num-people y j con los \
+valores de selection-size\
+\>", "Item",
+ CellChangeTimes->{{3.613858257223709*^9, 3.613858314523345*^9}, {
+  3.613858550996646*^9, 3.613858592076119*^9}, {3.6144530653078747`*^9, 
+  3.614453106996235*^9}, {3.6146064288897457`*^9, 3.614606484738681*^9}, {
+  3.614612198528225*^9, 3.614612198674933*^9}},
+ Background->RGBColor[
+  0.9294117647058824, 0.9294117647058824, 0.9294117647058824]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.6144528578028917`*^9, 3.614452859344166*^9}, {
+   3.614452914141574*^9, 3.6144529141506*^9}, {3.614452957155933*^9, 
+   3.6144529690192842`*^9}, {3.6144531144582233`*^9, 3.6144531400965843`*^9}, 
+   3.614460031031312*^9, {3.61446238861558*^9, 3.614462395522142*^9}, {
+   3.6144626798051157`*^9, 3.614462701856838*^9}, {3.614462745314272*^9, 
+   3.614462800574624*^9}, 3.61446343806563*^9, {3.6144662091611433`*^9, 
+   3.614466214169031*^9}, {3.614474553807413*^9, 3.6144746361175613`*^9}, {
+   3.614474776138646*^9, 3.614474776874262*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Integerise", "[", "x_", "]"}], ":=", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Round", "[", "x", "]"}], "\[Equal]", "x"}], ",", 
+     RowBox[{"ToString", "[", 
+      RowBox[{"Round", "@", "x"}], "]"}], ",", 
+     RowBox[{"ToString", "@", "x"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"networksM2", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{"\"\<rgraphs/model-v2/\>\"", ",", "\"\<network-\>\"", ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<-\>\"", ",", 
+        RowBox[{"Integerise", "[", "j", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "0", ",", "100", ",", "10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "0.1", ",", "1", ",", "0.1"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"clusteringM2", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", 
+     RowBox[{"Flatten", "[", 
+      RowBox[{"networksM2", ",", "1"}], "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pathPlotM2", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", 
+     RowBox[{"Flatten", "[", 
+      RowBox[{"networksM2", ",", "1"}], "]"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{
+  3.61460314282122*^9, {3.614603300179556*^9, 3.614603327007596*^9}, {
+   3.614606523164304*^9, 3.614606542156321*^9}, {3.614611801584444*^9, 
+   3.614611808358612*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Graficos:", "Section",
+ CellChangeTimes->{{3.614360835940679*^9, 3.6143608376429777`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"axes", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"i", ",", "j"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "0", ",", "100", ",", "10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "0.1", ",", "1", ",", "0.1"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"clusteringPlotM2", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Flatten", "[", 
+         RowBox[{"axes", ",", "1"}], "]"}], "[", 
+        RowBox[{"[", "c", "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"clusteringM2", "[", 
+         RowBox[{"[", "c", "]"}], "]"}], "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"c", ",", "1", ",", 
+       RowBox[{"Length", "[", "clusteringM2", "]"}], ",", "1"}], "}"}]}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot3D", "[", 
+  RowBox[{"clusteringPlotM2", ",", 
+   RowBox[{"ColorFunction", "\[Rule]", "\"\<SouthwestColors\>\""}]}], 
+  "]"}]}], "Input",
+ CellChangeTimes->{{3.61436084085808*^9, 3.614360919966914*^9}, {
+  3.614360980556922*^9, 3.614360981908618*^9}, {3.6143610192165403`*^9, 
+  3.6143610366801567`*^9}, {3.614361083551427*^9, 3.614361091182747*^9}, {
+  3.6143611244672527`*^9, 3.6143611379080687`*^9}, {3.614361174421205*^9, 
+  3.614361232139909*^9}, {3.614466595913615*^9, 3.614466620388653*^9}, {
+  3.614466712022031*^9, 3.614466723483231*^9}, {3.614475193679472*^9, 
+  3.6144751945561666`*^9}, {3.61451117216215*^9, 3.614511209757205*^9}, {
+  3.614513702517831*^9, 3.614513712404829*^9}, {3.6146117422091637`*^9, 
+  3.614611749316855*^9}, {3.614611784072747*^9, 3.614611787783843*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"pathPlotM2", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Flatten", "[", 
+         RowBox[{"axes", ",", "1"}], "]"}], "[", 
+        RowBox[{"[", "c", "]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"pathPlotM2", "[", 
+         RowBox[{"[", "c", "]"}], "]"}], "}"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"c", ",", "1", ",", 
+       RowBox[{"Length", "[", "aplData", "]"}], ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot3D", "[", 
+  RowBox[{"pathPlotM2", ",", 
+   RowBox[{"ColorFunction", "\[Rule]", "\"\<SouthwestColors\>\""}]}], 
+  "]"}]}], "Input",
+ CellChangeTimes->{{3.614513714979229*^9, 3.6145137156226997`*^9}, {
+  3.614612163553693*^9, 3.6146121729150476`*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{681, 747},
+WindowMargins->{{Automatic, 2}, {2, Automatic}},
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 109, 1, 92, "Title"],
+Cell[CellGroupData[{
+Cell[713, 27, 142, 2, 80, "Section"],
+Cell[CellGroupData[{
+Cell[880, 33, 417, 8, 67, "Item"],
+Cell[1300, 43, 477, 9, 67, "Item"]
+}, Open  ]],
+Cell[1792, 55, 685, 11, 32, "Input"],
+Cell[2480, 68, 1602, 43, 209, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4119, 116, 96, 1, 80, "Section"],
+Cell[4218, 119, 1737, 41, 143, "Input"],
+Cell[5958, 162, 835, 23, 99, "Input"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
