@@ -9,7 +9,7 @@ This model presents a way to study the evolution of collective intelligence thro
     - Open the model with netlogo and configure it by the GUI.
     - By a XML file.
 
-    Instructions [here], sections *Managing experiment setups* and *Setting up experiments in XML* respectively.
+    Instructions <a href="http://ccl.northwestern.edu/netlogo/docs/behaviorspace.html" target="_blank">here</a>, sections *Managing experiment setups* and *Setting up experiments in XML* respectively.
 
 2. Then run the experiments. For large numbers we recomend run the model from the command line.
 
@@ -34,4 +34,3 @@ This model presents a way to study the evolution of collective intelligence thro
     ├── testConection.nb          -Testing the connection with netlogo
     └── testGraphsAndData.nb      -Testing some graphs
 ```
-[here]:http://ccl.northwestern.edu/netlogo/docs/behaviorspace.html

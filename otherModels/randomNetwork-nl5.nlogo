@@ -1,11 +1,7 @@
 extensions [nw]
 
 to setup-simple-random
-  ;; (for this model to work with NetLogo's new plotting features,
-  ;; __clear-all-and-reset-ticks should be replaced with clear-all at
-  ;; the beginning of your setup procedure and reset-ticks at the end
-  ;; of the procedure.)
-  __clear-all-and-reset-ticks
+  clear-all
   ;; Make a circle of turtles
   create-turtles num-nodes
   layout-circle turtles (max-pxcor - 2)
@@ -16,14 +12,11 @@ to setup-simple-random
   ]
   
   nw:save-graphml (word graph-file-location "network-" num-nodes "-" num-links ".graphml")
+  reset-ticks
 end
 
 to setup-erdos-renyi
-  ;; (for this model to work with NetLogo's new plotting features,
-  ;; __clear-all-and-reset-ticks should be replaced with clear-all at
-  ;; the beginning of your setup procedure and reset-ticks at the end
-  ;; of the procedure.)
-  __clear-all-and-reset-ticks
+  clear-all
   ;; Make a circle of turtles
   create-turtles num-nodes
   layout-circle turtles (max-pxcor - 2)
@@ -36,6 +29,7 @@ to setup-erdos-renyi
   ]
   
   nw:save-graphml (word graph-file-location "network-" num-nodes "-" (precision probability 1) ".graphml")
+  reset-ticks
 end
 
 ; Public Domain:

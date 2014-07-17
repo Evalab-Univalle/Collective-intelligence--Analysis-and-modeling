@@ -1,14 +1,19 @@
+extensions [nw]
+
 globals [
   num-selection                        ;; La cantidad de personas que votan en cada iteración
   available-properties                 ;; TEMPORAL: Mientras se determina si es definitivo, las propiedades posibles
   available-rules                      ;; TEMPORAL: Mientras se determina si es definitivo, las reglas posibles
+  agents                               ;; La lista con los agentes (es necesario tenerlos ordenados para las probabilidades acumuladas)
+  total-votes                          ;; Los votos totales que se han realizado (para recalcular la probabilidad de selección de cada persona en cada iteración)
 ]
 breed [documents document]
 breed [people person]
 
 people-own [
   property
-  votes                                  ;;Cuantas veces ha votado
+  votes                                ;; Cuantas veces ha votado
+  probability                          ;: La probabilidad de ser seleccionado, afectada por los votos
 ]
 
 documents-own [
@@ -16,14 +21,12 @@ documents-own [
 ]
 
 to setup
-  ;; (for this model to work with NetLogo's new plotting features,
-  ;; __clear-all-and-reset-ticks should be replaced with clear-all at
-  ;; the beginning of your setup procedure and reset-ticks at the end
-  ;; of the procedure.)
-  __clear-all-and-reset-ticks
+  clear-all
   set-default-shape people "circle"
+  nw:set-context people links
   
   set num-selection round ((selection-size / 100) * num-people)
+  set total-votes 0
   
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;ESTOS DOS SON TEMPORALES;;
@@ -36,7 +39,7 @@ to setup
   setup-documents
   setup-people
   
-  type "Selection size: " print num-selection
+  print (word "Selection size: " num-selection)
   reset-ticks
 end
 
@@ -60,35 +63,91 @@ to setup-people
     set color blue
     set property one-of available-properties
     set votes 0
+    set probability 1 / num-people
   ]
+  set agents sort people
 end
 
 to go
   ;;Log
-  type "time: " print ticks
-  let selection n-of num-selection people   ;;Seleccionar un grupo de personas aleatoria
+  print (word "time: " ticks)
   
-  ;;Realizar las uniones entre las personas que votan en un mismo documento y aumentar las veces que ellas han votado
+  ;;Seleccionar un grupo de personas de acuerdo a la probabilidad de selección que tiene cada una
+  let selection make-selection
+  
+  ;;Realizar las uniones entre las personas que cumplen la regla en un documento y aumentar los votos realizados
   ask documents[
-    let doc-properties properties            ;;Las propiedades del documento actual
-    let voters no-turtles                    ;;Los agentes que pueden votar en el documento actual
-    
-    ask selection [                          ;;Verificar si cada persona de la selección aleatoria puede votar en el documento actual
-      if member? property doc-properties[
-        set voters (turtle-set voters self)  ;;Si puede votar es agregado al conjunto de votantes
-        set votes votes + 1          ;;Se aumenta un voto al documento actual
+    make-conections selection properties
+  ]
+  
+  ;;Actualizar la probabilidad de selección de las personas
+  foreach agents [
+    ask ? [
+      if total-votes != 0 [
+        set probability (votes + 1) / (total-votes + num-people)
       ]
-    ]
-    
-    ;;Log
-    type "Voters for document " type who type ":" type sort voters type ", total:" print length sort voters
-    
-    ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
-      create-links-with other voters
     ]
   ]
   
   tick
+end
+
+;;Selecciona el grupo de agentes al azar para que voten
+to-report make-selection
+  let selection []
+  let i 0
+  while [i < num-selection][
+    let num random-float 1.0
+    let j 0
+    let prob 0
+    while [num > prob][
+      ask item j agents[
+        set prob prob + probability
+        if prob > num [
+          set selection lput self selection
+        ]
+          set j j + 1
+      ]
+    ]
+    set i i + 1
+  ]
+  report selection
+end
+
+;Crea los enlaces entre las personas que arman una regla
+to make-conections [ag-selected doc-properties]
+  let i 1
+  let j length ag-selected
+  
+  foreach ag-selected [
+    let ag1 ?
+    let prop1 ""
+    ask ag1 [set prop1 property]
+    
+    foreach sublist ag-selected i j[
+      let ag2 ?
+      let prop2 ""
+      ask ag2 [set prop2 property]
+      
+      let cond1 (item 0 doc-properties = prop1) and (item 1 doc-properties = prop2)
+      let cond2 (item 0 doc-properties = prop2) and (item 1 doc-properties = prop1)
+      if cond1 or cond2[
+        ask ag1 [
+          create-link-with ag2
+          set votes votes + 1
+        ]
+        ask ag2 [
+          set votes votes + 1
+        ]
+        set total-votes total-votes + 2
+      ]
+    ]
+    set i i + 1
+  ]
+end
+
+to write-network
+  nw:save-graphml (word graph-file-location "network-" num-people "-" selection-size "-" num-rules ".graphml")
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -123,10 +182,10 @@ to-report limit-magnitude [number limit]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-330
-12
-899
-472
+276
+77
+845
+537
 21
 16
 13.0
@@ -150,10 +209,10 @@ ticks
 30.0
 
 BUTTON
-24
-10
-97
-43
+12
+77
+85
+110
 NIL
 setup
 NIL
@@ -167,10 +226,10 @@ NIL
 1
 
 BUTTON
-113
-10
-203
-43
+94
+77
+184
+110
 go once
 go
 NIL
@@ -184,10 +243,10 @@ NIL
 1
 
 BUTTON
-231
-15
-294
-48
+194
+77
+257
+110
 NIL
 go
 T
@@ -201,10 +260,10 @@ NIL
 1
 
 BUTTON
-122
-51
-197
-84
+101
+121
+176
+154
 NIL
 layout
 T
@@ -218,10 +277,10 @@ NIL
 1
 
 SLIDER
-24
-92
-196
-125
+7
+166
+261
+199
 num-people
 num-people
 1
@@ -233,10 +292,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-24
-136
-196
-169
+9
+214
+262
+247
 selection-size
 selection-size
 1
@@ -248,10 +307,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-25
-189
-197
-222
+9
+258
+260
+291
 num-rules
 num-rules
 1
@@ -261,6 +320,34 @@ num-rules
 1
 NIL
 HORIZONTAL
+
+INPUTBOX
+13
+10
+844
+70
+graph-file-location
+/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v2/
+1
+0
+String
+
+BUTTON
+77
+335
+205
+368
+NIL
+write-network
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -586,6 +673,20 @@ NetLogo 5.0.5
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="experiment-v2" repetitions="1" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>write-network</final>
+    <timeLimit steps="10"/>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v2/&quot;"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="num-rules" first="0" step="10" last="100"/>
+    <steppedValueSet variable="selection-size" first="0" step="10" last="100"/>
+    <steppedValueSet variable="num-people" first="1" step="1" last="10"/>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
