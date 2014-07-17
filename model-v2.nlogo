@@ -129,8 +129,8 @@ to make-conections [ag-selected doc-properties]
       let prop2 ""
       ask ag2 [set prop2 property]
       
-      let cond1 (item 0 doc-properties == prop1) and (item 1 doc-properties == prop2)
-      let cond2 (item 0 doc-properties == prop2) and (item 1 doc-properties == prop1)
+      let cond1 (item 0 doc-properties = prop1) and (item 1 doc-properties = prop2)
+      let cond2 (item 0 doc-properties = prop2) and (item 1 doc-properties = prop1)
       if cond1 or cond2[
         ask ag1 [
           create-link-with ag2
