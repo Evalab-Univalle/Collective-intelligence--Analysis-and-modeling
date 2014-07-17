@@ -75,25 +75,9 @@ to go
   ;;Seleccionar un grupo de personas de acuerdo a la probabilidad de selección que tiene cada una
   let selection make-selection
   
-  ;;Realizar las uniones entre las personas que votan en un mismo documento y aumentar las veces que ellas han votado
+  ;;Realizar las uniones entre las personas que cumplen la regla en un documento y aumentar los votos realizados
   ask documents[
-    let doc-properties properties            ;;Las propiedades del documento actual
-    let voters no-turtles                    ;;Los agentes que pueden votar en el documento actual
-    
-    ask selection [                          ;;Verificar si cada persona de la selección aleatoria puede votar en el documento actual
-      if member? property doc-properties[
-        set voters (turtle-set voters self)  ;;Si puede votar es agregado al conjunto de votantes
-        set votes votes + 1                  ;;Se aumenta un voto al documento actual
-        set total-votes total-votes + 1
-      ]
-    ]
-    
-    ;;Log
-    print (word "Voters for document " who ":" sort voters ", total:" length sort voters)
-    
-    ask voters [                             ;;Realizar los enlaces entre las personas que votaron en el documento actual
-      create-links-with other voters
-    ]
+    make-conections selection properties
   ]
   
   ;;Actualizar la probabilidad de selección de las personas
@@ -108,8 +92,9 @@ to go
   tick
 end
 
+;;Selecciona el grupo de agentes al azar para que voten
 to-report make-selection
-  let selection no-turtles
+  let selection []
   let i 0
   while [i < num-selection][
     let num random-float 1.0
@@ -119,7 +104,7 @@ to-report make-selection
       ask item j agents[
         set prob prob + probability
         if prob > num [
-          set selection (turtle-set selection self)
+          set selection lput self selection
         ]
           set j j + 1
       ]
@@ -127,6 +112,38 @@ to-report make-selection
     set i i + 1
   ]
   report selection
+end
+
+;Crea los enlaces entre las personas que arman una regla
+to make-conections [ag-selected doc-properties]
+  let i 1
+  let j length ag-selected
+  
+  foreach ag-selected [
+    let ag1 ?
+    let prop1 ""
+    ask ag1 [set prop1 property]
+    
+    foreach sublist ag-selected i j[
+      let ag2 ?
+      let prop2 ""
+      ask ag2 [set prop2 property]
+      
+      let cond1 (item 0 doc-properties == prop1) and (item 1 doc-properties == prop2)
+      let cond2 (item 0 doc-properties == prop2) and (item 1 doc-properties == prop1)
+      if cond1 or cond2[
+        ask ag1 [
+          create-link-with ag2
+          set votes votes + 1
+        ]
+        ask ag2 [
+          set votes votes + 1
+        ]
+        set total-votes total-votes + 2
+      ]
+    ]
+    set i i + 1
+  ]
 end
 
 to write-network
