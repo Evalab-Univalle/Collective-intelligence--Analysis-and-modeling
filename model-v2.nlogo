@@ -75,8 +75,6 @@ to go
   ;;Seleccionar un grupo de personas de acuerdo a la probabilidad de selección que tiene cada una
   let selection make-selection
   
-  show selection
-  
   ;;Realizar las uniones entre las personas que votan en un mismo documento y aumentar las veces que ellas han votado
   ask documents[
     let doc-properties properties            ;;Las propiedades del documento actual
@@ -128,7 +126,6 @@ to-report make-selection
     ]
     set i i + 1
   ]
-  show selection
   report selection
 end
 
