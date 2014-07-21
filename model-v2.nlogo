@@ -83,9 +83,7 @@ to go
   ;;Actualizar la probabilidad de selección de las personas
   foreach agents [
     ask ? [
-      if total-votes != 0 [
-        set probability (votes + 1) / (total-votes + num-people)
-      ]
+      set probability (votes + 1) / (total-votes + num-people)
     ]
   ]
   
@@ -129,17 +127,21 @@ to make-conections [ag-selected doc-properties]
       let prop2 ""
       ask ag2 [set prop2 property]
       
-      let cond1 (item 0 doc-properties = prop1) and (item 1 doc-properties = prop2)
-      let cond2 (item 0 doc-properties = prop2) and (item 1 doc-properties = prop1)
-      if cond1 or cond2[
-        ask ag1 [
-          create-link-with ag2
-          set votes votes + 1
+      if ag1 != ag2 [
+        print (word "ag1: " ag1 ", ag2: " ag2)
+        
+        let cond1 (item 0 doc-properties = prop1) and (item 1 doc-properties = prop2)
+        let cond2 (item 0 doc-properties = prop2) and (item 1 doc-properties = prop1)
+        if cond1 or cond2[
+          ask ag1 [
+            create-link-with ag2
+            set votes votes + 1
+          ]
+          ask ag2 [
+            set votes votes + 1
+          ]
+          set total-votes total-votes + 2
         ]
-        ask ag2 [
-          set votes votes + 1
-        ]
-        set total-votes total-votes + 2
       ]
     ]
     set i i + 1
@@ -300,7 +302,7 @@ selection-size
 selection-size
 1
 100
-20
+40
 1
 1
 NIL
@@ -315,7 +317,7 @@ num-rules
 num-rules
 1
 10
-3
+6
 1
 1
 NIL
@@ -682,9 +684,9 @@ NetLogo 5.0.5
     <enumeratedValueSet variable="graph-file-location">
       <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v2/&quot;"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="num-rules" first="0" step="10" last="100"/>
+    <steppedValueSet variable="num-people" first="0" step="10" last="1000"/>
     <steppedValueSet variable="selection-size" first="0" step="10" last="100"/>
-    <steppedValueSet variable="num-people" first="1" step="1" last="10"/>
+    <steppedValueSet variable="num-rules" first="1" step="1" last="10"/>
   </experiment>
 </experiments>
 @#$#@#$#@
