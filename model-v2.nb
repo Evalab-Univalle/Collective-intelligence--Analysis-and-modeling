@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[      7489,        218]
-NotebookOptionsPosition[      6821,        189]
-NotebookOutlinePosition[      7155,        204]
-CellTagsIndexPosition[      7112,        201]
+NotebookDataLength[      7802,        223]
+NotebookOptionsPosition[      7134,        194]
+NotebookOutlinePosition[      7469,        209]
+CellTagsIndexPosition[      7426,        206]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -84,14 +84,16 @@ Cell[BoxData[{
     RowBox[{
      RowBox[{"Import", "[", 
       RowBox[{"StringJoin", "[", 
-       RowBox[{"\"\<rgraphs/model-v2/\>\"", ",", "\"\<network-\>\"", ",", 
+       RowBox[{
+       "\"\</home/vbucheli/Collective-intelligence--Analysis-and-modeling/\
+graphs/model-v2/\>\"", ",", "\"\<network-\>\"", ",", 
         RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<-\>\"", ",", 
-        RowBox[{"Integerise", "[", "j", "]"}], ",", "\"\<.graphml\>\""}], 
+        RowBox[{"Integerise", "[", "j", "]"}], ",", "\"\<-4.graphml\>\""}], 
        "]"}], "]"}], ",", 
      RowBox[{"{", 
       RowBox[{"i", ",", "0", ",", "100", ",", "10"}], "}"}], ",", 
      RowBox[{"{", 
-      RowBox[{"j", ",", "0.1", ",", "1", ",", "0.1"}], "}"}]}], "]"}]}], 
+      RowBox[{"j", ",", "0", ",", "100", ",", "10"}], "}"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"clusteringM2", "=", 
@@ -109,7 +111,10 @@ Cell[BoxData[{
  CellChangeTimes->{
   3.61460314282122*^9, {3.614603300179556*^9, 3.614603327007596*^9}, {
    3.614606523164304*^9, 3.614606542156321*^9}, {3.614611801584444*^9, 
-   3.614611808358612*^9}}]
+   3.614611808358612*^9}, {3.615290787506665*^9, 3.615290788892131*^9}, {
+   3.615291367776474*^9, 3.615291388074743*^9}, {3.615291419201576*^9, 
+   3.615291427563647*^9}, {3.61529162640333*^9, 3.615291637238146*^9}, {
+   3.615291809509526*^9, 3.615291835099276*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -187,9 +192,9 @@ Cell[BoxData[{
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{681, 747},
-WindowMargins->{{Automatic, 2}, {2, Automatic}},
-FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
+WindowSize->{1305, 744},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"9.0 for Linux x86 (32-bit) (February 7, 2013)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -204,20 +209,20 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[579, 22, 109, 1, 92, "Title"],
+Cell[579, 22, 109, 1, 93, "Title"],
 Cell[CellGroupData[{
-Cell[713, 27, 142, 2, 80, "Section"],
+Cell[713, 27, 142, 2, 81, "Section"],
 Cell[CellGroupData[{
-Cell[880, 33, 417, 8, 67, "Item"],
-Cell[1300, 43, 477, 9, 67, "Item"]
+Cell[880, 33, 417, 8, 46, "Item"],
+Cell[1300, 43, 477, 9, 46, "Item"]
 }, Open  ]],
 Cell[1792, 55, 685, 11, 32, "Input"],
-Cell[2480, 68, 1602, 43, 209, "Input"]
+Cell[2480, 68, 1915, 48, 143, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[4119, 116, 96, 1, 80, "Section"],
-Cell[4218, 119, 1737, 41, 143, "Input"],
-Cell[5958, 162, 835, 23, 99, "Input"]
+Cell[4432, 121, 96, 1, 81, "Section"],
+Cell[4531, 124, 1737, 41, 77, "Input"],
+Cell[6271, 167, 835, 23, 55, "Input"]
 }, Open  ]]
 }, Open  ]]
 }

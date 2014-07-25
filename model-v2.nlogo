@@ -39,7 +39,7 @@ to setup
   setup-documents
   setup-people
   
-  print (word "Selection size: " num-selection)
+;  print (word "Selection size: " num-selection)
   reset-ticks
 end
 
@@ -52,9 +52,9 @@ to setup-documents
     ]
   ]
   ;;Log
-  ask documents [
-    show properties
-  ]
+;  ask documents [
+;    show properties
+;  ]
 end
 
 to setup-people
@@ -70,7 +70,7 @@ end
 
 to go
   ;;Log
-  print (word "time: " ticks)
+;  print (word "time: " ticks)
   
   ;;Seleccionar un grupo de personas de acuerdo a la probabilidad de selección que tiene cada una
   let selection make-selection
@@ -128,7 +128,7 @@ to make-conections [ag-selected doc-properties]
       ask ag2 [set prop2 property]
       
       if ag1 != ag2 [
-        print (word "ag1: " ag1 ", ag2: " ag2)
+;        print (word "ag1: " ag1 ", ag2: " ag2)
         
         let cond1 (item 0 doc-properties = prop1) and (item 1 doc-properties = prop2)
         let cond2 (item 0 doc-properties = prop2) and (item 1 doc-properties = prop1)
@@ -329,7 +329,7 @@ INPUTBOX
 844
 70
 graph-file-location
-/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v2/
+/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v2/
 1
 0
 String
@@ -680,13 +680,31 @@ NetLogo 5.0.5
     <setup>setup</setup>
     <go>go</go>
     <final>write-network</final>
-    <timeLimit steps="10"/>
+    <timeLimit steps="3"/>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v2/&quot;"/>
+      <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v2/&quot;"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="num-people" first="0" step="10" last="1000"/>
+    <steppedValueSet variable="num-people" first="0" step="10" last="100"/>
     <steppedValueSet variable="selection-size" first="0" step="10" last="100"/>
     <steppedValueSet variable="num-rules" first="1" step="1" last="10"/>
+  </experiment>
+  <experiment name="experiment-v2-test" repetitions="1" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>write-network</final>
+    <timeLimit steps="1000"/>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v2/&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="10000"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="selection-size" first="0" step="10" last="100"/>
+    <enumeratedValueSet variable="num-rules">
+      <value value="1"/>
+      <value value="5"/>
+      <value value="10"/>
+    </enumeratedValueSet>
   </experiment>
 </experiments>
 @#$#@#$#@
