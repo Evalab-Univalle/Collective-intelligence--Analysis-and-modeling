@@ -50,7 +50,7 @@ to setup-people
   create-people num-people [
     setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
     set color blue
-    set capacity ((random 50) + 1)
+    set capacity ((random 25) + 1)
   ]
 end
 
@@ -266,7 +266,7 @@ num-people
 num-people
 1
 100
-20
+500
 1
 1
 NIL
@@ -293,7 +293,7 @@ INPUTBOX
 844
 70
 graph-file-location
-/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/
+/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/
 1
 0
 String
@@ -677,6 +677,18 @@ NetLogo 5.0.5
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="10000"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>write-network</final>
+    <timeLimit steps="500"/>
+    <enumeratedValueSet variable="num-people">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
