@@ -2,9 +2,12 @@ extensions [nw]
 
 globals [
   num-selection                         ;; La cantidad de agentes que van a votar, por si se desea volver a seleccionar un grupo
-  documents-list                        ;; La lista con los documentos  (es necesario tenerlos ordenados para las probabilidades acumuladas
+                                          ;(si es así, toca volver a colocar el deslizador para el porcentaje de la selección)
+  documents-list                        ;; La lista con los documentos (para poder ordenarlos de acuerdo a la probabilidad)
   inf                                   ;; Valor muy grande para representar el infinito
-  total-votes                           ;; Los votos totales que se han realizado (para recalcular la probabilidad de selección de cada persona en cada iteración)
+  total-votes                           ;; Los votos totales que se han realizado
+                                          ;(para recalcular la probabilidad de selección de cada persona en cada iteración)
+  capacity-limit                        ;; Valor para el máximo de capacidades que puede tener un agente
 ]
 breed [documents document]
 breed [people person]
@@ -28,6 +31,7 @@ to setup
   set num-selection 1
   set total-votes 0
   set inf 1000
+  set capacity-limit 15
   
   setup-people
   setup-documents
@@ -50,7 +54,7 @@ to setup-people
   create-people num-people [
     setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
     set color blue
-    set capacity ((random 25) + 1)
+    set capacity ((random capacity-limit) + 1)
   ]
 end
 
@@ -66,9 +70,6 @@ to go
     make-selection-vote self
   ]
   
-  ;;Realizar las uniones entre las personas que votaron en cada documento, esto se puede hacer cuando termine la ejecución
-  make-links
-  
   ;;Actualizar la probabilidad de selección de cada uno
   ask documents[
     set probability (votes + 1) / (total-votes + inf)
@@ -76,13 +77,14 @@ to go
   
   ;;Reorganizar los documentos después de las primeras 10 rondas, para poner de primeros los que tengan mayor probabilidad
   ;;(en un intento de optimizar la selección del documento aleatorio)
-  if ticks = 10 [
+  if ticks = 10 or ticks = 50 or ticks = 100 [
     set documents-list sort-on [probability] documents
   ]
   
   tick
 end
 
+;Proceso de votación en cuantos documentos como capacidades tenga el agente
 to make-selection-vote [agent]
   repeat capacity[
     let doc select-document
@@ -128,7 +130,7 @@ to make-links
 end
 
 to write-network
-  nw:save-graphml (word graph-file-location "network-" num-people "-" selection-size ".graphml")
+  nw:save-graphml (word graph-file-location "network-" num-people "-" capacity-limit "-" ticks ".graphml")
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -272,37 +274,22 @@ num-people
 NIL
 HORIZONTAL
 
-SLIDER
-9
-214
-262
-247
-selection-size
-selection-size
-1
-100
-40
-1
-1
-NIL
-HORIZONTAL
-
 INPUTBOX
 13
 10
 844
 70
 graph-file-location
-/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/
+/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/
 1
 0
 String
 
 BUTTON
-69
-261
-197
-294
+76
+213
+204
+246
 NIL
 write-network
 NIL
@@ -316,10 +303,10 @@ NIL
 1
 
 BUTTON
-78
-304
-186
-337
+85
+256
+193
+289
 NIL
 make-links
 NIL
@@ -657,28 +644,6 @@ NetLogo 5.0.5
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment-v3" repetitions="1" runMetricsEveryStep="false">
-    <setup>setup</setup>
-    <go>go</go>
-    <final>write-network</final>
-    <timeLimit steps="3"/>
-    <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
-    </enumeratedValueSet>
-    <steppedValueSet variable="num-people" first="0" step="10" last="100"/>
-  </experiment>
-  <experiment name="experiment-v3-test" repetitions="1" runMetricsEveryStep="false">
-    <setup>setup</setup>
-    <go>go</go>
-    <final>write-network</final>
-    <timeLimit steps="1000"/>
-    <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="num-people">
-      <value value="10000"/>
-    </enumeratedValueSet>
-  </experiment>
   <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
@@ -689,6 +654,19 @@ NetLogo 5.0.5
     </enumeratedValueSet>
     <enumeratedValueSet variable="graph-file-location">
       <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment-erikasv" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <timeLimit steps="4000"/>
+    <enumeratedValueSet variable="num-people">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
