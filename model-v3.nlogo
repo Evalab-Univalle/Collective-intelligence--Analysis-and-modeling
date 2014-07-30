@@ -31,7 +31,6 @@ to setup
   set num-selection 1
   set total-votes 0
   set inf 1000
-  set capacity-limit 15
   
   setup-people
   setup-documents
@@ -54,7 +53,7 @@ to setup-people
   create-people num-people [
     setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
     set color blue
-    set capacity ((random capacity-limit) + 1)
+    set capacity ((random lim-capacity) + 1)
   ]
 end
 
@@ -130,7 +129,7 @@ to make-links
 end
 
 to write-network
-  nw:save-graphml (word graph-file-location "network-" num-people "-" capacity-limit "-" ticks ".graphml")
+  nw:save-graphml (word graph-file-location "network-" num-people "-" lim-capacity "-" ticks ".graphml")
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -318,6 +317,17 @@ NIL
 NIL
 NIL
 1
+
+INPUTBOX
+101
+305
+179
+365
+lim-capacity
+50
+1
+0
+Number
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -664,6 +674,70 @@ write-network</final>
     <timeLimit steps="4000"/>
     <enumeratedValueSet variable="num-people">
       <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="e-1000" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <timeLimit steps="1000"/>
+    <enumeratedValueSet variable="num-people">
+      <value value="1000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="e-2000" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <timeLimit steps="2000"/>
+    <enumeratedValueSet variable="num-people">
+      <value value="1000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="25"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="e-10000" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <timeLimit steps="10000"/>
+    <enumeratedValueSet variable="num-people">
+      <value value="10000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="e-20000" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <timeLimit steps="20000"/>
+    <enumeratedValueSet variable="num-people">
+      <value value="10000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="25"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="graph-file-location">
       <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
