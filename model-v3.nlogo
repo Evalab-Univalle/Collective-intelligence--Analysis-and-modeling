@@ -711,48 +711,45 @@ write-network</final>
       <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="exp-fixedt1000" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="exp-fixedt100mil" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <final>make-links
 write-network</final>
-    <timeLimit steps="1000"/>
+    <timeLimit steps="100000"/>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/fixed-t1000-2/&quot;"/>
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/fixed100mil/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="100"/>
-      <value value="1000"/>
     </enumeratedValueSet>
     <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
   </experiment>
-  <experiment name="exp-uniformt1000" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="exp-uniformt100mil" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <final>make-links
 write-network</final>
-    <timeLimit steps="1000"/>
+    <timeLimit steps="100000"/>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/uniform-t1000-2/&quot;"/>
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/uniform100mil/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="100"/>
-      <value value="1000"/>
     </enumeratedValueSet>
     <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
   </experiment>
-  <experiment name="exp-normalt1000" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="exp-normalt100mil" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <final>make-links
 write-network</final>
-    <timeLimit steps="1000"/>
+    <timeLimit steps="100000"/>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/normal-t1000-2/&quot;"/>
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/normalt100mil/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="100"/>
-      <value value="1000"/>
     </enumeratedValueSet>
     <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
   </experiment>
