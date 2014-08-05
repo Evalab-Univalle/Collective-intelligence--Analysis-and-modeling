@@ -1,0 +1,1250 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     43699,       1241]
+NotebookOptionsPosition[     39803,       1106]
+NotebookOutlinePosition[     40138,       1121]
+CellTagsIndexPosition[     40095,       1118]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Modelo versi\[OAcute]n 3", "Title",
+ CellChangeTimes->{{3.614602255093151*^9, 3.6146022656100817`*^9}, {
+  3.615653173430203*^9, 3.615653173574904*^9}}],
+
+Cell["\<\
+An\[AAcute]lisis de pruebas realizadas anteriormente\
+\>", "Subtitle",
+ CellChangeTimes->{{3.615812841155417*^9, 3.61581284377851*^9}, {
+  3.616182090588043*^9, 3.616182099949757*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Importaci\[OAcute]n de la red:", "Section",
+ CellChangeTimes->{{3.6144527697021303`*^9, 3.61445278458307*^9}, 
+   3.614452855844709*^9}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Pasar a SetDirectory el directorio en donde se encuentra el archivo .graphml \
+para facilidad\
+\>", "Item",
+ CellChangeTimes->{{3.613858257223709*^9, 3.613858314523345*^9}, {
+  3.613858550996646*^9, 3.613858592076119*^9}, {3.6144530653078747`*^9, 
+  3.614453106996235*^9}, {3.6146064288897457`*^9, 3.614606451744883*^9}},
+ Background->RGBColor[
+  0.9294117647058824, 0.9294117647058824, 0.9294117647058824]],
+
+Cell["\<\
+Tener en cuenta que i debe cumplir con los valores de num-people\
+\>", "Item",
+ CellChangeTimes->{{3.613858257223709*^9, 3.613858314523345*^9}, {
+   3.613858550996646*^9, 3.613858592076119*^9}, {3.6144530653078747`*^9, 
+   3.614453106996235*^9}, {3.6146064288897457`*^9, 3.614606484738681*^9}, {
+   3.614612198528225*^9, 3.614612198674933*^9}, 3.61565308968587*^9},
+ Background->RGBColor[
+  0.9294117647058824, 0.9294117647058824, 0.9294117647058824]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.6144528578028917`*^9, 3.614452859344166*^9}, {
+   3.614452914141574*^9, 3.6144529141506*^9}, {3.614452957155933*^9, 
+   3.6144529690192842`*^9}, {3.6144531144582233`*^9, 3.6144531400965843`*^9}, 
+   3.614460031031312*^9, {3.61446238861558*^9, 3.614462395522142*^9}, {
+   3.6144626798051157`*^9, 3.614462701856838*^9}, {3.614462745314272*^9, 
+   3.614462800574624*^9}, 3.61446343806563*^9, {3.6144662091611433`*^9, 
+   3.614466214169031*^9}, {3.614474553807413*^9, 3.6144746361175613`*^9}, {
+   3.614474776138646*^9, 3.614474776874262*^9}, {3.616097737907*^9, 
+   3.6160977391119003`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clusteringM3", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networksM3"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"aplM3", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networksM3"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"aplM3", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.615653194058578*^9, 3.6156532013388653`*^9}, {
+  3.615653263250373*^9, 3.6156532634516697`*^9}, {3.6157293501601057`*^9, 
+  3.615729470134081*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Modelo versi\[OAcute]n 3", "Title",
+ CellChangeTimes->{{3.614602255093151*^9, 3.6146022656100817`*^9}, {
+  3.615653173430203*^9, 3.615653173574904*^9}}],
+
+Cell["Lim-capacity: [1-10] --> 1", "Subsubtitle",
+ CellChangeTimes->{{3.615833870546685*^9, 3.6158338998934*^9}, {
+  3.6158339585271683`*^9, 3.615833961311427*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Capacidad fija", "Section",
+ CellChangeTimes->{{3.615812988459712*^9, 3.615813011466572*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks100Fixed", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/fixed-t1000-2/\>\"", ",", "\"\<network-100-\>\"", 
+        ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158128623595324`*^9, 3.615812926320092*^9}, {
+  3.615833987288446*^9, 3.615833993974658*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering100Fixed", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks100Fixed"}], "]"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl100Fixed", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks100Fixed"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering100Fixed", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl100Fixed", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.615812937951058*^9, 3.6158129434627953`*^9}, {
+   3.6161822357895927`*^9, 3.6161822441217833`*^9}, 3.616182303930849*^9, {
+   3.616182389309949*^9, 3.616182407305009*^9}, {3.6161827369652147`*^9, 
+   3.61618277958395*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 0.29718082240976834`}, {2., 0.5742751164789434}, {3., 
+     0.8102886941008971}, {4., 0.9140577349293562}, {5., 
+     0.9673455266432026}, {6., 0.9932789125882456}, {7., 
+     0.9938757107431806}, {8., 0.9989961208125224}, {9., 
+     0.9995956328346138}, {10., 0.9991988734674325}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0.29718082240976834`},
+  Method->{},
+  PlotRange->{{0, 10.}, {0.29718082240976834`, 0.9995956328346138}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.01404829620849691, 
+   0.01404829620849691}}]], "Output",
+ CellChangeTimes->{
+  3.6158129648622427`*^9, 3.615834049368946*^9, 3.616182411325666*^9, 
+   3.616182465231407*^9, {3.616182772326413*^9, 3.616182780419759*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.9175757575757575`}, {2., 1.489090909090909}, {3., 
+     1.235959595959596}, {4., 1.0963636363636364`}, {5., 
+     1.0369696969696969`}, {6., 1.006868686868687}, {7., 
+     1.0062626262626262`}, {8., 1.001010101010101}, {9., 
+     1.0004040404040404`}, {10., 1.0008080808080808`}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 1.0004040404040404`},
+  Method->{},
+  PlotRange->{{0, 10.}, {1.0004040404040404`, 1.9175757575757575`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.018343434343434342`, 
+   0.018343434343434342`}}]], "Output",
+ CellChangeTimes->{
+  3.6158129648622427`*^9, 3.615834049368946*^9, 3.616182411325666*^9, 
+   3.616182465231407*^9, {3.616182772326413*^9, 3.616182780434311*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks1000Fixed", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/fixed-t1000-2/\>\"", ",", "\"\<network-1000-\>\"",
+         ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158340601734257`*^9, 3.6158340626459923`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering1000Fixed", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks1000Fixed"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering1000Fixed", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl1000Fixed", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks1000Fixed"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", "apl1000Fixed", "]"}]}], "Input",
+ CellChangeTimes->{{3.615812937951058*^9, 3.6158129434627953`*^9}, {
+   3.6161822357895927`*^9, 3.6161822441217833`*^9}, 3.616182303930849*^9, {
+   3.616182389309949*^9, 3.616182407305009*^9}, {3.616182516747061*^9, 
+   3.616182522155471*^9}, {3.6161829379089317`*^9, 3.6161829700868397`*^9}, {
+   3.616185121150025*^9, 3.6161851295139227`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 0.6414092664092664}, {2., 0.36797267375924825`}, {3., 
+     0.2817689885871704}, {4., 0.260211021183495}, {5., 
+     0.27629292691099994`}, {6., 0.30603492967461615`}, {7., 
+     0.33289744711602276`}, {8., 0.3769703312012237}, {9., 
+     0.4296609510877867}, {10., 0.4609416785529868}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0.260211021183495},
+  Method->{},
+  PlotRange->{{0, 10.}, {0.260211021183495, 0.6414092664092664}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.007623964904515429, 
+   0.007623964904515429}}]], "Output",
+ CellChangeTimes->{3.6161826786725903`*^9, 3.6161829778748207`*^9, 
+  3.616185342640102*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{-1, 1}, {-1, 1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.04, 0.04}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.6161826786725903`*^9, 3.6161829778748207`*^9, 
+  3.616185348451292*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Capacidad distribuida uniformemente", "Section",
+ CellChangeTimes->{{3.615812988459712*^9, 3.615813025474766*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks100Uniform", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/uniform-t1000-2/\>\"", ",", 
+        "\"\<network-100-\>\"", ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158128623595324`*^9, 3.615812926320092*^9}, {
+  3.6158130344483643`*^9, 3.615813075935986*^9}, {3.61583437394591*^9, 
+  3.615834374155348*^9}, {3.6158345079469*^9, 3.615834509201621*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering100Uniform", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks100Uniform"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl100Uniform", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks100Uniform"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering100Uniform", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl100Uniform", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.615812937951058*^9, 3.6158129434627953`*^9}, {
+   3.6161822357895927`*^9, 3.6161822441217833`*^9}, 3.616182303930849*^9, {
+   3.616182389309949*^9, 3.616182407305009*^9}, {3.6161827369652147`*^9, 
+   3.61618277958395*^9}, {3.616185421320997*^9, 3.616185445420767*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 0.30673642903858733`}, {2., 0.44901678993305055`}, {3., 
+     0.5815357052372507}, {4., 0.7390841069500563}, {5., 
+     0.7592981349671142}, {6., 0.8156865646402299}, {7., 
+     0.8525549488119735}, {8., 0.8599356702154336}, {9., 
+     0.9180908418647377}, {10., 0.9078183625693487}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0.30673642903858733`},
+  Method->{},
+  PlotRange->{{0, 10.}, {0.30673642903858733`, 0.9180908418647377}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.012227088256523007`, 
+   0.012227088256523007`}}]], "Output",
+ CellChangeTimes->{3.616185597311878*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.8838383838383839`}, {2., 1.6848484848484848`}, {3., 
+     1.5545454545454545`}, {4., 1.3642424242424243`}, {5., 
+     1.3509090909090908`}, {6., 1.2527272727272727`}, {7., 
+     1.2121212121212122`}, {8., 1.2004040404040404`}, {9., 
+     1.11010101010101}, {10., 1.1327272727272728`}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 1.11010101010101},
+  Method->{},
+  PlotRange->{{0, 10.}, {1.11010101010101, 1.8838383838383839`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.015474747474747476`, 
+   0.015474747474747476`}}]], "Output",
+ CellChangeTimes->{3.616185597333519*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks1000Uniform", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/uniform-t1000-2/\>\"", ",", 
+        "\"\<network-1000-\>\"", ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158340601734257`*^9, 3.6158340626459923`*^9}, {
+  3.6158346278373003`*^9, 3.615834633938489*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering1000Uniform", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks1000Uniform"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl1000Uniform", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks1000Uniform"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering1000Uniform", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl1000Uniform", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.615812937951058*^9, 3.6158129434627953`*^9}, {
+   3.6161822357895927`*^9, 3.6161822441217833`*^9}, 3.616182303930849*^9, {
+   3.616182389309949*^9, 3.616182407305009*^9}, {3.6161827369652147`*^9, 
+   3.61618277958395*^9}, {3.616185421320997*^9, 3.616185445420767*^9}, {
+   3.616185615063403*^9, 3.616185630135996*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 0.5912946428571428}, {2., 0.4041430610214938}, {3., 
+     0.3261378623529728}, {4., 0.27656949227454375`}, {5., 
+     0.2656575160674388}, {6., 0.26620682595500744`}, {7., 
+     0.2731841588131981}, {8., 0.3005414724400429}, {9., 
+     0.29798966192661525`}, {10., 0.33694120883063455`}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0.2656575160674388},
+  Method->{},
+  PlotRange->{{0, 10.}, {0.2656575160674388, 0.5912946428571428}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.00651274253579408, 
+   0.00651274253579408}}]], "Output",
+ CellChangeTimes->{3.6161857866536627`*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{-1, 1}, {-1, 1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.04, 0.04}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.616185786668911*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Capacidad distribuida normal con desviaci\[OAcute]n=3\
+\>", "Section",
+ CellChangeTimes->{{3.615812988459712*^9, 3.615813025474766*^9}, {
+  3.615813114946989*^9, 3.615813129706965*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks100Normal", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/normal-t1000-2/\>\"", ",", "\"\<network-100-\>\"",
+         ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158128623595324`*^9, 3.615812926320092*^9}, {
+  3.6158130344483643`*^9, 3.615813075935986*^9}, {3.615813137560171*^9, 
+  3.6158131422945013`*^9}, {3.615834964371339*^9, 3.615834969811985*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering100Normal", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks100Normal"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl100Normal", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks100Normal"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering100Normal", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl100Normal", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.615812937951058*^9, 3.6158129434627953`*^9}, {
+   3.6161822357895927`*^9, 3.6161822441217833`*^9}, 3.616182303930849*^9, {
+   3.616182389309949*^9, 3.616182407305009*^9}, {3.6161827369652147`*^9, 
+   3.61618277958395*^9}, {3.616185421320997*^9, 3.616185445420767*^9}, {
+   3.6161859165091753`*^9, 3.616185938963904*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 0.7883302296710117}, {2., 0.7610826441009504}, {3., 
+     0.8055034706252786}, {4., 0.83945295404814}, {5., 0.8819617349204208}, {
+     6., 0.9494782365094373}, {7., 0.9648465377610911}, {8., 
+     0.9847914768901739}, {9., 0.9810352230882334}, {10., 
+     0.9980503312574122}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0.7610826441009504},
+  Method->{},
+  PlotRange->{{0, 10.}, {0.7610826441009504, 0.9980503312574122}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.004739353743129235, 
+   0.004739353743129235}}]], "Output",
+ CellChangeTimes->{3.616185945069338*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{}, {}, 
+    {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+     LineBox[{{9., 1.027070707070707}, {10., 1.002020202020202}}]}}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{9., 1.002020202020202},
+  Method->{},
+  PlotRange->{{9., 10.}, {1.002020202020202, 1.027070707070707}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.02, 0.02}, {0.0005010101010100998, 
+   0.0005010101010100998}}]], "Output",
+ CellChangeTimes->{3.6161859456239653`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks1000Normal", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/normal-t1000-2/\>\"", ",", 
+        "\"\<network-1000-\>\"", ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158128623595324`*^9, 3.615812926320092*^9}, {
+  3.6158130344483643`*^9, 3.615813075935986*^9}, {3.615813137560171*^9, 
+  3.6158131422945013`*^9}, {3.615834964371339*^9, 3.615834969811985*^9}, {
+  3.6158350030857897`*^9, 3.6158350052729263`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering1000Normal", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks1000Normal"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl1000Normal", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks1000Normal"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering1000Normal", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl1000Normal", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.615812937951058*^9, 3.6158129434627953`*^9}, {
+   3.6161822357895927`*^9, 3.6161822441217833`*^9}, 3.616182303930849*^9, {
+   3.616182389309949*^9, 3.616182407305009*^9}, {3.6161827369652147`*^9, 
+   3.61618277958395*^9}, {3.616185421320997*^9, 3.616185445420767*^9}, {
+   3.6161859165091753`*^9, 3.616185976911798*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 0.26952076677316295`}, {2., 0.2661776014481412}, {3., 
+     0.26574268837343323`}, {4., 0.2769144788208296}, {5., 
+     0.3191972182602589}, {6., 0.3356672964290652}, {7., 
+     0.3635662430010438}, {8., 0.3942575144447438}, {9., 
+     0.42503170107170796`}, {10., 0.49158544180775643`}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0.26574268837343323`},
+  Method->{},
+  PlotRange->{{0, 10.}, {0.26574268837343323`, 0.49158544180775643`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.004516855068686464, 
+   0.004516855068686464}}]], "Output",
+ CellChangeTimes->{3.616186142640626*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{-1, 1}, {-1, 1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.04, 0.04}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.6161861427324266`*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Modelo versi\[OAcute]n 3", "Title",
+ CellChangeTimes->{{3.614602255093151*^9, 3.6146022656100817`*^9}, {
+  3.615653173430203*^9, 3.615653173574904*^9}}],
+
+Cell["\<\
+Lim-capacity: [1-10] --> 1
+10.000 unidades de tiempo\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.615833870546685*^9, 3.6158338998934*^9}, {
+  3.6158339585271683`*^9, 3.615833961311427*^9}, {3.616079544353636*^9, 
+  3.61607955869134*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Capacidad fija", "Section",
+ CellChangeTimes->{{3.615812988459712*^9, 3.615813011466572*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks100Fixed", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/fixed10mil/\>\"", ",", "\"\<network-100-\>\"", 
+        ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158128623595324`*^9, 3.615812926320092*^9}, {
+  3.615833987288446*^9, 3.615833993974658*^9}, {3.616079562516665*^9, 
+  3.616079566778336*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering100Fixed", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks100Fixed"}], "]"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl100Fixed", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks100Fixed"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering100Fixed", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl100Fixed", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.615812937951058*^9, 3.6158129434627953`*^9}, {
+   3.6161822357895927`*^9, 3.6161822441217833`*^9}, 3.616182303930849*^9, {
+   3.616182389309949*^9, 3.616182407305009*^9}, {3.6161827369652147`*^9, 
+   3.61618277958395*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.}, {2., 1.}, {3., 1.}, {4., 1.}, {5., 1.}, {6., 1.}, {7., 
+     1.}, {8., 1.}, {9., 1.}, {10., 1.}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.616186390487247*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.}, {2., 1.}, {3., 1.}, {4., 1.}, {5., 1.}, {6., 1.}, {7., 
+     1.}, {8., 1.}, {9., 1.}, {10., 1.}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.616186390524791*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Capacidad distribuida uniformemente", "Section",
+ CellChangeTimes->{{3.615812988459712*^9, 3.615813025474766*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks100Uniform", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/uniform10mil/\>\"", ",", "\"\<network-100-\>\"", 
+        ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158128623595324`*^9, 3.615812926320092*^9}, {
+  3.6158130344483643`*^9, 3.615813075935986*^9}, {3.61583437394591*^9, 
+  3.615834374155348*^9}, {3.6158345079469*^9, 3.615834509201621*^9}, {
+  3.6160812534851627`*^9, 3.616081258047063*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering100Uniform", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks100Uniform"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl100Uniform", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks100Uniform"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering100Uniform", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl100Uniform", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.615812937951058*^9, 3.6158129434627953`*^9}, {
+   3.6161822357895927`*^9, 3.6161822441217833`*^9}, 3.616182303930849*^9, {
+   3.616182389309949*^9, 3.616182407305009*^9}, {3.6161827369652147`*^9, 
+   3.61618277958395*^9}, {3.616185421320997*^9, 3.616185445420767*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.}, {2., 1.}, {3., 1.}, {4., 1.}, {5., 1.}, {6., 1.}, {7., 
+     1.}, {8., 1.}, {9., 1.}, {10., 1.}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.616186788431636*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.}, {2., 1.}, {3., 1.}, {4., 1.}, {5., 1.}, {6., 1.}, {7., 
+     1.}, {8., 1.}, {9., 1.}, {10., 1.}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.616186788465868*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Capacidad distribuida normal con desviaci\[OAcute]n=3\
+\>", "Section",
+ CellChangeTimes->{{3.615812988459712*^9, 3.615813025474766*^9}, {
+  3.615813114946989*^9, 3.615813129706965*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks100Normal", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/normalt10mil/\>\"", ",", "\"\<network-100-\>\"", 
+        ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158128623595324`*^9, 3.615812926320092*^9}, {
+   3.6158130344483643`*^9, 3.615813075935986*^9}, {3.615813137560171*^9, 
+   3.6158131422945013`*^9}, {3.615834964371339*^9, 3.615834969811985*^9}, {
+   3.616082375647559*^9, 3.616082382650796*^9}, 3.6160824226621637`*^9, 
+   3.616093721369568*^9, 3.616093781821261*^9, 3.616187052131627*^9, 
+   3.61618728386858*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering100Normal", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks100Normal"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl100Normal", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks100Normal"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering100Normal", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl100Normal", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.}, {2., 1.}, {3., 1.}, {4., 1.}, {5., 1.}, {6., 1.}, {7., 
+     1.}, {8., 1.}, {9., 1.}, {10., 1.}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.616187307757736*^9, 3.6161873733167753`*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, GraphicsComplexBox[{{8., 1.}, {10., 1.}}, {}], {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{8., 0},
+  Method->{},
+  PlotRange->{{8., 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.04, 0.04}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.616187307757736*^9, 3.616187373355096*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Lim-capacity: [1-10] --> 1
+100.000 unidades de tiempo\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.615833870546685*^9, 3.6158338998934*^9}, {
+   3.6158339585271683`*^9, 3.615833961311427*^9}, {3.616079544353636*^9, 
+   3.61607955869134*^9}, 3.616093712756757*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Capacidad fija", "Section",
+ CellChangeTimes->{{3.615812988459712*^9, 3.615813011466572*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks100Fixed", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/fixed100mil/\>\"", ",", "\"\<network-100-\>\"", 
+        ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158128623595324`*^9, 3.615812926320092*^9}, {
+   3.615833987288446*^9, 3.615833993974658*^9}, {3.616079562516665*^9, 
+   3.616079566778336*^9}, 3.616093805393894*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering100Fixed", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks100Fixed"}], "]"}]}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl100Fixed", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks100Fixed"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering100Fixed", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl100Fixed", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.615812937951058*^9, 3.6158129434627953`*^9}, {
+   3.6161822357895927`*^9, 3.6161822441217833`*^9}, 3.616182303930849*^9, {
+   3.616182389309949*^9, 3.616182407305009*^9}, {3.6161827369652147`*^9, 
+   3.61618277958395*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.}, {2., 1.}, {3., 1.}, {4., 1.}, {5., 1.}, {6., 1.}, {7., 
+     1.}, {8., 1.}, {9., 1.}, {10., 1.}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.616186566471746*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.}, {2., 1.}, {3., 1.}, {4., 1.}, {5., 1.}, {6., 1.}, {7., 
+     1.}, {8., 1.}, {9., 1.}, {10., 1.}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.6161865664850073`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Capacidad distribuida uniformemente", "Section",
+ CellChangeTimes->{{3.615812988459712*^9, 3.615813025474766*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks100Uniform", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/uniform100mil/\>\"", ",", "\"\<network-100-\>\"", 
+        ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158128623595324`*^9, 3.615812926320092*^9}, {
+   3.6158130344483643`*^9, 3.615813075935986*^9}, {3.61583437394591*^9, 
+   3.615834374155348*^9}, {3.6158345079469*^9, 3.615834509201621*^9}, {
+   3.6160812534851627`*^9, 3.616081258047063*^9}, 3.616093858642898*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering100Uniform", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks100Uniform"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl100Uniform", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks100Uniform"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering100Uniform", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl100Uniform", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.615812937951058*^9, 3.6158129434627953`*^9}, {
+   3.6161822357895927`*^9, 3.6161822441217833`*^9}, 3.616182303930849*^9, {
+   3.616182389309949*^9, 3.616182407305009*^9}, {3.6161827369652147`*^9, 
+   3.61618277958395*^9}, {3.616185421320997*^9, 3.616185445420767*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.}, {2., 1.}, {3., 1.}, {4., 1.}, {5., 1.}, {6., 1.}, {7., 
+     1.}, {8., 1.}, {9., 1.}, {10., 1.}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.616187015296748*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.}, {2., 1.}, {3., 1.}, {4., 1.}, {5., 1.}, {6., 1.}, {7., 
+     1.}, {8., 1.}, {9., 1.}, {10., 1.}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.04, 0.04}}]], "Input",
+ CellChangeTimes->{{3.616187380503229*^9, 3.6161873805220413`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Capacidad distribuida normal con desviaci\[OAcute]n=3\
+\>", "Section",
+ CellChangeTimes->{{3.615812988459712*^9, 3.615813025474766*^9}, {
+  3.615813114946989*^9, 3.615813129706965*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"networks100Normal", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{
+       "\"\<graphs/model-v3/normalt100mil/\>\"", ",", "\"\<network-100-\>\"", 
+        ",", 
+        RowBox[{"IntegerString", "[", "i", "]"}], ",", "\"\<.graphml\>\""}], 
+       "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10", ",", "1"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.6158128623595324`*^9, 3.615812926320092*^9}, {
+   3.6158130344483643`*^9, 3.615813075935986*^9}, {3.615813137560171*^9, 
+   3.6158131422945013`*^9}, {3.615834964371339*^9, 3.615834969811985*^9}, {
+   3.616082375647559*^9, 3.616082382650796*^9}, 3.6160824226621637`*^9, 
+   3.6160938702788486`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"clustering100Normal", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"GlobalClusteringCoefficient", ",", "networks100Normal"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"apl100Normal", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"MeanGraphDistance", ",", "networks100Normal"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"clustering100Normal", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"apl100Normal", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}]}], "]"}]}], "Input"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+    LineBox[{{1., 1.}, {2., 1.}, {3., 1.}, {4., 1.}, {5., 1.}, {6., 1.}, {7., 
+     1.}, {8., 1.}, {9., 1.}, {10., 1.}}]}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  Method->{},
+  PlotRange->{{0, 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.2, 0.2}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.6161874806177883`*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{}, {}, 
+    {RGBColor[0.24720000000000014`, 0.24, 0.6], 
+     LineBox[{{7., 1.}, {8., 1.}}]}}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{None, None},
+  AxesOrigin->{7., 0},
+  Method->{},
+  PlotRange->{{7., 10.}, {0, 2.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0.06, 0.06}, {0.04, 0.04}}]], "Output",
+ CellChangeTimes->{3.616187480636072*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1364, 747},
+WindowMargins->{{0, Automatic}, {2, Automatic}},
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 158, 2, 92, "Title"],
+Cell[740, 26, 194, 4, 50, "Subtitle"],
+Cell[CellGroupData[{
+Cell[959, 34, 142, 2, 80, "Section"],
+Cell[CellGroupData[{
+Cell[1126, 40, 417, 8, 47, "Item"],
+Cell[1546, 50, 461, 8, 47, "Item"]
+}, Open  ]],
+Cell[2022, 61, 734, 12, 32, "Input"],
+Cell[2759, 75, 627, 16, 77, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3435, 97, 158, 2, 92, "Title"],
+Cell[3596, 101, 164, 2, 29, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[3785, 107, 99, 1, 80, "Section"],
+Cell[3887, 110, 601, 16, 32, "Input"],
+Cell[CellGroupData[{
+Cell[4513, 130, 872, 20, 99, "Input"],
+Cell[5388, 152, 898, 19, 245, "Output"],
+Cell[6289, 173, 901, 19, 243, "Output"]
+}, Open  ]],
+Cell[7205, 195, 556, 15, 55, "Input"],
+Cell[CellGroupData[{
+Cell[7786, 214, 920, 19, 99, "Input"],
+Cell[8709, 235, 829, 18, 239, "Output"],
+Cell[9541, 255, 393, 11, 240, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9983, 272, 120, 1, 80, "Section"],
+Cell[10106, 275, 699, 17, 55, "Input"],
+Cell[CellGroupData[{
+Cell[10830, 296, 932, 20, 99, "Input"],
+Cell[11765, 318, 783, 17, 243, "Output"],
+Cell[12551, 337, 779, 17, 243, "Output"]
+}, Open  ]],
+Cell[13345, 357, 611, 16, 55, "Input"],
+Cell[CellGroupData[{
+Cell[13981, 377, 988, 21, 99, "Input"],
+Cell[14972, 400, 781, 17, 239, "Output"],
+Cell[15756, 419, 342, 10, 240, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16147, 435, 195, 4, 80, "Section"],
+Cell[16345, 441, 702, 17, 55, "Input"],
+Cell[CellGroupData[{
+Cell[17072, 462, 978, 21, 99, "Input"],
+Cell[18053, 485, 771, 17, 244, "Output"],
+Cell[18827, 504, 556, 13, 233, "Output"]
+}, Open  ]],
+Cell[19398, 520, 757, 18, 55, "Input"],
+Cell[CellGroupData[{
+Cell[20180, 542, 984, 21, 99, "Input"],
+Cell[21167, 565, 787, 17, 239, "Output"],
+Cell[21957, 584, 344, 10, 240, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22362, 601, 158, 2, 92, "Title"],
+Cell[22523, 605, 246, 6, 49, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[22794, 615, 99, 1, 80, "Section"],
+Cell[22896, 618, 647, 17, 32, "Input"],
+Cell[CellGroupData[{
+Cell[23568, 639, 872, 20, 99, "Input"],
+Cell[24443, 661, 509, 13, 246, "Output"],
+Cell[24955, 676, 509, 13, 246, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25513, 695, 120, 1, 80, "Section"],
+Cell[25636, 698, 747, 18, 55, "Input"],
+Cell[CellGroupData[{
+Cell[26408, 720, 932, 20, 99, "Input"],
+Cell[27343, 742, 509, 13, 246, "Output"],
+Cell[27855, 757, 509, 13, 246, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28413, 776, 195, 4, 80, "Section"],
+Cell[28611, 782, 871, 20, 32, "Input"],
+Cell[CellGroupData[{
+Cell[29507, 806, 635, 16, 99, "Input"],
+Cell[30145, 824, 533, 13, 246, "Output"],
+Cell[30681, 839, 410, 10, 243, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31140, 855, 271, 6, 49, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[31436, 865, 99, 1, 80, "Section"],
+Cell[31538, 868, 672, 17, 32, "Input"],
+Cell[CellGroupData[{
+Cell[32235, 889, 872, 20, 99, "Input"],
+Cell[33110, 911, 509, 13, 246, "Output"],
+Cell[33622, 926, 511, 13, 246, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34182, 945, 120, 1, 80, "Section"],
+Cell[34305, 948, 773, 18, 55, "Input"],
+Cell[CellGroupData[{
+Cell[35103, 970, 932, 20, 99, "Input"],
+Cell[36038, 992, 509, 13, 246, "Output"]
+}, Open  ]],
+Cell[36562, 1008, 534, 13, 246, InheritFromParent]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37133, 1026, 195, 4, 80, "Section"],
+Cell[37331, 1032, 805, 19, 55, "Input"],
+Cell[CellGroupData[{
+Cell[38161, 1055, 635, 16, 99, "Input"],
+Cell[38799, 1073, 511, 13, 246, "Output"],
+Cell[39313, 1088, 438, 12, 243, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
