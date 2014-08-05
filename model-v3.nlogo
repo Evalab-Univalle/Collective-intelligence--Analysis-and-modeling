@@ -30,7 +30,7 @@ to setup
 ;  set num-selection round ((selection-size / 100) * num-people)
   set num-selection 1
   set total-votes 0
-  set inf 1000
+  set inf 10000
   
   setup-people
   setup-documents
@@ -53,8 +53,8 @@ to setup-people
   create-people num-people [
     setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
     set color blue
-    ;set capacity ((random lim-capacity) + 1)
-    set capacity random-normal lim-capacity 3
+    set capacity ((random lim-capacity) + 1)
+    ;set capacity random-normal lim-capacity 3
     ;set capacity lim-capacity
   ]
 end
@@ -750,6 +750,20 @@ write-network</final>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="100"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
+  </experiment>
+  <experiment name="exp-10mildoc" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <timeLimit steps="1000"/>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/10mildoc/&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="1000"/>
     </enumeratedValueSet>
     <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
   </experiment>
