@@ -53,9 +53,9 @@ to setup-people
   create-people num-people [
     setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
     set color blue
-    set capacity ((random lim-capacity) + 1)
+    ;set capacity ((random lim-capacity) + 1)
     ;set capacity random-normal lim-capacity 3
-    ;set capacity lim-capacity
+    set capacity lim-capacity
   ]
 end
 
@@ -283,7 +283,7 @@ INPUTBOX
 844
 70
 graph-file-location
-/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/uniformt1000-2/
+/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/fixed/
 1
 0
 String
@@ -328,7 +328,7 @@ INPUTBOX
 179
 365
 lim-capacity
-1
+10
 1
 0
 Number
@@ -349,7 +349,7 @@ true
 false
 "" ""
 PENS
-"default" 0.001 1 -16777216 true "" "histogram [probability] of documents"
+"default" 0.0010 1 -16777216 true "" "histogram [probability] of documents"
 
 OUTPUT
 276
@@ -764,6 +764,20 @@ write-network</final>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="1000"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
+  </experiment>
+  <experiment name="exp-fixed100" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <timeLimit steps="1000"/>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/fixed/&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="100"/>
     </enumeratedValueSet>
     <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
   </experiment>
