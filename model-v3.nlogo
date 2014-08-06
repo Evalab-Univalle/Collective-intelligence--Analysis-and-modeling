@@ -137,7 +137,7 @@ to make-links
 end
 
 to write-network
-  nw:save-graphml (word graph-file-location "network-" num-people "-" stopTime ".graphml")
+  nw:save-graphml (word graph-file-location lim-capacity "/" "network-" num-people "-" stopTime ".graphml")
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -275,7 +275,7 @@ num-people
 num-people
 1
 100
-100
+10
 1
 1
 NIL
@@ -287,7 +287,7 @@ INPUTBOX
 844
 70
 graph-file-location
-/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/capacity1/
+/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/capacity
 1
 0
 String
@@ -332,7 +332,7 @@ INPUTBOX
 179
 365
 lim-capacity
-1
+2
 1
 0
 Number
@@ -368,7 +368,7 @@ INPUTBOX
 181
 437
 stopTime
-100
+10
 1
 0
 Number
@@ -808,18 +808,19 @@ write-network</final>
     </enumeratedValueSet>
     <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
   </experiment>
-  <experiment name="exp-capacity1" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="exp-capacity" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <final>make-links
 write-network</final>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/capacity1/&quot;"/>
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/capacity&quot;"/>
     </enumeratedValueSet>
     <steppedValueSet variable="num-people" first="100" step="100" last="1000"/>
     <steppedValueSet variable="stopTime" first="1000" step="1000" last="10000"/>
     <enumeratedValueSet variable="lim-capacity">
-      <value value="1"/>
+      <value value="2"/>
+      <value value="5"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
