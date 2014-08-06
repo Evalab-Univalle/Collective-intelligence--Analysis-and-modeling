@@ -53,9 +53,9 @@ to setup-people
   create-people num-people [
     setxy random-xcor random-ycor   ;;Ubicación aleatoria (por el momento)
     set color blue
-    ;set capacity ((random lim-capacity) + 1)
+    set capacity ((random lim-capacity) + 1)
     ;set capacity random-normal lim-capacity 3
-    set capacity lim-capacity
+    ;set capacity lim-capacity
   ]
 end
 
@@ -78,13 +78,17 @@ to go
   
   ;;Reorganizar los documentos después de las primeras 10 rondas, para poner de primeros los que tengan mayor probabilidad
   ;;(en un intento de optimizar la selección del documento aleatorio)
-  if ticks = 10 or ticks = 50 or ticks = 100 [
+  if ticks = 100 or ticks = 500 [
     set documents-list sort-on [probability] documents
   ]
   
   ;output-print sublist sort-on [(- probability)] documents 0 10
   
   tick
+  
+  if ticks = stopTime [
+    stop
+  ]
 end
 
 ;Proceso de votación en cuantos documentos como capacidades tenga el agente
@@ -133,7 +137,7 @@ to make-links
 end
 
 to write-network
-  nw:save-graphml (word graph-file-location "network-" num-people "-" lim-capacity ".graphml")
+  nw:save-graphml (word graph-file-location "network-" num-people "-" stopTime ".graphml")
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -283,7 +287,7 @@ INPUTBOX
 844
 70
 graph-file-location
-/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/fixed/
+/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/capacity1/
 1
 0
 String
@@ -328,7 +332,7 @@ INPUTBOX
 179
 365
 lim-capacity
-10
+1
 1
 0
 Number
@@ -349,7 +353,7 @@ true
 false
 "" ""
 PENS
-"default" 0.0010 1 -16777216 true "" "histogram [probability] of documents"
+"default" 0.001 1 -16777216 true "" "histogram [probability] of documents"
 
 OUTPUT
 276
@@ -357,6 +361,17 @@ OUTPUT
 1481
 721
 12
+
+INPUTBOX
+102
+377
+181
+437
+stopTime
+100
+1
+0
+Number
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -711,47 +726,59 @@ write-network</final>
       <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="exp-fixedt100mil" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="exp-fixedt10mil" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <final>make-links
 write-network</final>
-    <timeLimit steps="100000"/>
+    <timeLimit steps="10000"/>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/fixed100mil/&quot;"/>
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/fixed10mil/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
-      <value value="100"/>
+      <value value="1000"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="1"/>
+      <value value="5"/>
+      <value value="10"/>
+    </enumeratedValueSet>
   </experiment>
-  <experiment name="exp-uniformt100mil" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="exp-uniformt10mil" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <final>make-links
 write-network</final>
-    <timeLimit steps="100000"/>
+    <timeLimit steps="10000"/>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/uniform100mil/&quot;"/>
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/uniform10mil/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
-      <value value="100"/>
+      <value value="1000"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="1"/>
+      <value value="5"/>
+      <value value="10"/>
+    </enumeratedValueSet>
   </experiment>
-  <experiment name="exp-normalt100mil" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="exp-normalt10mil" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <final>make-links
 write-network</final>
-    <timeLimit steps="100000"/>
+    <timeLimit steps="10000"/>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/normalt100mil/&quot;"/>
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/normalt10mil/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
-      <value value="100"/>
+      <value value="1000"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="1"/>
+      <value value="5"/>
+      <value value="10"/>
+    </enumeratedValueSet>
   </experiment>
   <experiment name="exp-10mildoc" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
@@ -780,6 +807,20 @@ write-network</final>
       <value value="100"/>
     </enumeratedValueSet>
     <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
+  </experiment>
+  <experiment name="exp-capacity1" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/capacity1/&quot;"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="num-people" first="100" step="100" last="1000"/>
+    <steppedValueSet variable="stopTime" first="1000" step="1000" last="10000"/>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="1"/>
+    </enumeratedValueSet>
   </experiment>
 </experiments>
 @#$#@#$#@
