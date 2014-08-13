@@ -25,7 +25,6 @@ documents-own [
 to setup
   clear-all
   set-default-shape people "circle"
-  nw:set-context people links
   
 ;  set num-selection round ((selection-size / 100) * num-people)
   set num-selection 1
@@ -137,6 +136,7 @@ to make-links
 end
 
 to write-network
+  nw:set-context people links
   nw:save-graphml (word graph-file-location "network-" num-people "-" stopTime ".graphml")
 end
 
