@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[      7802,        223]
-NotebookOptionsPosition[      7134,        194]
-NotebookOutlinePosition[      7469,        209]
-CellTagsIndexPosition[      7426,        206]
+NotebookDataLength[      7892,        225]
+NotebookOptionsPosition[      7224,        196]
+NotebookOutlinePosition[      7559,        211]
+CellTagsIndexPosition[      7516,        208]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -103,7 +103,7 @@ graphs/model-v2/\>\"", ",", "\"\<network-\>\"", ",",
       RowBox[{"networksM2", ",", "1"}], "]"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"pathPlotM2", "=", 
+  RowBox[{"aplM2", "=", 
    RowBox[{"Map", "[", 
     RowBox[{"MeanGraphDistance", ",", 
      RowBox[{"Flatten", "[", 
@@ -114,7 +114,8 @@ graphs/model-v2/\>\"", ",", "\"\<network-\>\"", ",",
    3.614611808358612*^9}, {3.615290787506665*^9, 3.615290788892131*^9}, {
    3.615291367776474*^9, 3.615291388074743*^9}, {3.615291419201576*^9, 
    3.615291427563647*^9}, {3.61529162640333*^9, 3.615291637238146*^9}, {
-   3.615291809509526*^9, 3.615291835099276*^9}}]
+   3.615291809509526*^9, 3.615291835099276*^9}, {3.615653230304347*^9, 
+   3.61565323440235*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -181,20 +182,21 @@ Cell[BoxData[{
          RowBox[{"[", "c", "]"}], "]"}], "}"}]}], "]"}], ",", 
      RowBox[{"{", 
       RowBox[{"c", ",", "1", ",", 
-       RowBox[{"Length", "[", "aplData", "]"}], ",", "1"}], "}"}]}], "]"}]}], 
+       RowBox[{"Length", "[", "aplM2", "]"}], ",", "1"}], "}"}]}], "]"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{"ListPlot3D", "[", 
   RowBox[{"pathPlotM2", ",", 
    RowBox[{"ColorFunction", "\[Rule]", "\"\<SouthwestColors\>\""}]}], 
   "]"}]}], "Input",
  CellChangeTimes->{{3.614513714979229*^9, 3.6145137156226997`*^9}, {
-  3.614612163553693*^9, 3.6146121729150476`*^9}}]
+  3.614612163553693*^9, 3.6146121729150476`*^9}, {3.615653237931899*^9, 
+  3.61565323817163*^9}}]
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{1305, 744},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
-FrontEndVersion->"9.0 for Linux x86 (32-bit) (February 7, 2013)",
+WindowSize->{832, 1022},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -209,20 +211,20 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[579, 22, 109, 1, 93, "Title"],
+Cell[579, 22, 109, 1, 92, "Title"],
 Cell[CellGroupData[{
-Cell[713, 27, 142, 2, 81, "Section"],
+Cell[713, 27, 142, 2, 80, "Section"],
 Cell[CellGroupData[{
 Cell[880, 33, 417, 8, 46, "Item"],
 Cell[1300, 43, 477, 9, 46, "Item"]
 }, Open  ]],
 Cell[1792, 55, 685, 11, 32, "Input"],
-Cell[2480, 68, 1915, 48, 143, "Input"]
+Cell[2480, 68, 1959, 49, 231, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[4432, 121, 96, 1, 81, "Section"],
-Cell[4531, 124, 1737, 41, 77, "Input"],
-Cell[6271, 167, 835, 23, 55, "Input"]
+Cell[4476, 122, 96, 1, 80, "Section"],
+Cell[4575, 125, 1737, 41, 99, "Input"],
+Cell[6315, 168, 881, 24, 77, "Input"]
 }, Open  ]]
 }, Open  ]]
 }
