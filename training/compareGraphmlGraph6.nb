@@ -10,14 +10,29 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[      4085,        130]
-NotebookOptionsPosition[      3490,        104]
-NotebookOutlinePosition[      3826,        119]
-CellTagsIndexPosition[      3783,        116]
+NotebookDataLength[      4738,        150]
+NotebookOptionsPosition[      4001,        118]
+NotebookOutlinePosition[      4337,        133]
+CellTagsIndexPosition[      4294,        130]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Compare Graphml and Graph6 formats\
+\>", "Title",
+ CellChangeTimes->{{3.6170609640211906`*^9, 3.6170609762398243`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Time that takes Mathematica importing both types\
+\>", "Section",
+ CellChangeTimes->{{3.61706099079922*^9, 3.617061022273337*^9}, 
+   3.617061056824271*^9}],
+
 Cell[BoxData[
  RowBox[{
   RowBox[{"SetDirectory", "[", 
@@ -40,32 +55,29 @@ Cell[BoxData[{
    RowBox[{"AbsoluteTime", "[", "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"graph", "=", 
-   RowBox[{
-   "Import", "[", 
-    "\"\<../graphs/model-v3/fixed-t1000-2/network-1000-10.graphml\>\"", 
-    "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"Import", "[", "\"\<testNetwork.graphml\>\"", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
  RowBox[{"time", "=", 
   RowBox[{
    RowBox[{"AbsoluteTime", "[", "]"}], "-", "init"}]}]}], "Input",
  CellChangeTimes->{{3.6165272305396557`*^9, 3.616527289453621*^9}, {
   3.616527964349697*^9, 3.616528015309445*^9}, {3.616880726100972*^9, 
-  3.616880731192821*^9}}],
+  3.616880731192821*^9}, {3.617061215308484*^9, 3.617061221912644*^9}}],
 
-Cell[BoxData["24.80783`7.84613377065644"], "Output",
+Cell[BoxData["33.59474`7.977816277796493"], "Output",
  CellChangeTimes->{3.616880771042396*^9, 3.61688112992563*^9, 
-  3.6168811600789957`*^9}]
+  3.6168811600789957`*^9, 3.6170612584852457`*^9, 3.617061305968917*^9}]
 }, Open  ]],
 
 Cell[BoxData[
  RowBox[{"(*", 
   RowBox[{
    RowBox[{"Export", "[", 
-    RowBox[{
-    "\"\<../graphs/model-v3/fixed-t1000-2/network-1000-10.g6\>\"", ",", 
-     "graph"}], "]"}], ";"}], "*)"}]], "Input",
+    RowBox[{"\"\<testNetwork.g6\>\"", ",", "graph"}], "]"}], ";"}], 
+  "*)"}]], "Input",
  CellChangeTimes->{{3.6168808535166407`*^9, 3.61688085737007*^9}, {
   3.616880927826312*^9, 3.6168809588037558`*^9}, {3.616881558365829*^9, 
-  3.6168815817574778`*^9}}],
+  3.6168815817574778`*^9}, {3.617061245286525*^9, 3.617061248625804*^9}}],
 
 Cell[CellGroupData[{
 
@@ -75,17 +87,17 @@ Cell[BoxData[{
    RowBox[{"AbsoluteTime", "[", "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"graph2", "=", 
-   RowBox[{
-   "Import", "[", 
-    "\"\<../graphs/model-v3/fixed-t1000-2/network-1000-10.g6\>\"", "]"}]}], 
+   RowBox[{"Import", "[", "\"\<testNetwork.g6\>\"", "]"}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{"time2", "=", 
   RowBox[{
    RowBox[{"AbsoluteTime", "[", "]"}], "-", "init2"}]}]}], "Input",
- CellChangeTimes->{{3.616881077643792*^9, 3.61688112679084*^9}}],
+ CellChangeTimes->{{3.616881077643792*^9, 3.61688112679084*^9}, 
+   3.617061255955289*^9, {3.617061313935048*^9, 3.61706131461656*^9}}],
 
-Cell[BoxData["0.785132`6.346487671963917"], "Output",
- CellChangeTimes->{3.6168811652753696`*^9}]
+Cell[BoxData["0.975967`6.440980126777218"], "Output",
+ CellChangeTimes->{
+  3.6168811652753696`*^9, {3.617061309841845*^9, 3.617061316144042*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -99,7 +111,9 @@ Cell[BoxData[
   3.6168815513281918`*^9}}],
 
 Cell[BoxData["True"], "Output",
- CellChangeTimes->{3.616881552111699*^9}]
+ CellChangeTimes->{3.616881552111699*^9, 3.617061320805345*^9}]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 },
 WindowSize->{1364, 747},
@@ -118,19 +132,25 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[557, 20, 778, 12, 32, "Input"],
 Cell[CellGroupData[{
-Cell[1360, 36, 570, 15, 77, "Input"],
-Cell[1933, 53, 142, 2, 32, "Output"]
+Cell[579, 22, 129, 3, 92, "Title"],
+Cell[CellGroupData[{
+Cell[733, 29, 166, 4, 80, "Section"],
+Cell[902, 35, 778, 12, 32, "Input"],
+Cell[CellGroupData[{
+Cell[1705, 51, 568, 13, 77, "Input"],
+Cell[2276, 66, 189, 2, 32, "Output"]
 }, Open  ]],
-Cell[2090, 58, 370, 9, 32, "Input"],
+Cell[2480, 71, 371, 8, 32, "Input"],
 Cell[CellGroupData[{
-Cell[2485, 71, 466, 13, 77, "Input"],
-Cell[2954, 86, 97, 1, 32, "Output"]
+Cell[2876, 83, 491, 12, 77, "Input"],
+Cell[3370, 97, 146, 2, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[3088, 92, 310, 6, 32, "Input"],
-Cell[3401, 100, 73, 1, 32, "Output"]
+Cell[3553, 104, 310, 6, 32, "Input"],
+Cell[3866, 112, 95, 1, 32, "Output"]
+}, Open  ]]
+}, Open  ]]
 }, Open  ]]
 }
 ]
