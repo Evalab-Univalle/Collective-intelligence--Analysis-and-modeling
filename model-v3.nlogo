@@ -723,15 +723,15 @@ NetLogo 5.0.5
 write-network</final>
     <enumeratedValueSet variable="stopTime">
       <value value="1000"/>
-      <value value="10000"/>
-      <value value="100000"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="1"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/people10000/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
-      <value value="100"/>
+      <value value="10000"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
