@@ -38,6 +38,7 @@ to setup
   set location (word graph-file-location "network-" num-people "-" lim-capacity "-" stopTime ".g6")
 ;  print (word "Selection size: " num-selection)
   reset-ticks
+  reset-timer
 end
 
 to setup-documents
@@ -135,10 +136,13 @@ to make-links
       create-links-with other doc-voters
     ]
   ]
+  print timer
 end
 
 to write-network
+  reset-timer
   graph6:save-graph6 people links location
+  print timer
 end
 
 to write-network-graphml
