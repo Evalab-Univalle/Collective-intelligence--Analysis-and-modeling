@@ -1,4 +1,4 @@
-extensions [nw]
+extensions [graph6 nw]
 
 globals [
   num-selection                         ;; La cantidad de agentes que van a votar, por si se desea volver a seleccionar un grupo
@@ -8,6 +8,7 @@ globals [
   total-votes                           ;; Los votos totales que se han realizado
                                           ;(para recalcular la probabilidad de selección de cada persona en cada iteración)
   capacity-limit                        ;; Valor para el máximo de capacidades que puede tener un agente
+  location                              ;; Nombre del archivo de la red
 ]
 breed [documents document]
 breed [people person]
@@ -34,8 +35,10 @@ to setup
   setup-people
   setup-documents
   
+  set location (word graph-file-location "network-" num-people "-" lim-capacity "-" stopTime ".g6")
 ;  print (word "Selection size: " num-selection)
   reset-ticks
+  reset-timer
 end
 
 to setup-documents
@@ -77,7 +80,7 @@ to go
   
   ;;Reorganizar los documentos después de las primeras 10 rondas, para poner de primeros los que tengan mayor probabilidad
   ;;(en un intento de optimizar la selección del documento aleatorio)
-  if ticks = 100 or ticks = 500 [
+  if ticks = 1000 or ticks = 5000 [
     set documents-list sort-on [probability] documents
   ]
   
@@ -133,9 +136,16 @@ to make-links
       create-links-with other doc-voters
     ]
   ]
+  print timer
 end
 
 to write-network
+  reset-timer
+  graph6:save-graph6 people links location
+  print timer
+end
+
+to write-network-graphml
   nw:set-context people links
   nw:save-graphml (word graph-file-location "network-" num-people "-" stopTime ".graphml")
 end
@@ -287,7 +297,7 @@ INPUTBOX
 844
 70
 graph-file-location
-/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/capacity1/
+/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/
 1
 0
 String
@@ -368,7 +378,7 @@ INPUTBOX
 181
 437
 stopTime
-100
+1000
 1
 0
 Number
@@ -710,116 +720,22 @@ NetLogo 5.0.5
       <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="experiment-erikasv" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="test-large-networks" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <final>make-links
 write-network</final>
-    <timeLimit steps="1000"/>
-    <enumeratedValueSet variable="num-people">
-      <value value="100"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="lim-capacity">
-      <value value="50"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
-    </enumeratedValueSet>
-  </experiment>
-  <experiment name="exp-fixedt10mil" repetitions="1" runMetricsEveryStep="true">
-    <setup>setup</setup>
-    <go>go</go>
-    <final>make-links
-write-network</final>
-    <timeLimit steps="10000"/>
-    <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/fixed10mil/&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="num-people">
+    <enumeratedValueSet variable="stopTime">
       <value value="1000"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="lim-capacity">
       <value value="1"/>
-      <value value="5"/>
-      <value value="10"/>
     </enumeratedValueSet>
-  </experiment>
-  <experiment name="exp-uniformt10mil" repetitions="1" runMetricsEveryStep="true">
-    <setup>setup</setup>
-    <go>go</go>
-    <final>make-links
-write-network</final>
-    <timeLimit steps="10000"/>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/uniform10mil/&quot;"/>
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/people10000/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
-      <value value="1000"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="lim-capacity">
-      <value value="1"/>
-      <value value="5"/>
-      <value value="10"/>
-    </enumeratedValueSet>
-  </experiment>
-  <experiment name="exp-normalt10mil" repetitions="1" runMetricsEveryStep="true">
-    <setup>setup</setup>
-    <go>go</go>
-    <final>make-links
-write-network</final>
-    <timeLimit steps="10000"/>
-    <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/normalt10mil/&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="num-people">
-      <value value="1000"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="lim-capacity">
-      <value value="1"/>
-      <value value="5"/>
-      <value value="10"/>
-    </enumeratedValueSet>
-  </experiment>
-  <experiment name="exp-10mildoc" repetitions="1" runMetricsEveryStep="true">
-    <setup>setup</setup>
-    <go>go</go>
-    <final>make-links
-write-network</final>
-    <timeLimit steps="1000"/>
-    <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/10mildoc/&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="num-people">
-      <value value="1000"/>
-    </enumeratedValueSet>
-    <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
-  </experiment>
-  <experiment name="exp-fixed100" repetitions="1" runMetricsEveryStep="true">
-    <setup>setup</setup>
-    <go>go</go>
-    <final>make-links
-write-network</final>
-    <timeLimit steps="1000"/>
-    <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/fixed/&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="num-people">
-      <value value="100"/>
-    </enumeratedValueSet>
-    <steppedValueSet variable="lim-capacity" first="1" step="1" last="10"/>
-  </experiment>
-  <experiment name="exp-capacity1" repetitions="1" runMetricsEveryStep="true">
-    <setup>setup</setup>
-    <go>go</go>
-    <final>make-links
-write-network</final>
-    <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/capacity1/&quot;"/>
-    </enumeratedValueSet>
-    <steppedValueSet variable="num-people" first="100" step="100" last="1000"/>
-    <steppedValueSet variable="stopTime" first="1000" step="1000" last="10000"/>
-    <enumeratedValueSet variable="lim-capacity">
-      <value value="1"/>
+      <value value="10000"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
