@@ -725,16 +725,13 @@ NetLogo 5.0.5
     <go>go</go>
     <final>make-links
 write-network</final>
-    <enumeratedValueSet variable="stopTime">
-      <value value="100000"/>
-    </enumeratedValueSet>
+    <steppedValueSet variable="stopTime" first="100" step="100" last="1000"/>
     <steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
     <enumeratedValueSet variable="graph-file-location">
       <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="100"/>
-      <value value="1000"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
