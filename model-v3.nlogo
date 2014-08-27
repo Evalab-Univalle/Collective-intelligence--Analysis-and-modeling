@@ -35,10 +35,10 @@ to setup
   setup-people
   setup-documents
   
-  set location (word graph-file-location "network-" num-people "-" lim-capacity "-" stopTime ".g6")
+  set location (word graph-file-location "people" num-people "/network-" num-people "-" lim-capacity "-" stopTime ".g6")
 ;  print (word "Selection size: " num-selection)
   reset-ticks
-  reset-timer
+  ;reset-timer
 end
 
 to setup-documents
@@ -136,13 +136,13 @@ to make-links
       create-links-with other doc-voters
     ]
   ]
-  print timer
+  ;print timer
 end
 
 to write-network
-  reset-timer
+  ;reset-timer
   graph6:save-graph6 people links location
-  print timer
+  ;print timer
 end
 
 to write-network-graphml
@@ -726,16 +726,15 @@ NetLogo 5.0.5
     <final>make-links
 write-network</final>
     <enumeratedValueSet variable="stopTime">
-      <value value="1000"/>
+      <value value="100000"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="lim-capacity">
-      <value value="1"/>
-    </enumeratedValueSet>
+    <steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/people10000/&quot;"/>
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
-      <value value="10000"/>
+      <value value="100"/>
+      <value value="1000"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
