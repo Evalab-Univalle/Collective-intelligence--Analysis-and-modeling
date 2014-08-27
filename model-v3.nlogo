@@ -750,6 +750,27 @@ write-network</final>
     <steppedValueSet variable="Execution-number" first="1" step="1" last="2"/>
     <steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
   </experiment>
+  <experiment name="small" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <enumeratedValueSet variable="stopTime">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/graphs/&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="execution-number">
+      <value value="1"/>
+    </enumeratedValueSet>
+  </experiment>
 </experiments>
 @#$#@#$#@
 @#$#@#$#@
