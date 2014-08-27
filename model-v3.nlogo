@@ -35,7 +35,7 @@ to setup
   setup-people
   setup-documents
   
-  set location (word graph-file-location "people" num-people "/network-" num-people "-" lim-capacity "-" stopTime ".g6")
+  set location (word graph-file-location execution-number "/network-" num-people "-" lim-capacity "-" stopTime ".g6")
 ;  print (word "Selection size: " num-selection)
   reset-ticks
   ;reset-timer
@@ -297,7 +297,7 @@ INPUTBOX
 844
 70
 graph-file-location
-/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/
+/home/erikasv/graphs/
 1
 0
 String
@@ -379,6 +379,17 @@ INPUTBOX
 437
 stopTime
 1000
+1
+0
+Number
+
+INPUTBOX
+89
+449
+195
+509
+execution-number
+1
 1
 0
 Number
@@ -708,18 +719,6 @@ NetLogo 5.0.5
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
-    <setup>setup</setup>
-    <go>go</go>
-    <final>write-network</final>
-    <timeLimit steps="500"/>
-    <enumeratedValueSet variable="num-people">
-      <value value="500"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
-    </enumeratedValueSet>
-  </experiment>
   <experiment name="test-large-networks" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
@@ -733,6 +732,23 @@ write-network</final>
     <enumeratedValueSet variable="num-people">
       <value value="100"/>
     </enumeratedValueSet>
+  </experiment>
+  <experiment name="10-100" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/graphs/&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="stopTime">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="Execution-number" first="1" step="1" last="2"/>
+    <steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
   </experiment>
 </experiments>
 @#$#@#$#@
