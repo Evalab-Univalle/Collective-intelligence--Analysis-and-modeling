@@ -20,7 +20,7 @@
 		<steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
 	</experiment>
 	
-	<experiment name="50-100" repetitions="1" runMetricsEveryStep="true">
+	<experiment name="50-250" repetitions="1" runMetricsEveryStep="true">
 		<setup>setup</setup>
 		<go>go</go>
 		<final>make-links
@@ -32,7 +32,7 @@
 			<value value="50"/>
 		</enumeratedValueSet>
 		<enumeratedValueSet variable="stopTime">
-			<value value="100"/>
+			<value value="250"/>
 		</enumeratedValueSet>
 		<steppedValueSet variable="Execution-number" first="1" step="1" last="2"/>
 		<steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
@@ -56,7 +56,7 @@
 		<steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
 	</experiment>
 	
-	<experiment name="500-1000" repetitions="1" runMetricsEveryStep="true">
+	<experiment name="500-2500" repetitions="1" runMetricsEveryStep="true">
 		<setup>setup</setup>
 		<go>go</go>
 		<final>make-links
@@ -68,7 +68,7 @@
 			<value value="500"/>
 		</enumeratedValueSet>
 		<enumeratedValueSet variable="stopTime">
-			<value value="1000"/>
+			<value value="5000"/>
 		</enumeratedValueSet>
 		<steppedValueSet variable="Execution-number" first="1" step="1" last="2"/>
 		<steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
