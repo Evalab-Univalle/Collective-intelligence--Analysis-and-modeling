@@ -139,6 +139,10 @@ to make-links
   ;print timer
 end
 
+to write-network-csv
+  graph6:save-csv people links location
+end
+
 to write-network
   ;reset-timer
   graph6:save-graph6 people links location
@@ -285,7 +289,7 @@ num-people
 num-people
 1
 100
-100
+1000
 1
 1
 NIL
@@ -297,16 +301,16 @@ INPUTBOX
 844
 70
 graph-file-location
-/home/erikasv/graphs/
+/home/erikasv/Downloads/
 1
 0
 String
 
 BUTTON
-76
-213
-204
-246
+7
+214
+135
+247
 NIL
 write-network
 NIL
@@ -342,7 +346,7 @@ INPUTBOX
 179
 365
 lim-capacity
-1
+2
 1
 0
 Number
@@ -378,7 +382,7 @@ INPUTBOX
 181
 437
 stopTime
-1000
+100000
 1
 0
 Number
@@ -393,6 +397,23 @@ execution-number
 1
 0
 Number
+
+BUTTON
+143
+214
+271
+247
+NIL
+write-network-csv
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -769,6 +790,24 @@ write-network</final>
     </enumeratedValueSet>
     <enumeratedValueSet variable="execution-number">
       <value value="1"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="test-large" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network-csv</final>
+    <enumeratedValueSet variable="stopTime">
+      <value value="100000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/Downloads/&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="10000"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
