@@ -35,7 +35,7 @@ to setup
   setup-people
   setup-documents
   
-  set location (word graph-file-location execution-number "/network-" num-people "-" lim-capacity "-" stopTime ".g6")
+  set location (word graph-file-location execution-number "/network-" num-people "-" lim-capacity "-" stopTime)
 ;  print (word "Selection size: " num-selection)
   reset-ticks
   ;reset-timer
@@ -140,12 +140,12 @@ to make-links
 end
 
 to write-network-csv
-  graph6:save-csv people links location
+  graph6:save-csv people links (word location ".csv")
 end
 
 to write-network
   ;reset-timer
-  graph6:save-graph6 people links location
+  graph6:save-graph6 people links (word location ".g6")
   ;print timer
 end
 
@@ -289,7 +289,7 @@ num-people
 num-people
 1
 100
-1000
+5000
 1
 1
 NIL
@@ -807,7 +807,7 @@ write-network-csv</final>
       <value value="&quot;/home/erikasv/Downloads/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
-      <value value="10000"/>
+      <value value="5000"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
