@@ -1,0 +1,346 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     12286,        337]
+NotebookOptionsPosition[     11294,        299]
+NotebookOutlinePosition[     11629,        314]
+CellTagsIndexPosition[     11586,        311]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"g", "=", 
+  RowBox[{"Import", "[", 
+   RowBox[{"\"\<~/Downloads/graphTest.csv\>\"", ",", "\"\<Data\>\""}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.619190637521537*^9, 3.619190692041636*^9}, {
+  3.61919074112813*^9, 3.6191907577660646`*^9}, {3.619190806202601*^9, 
+  3.619190814128354*^9}, {3.6191908487954807`*^9, 3.619190849208343*^9}, {
+  3.619191053853798*^9, 3.619191055973044*^9}, {3.6191911390529222`*^9, 
+  3.619191140318063*^9}, {3.619191230972638*^9, 3.6191912325358763`*^9}, {
+  3.6191914528015623`*^9, 3.619191457810354*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "5", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "4"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.6191906676654873`*^9, 3.619190758340781*^9}, {
+   3.619190807497877*^9, 3.619190814676612*^9}, 3.619190849732533*^9, 
+   3.619191056553153*^9, 3.619191140796515*^9, 3.619191233209689*^9, {
+   3.619191427613426*^9, 3.6191914583200483`*^9}, 3.619191704377748*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"gr", "=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"g", "[", 
+     RowBox[{"[", 
+      RowBox[{"3", ",", "1"}], "]"}], "]"}], "<->", 
+    RowBox[{"g", "[", 
+     RowBox[{"[", 
+      RowBox[{"3", ",", "2"}], "]"}], "]"}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.619190681558344*^9, 3.619190698698846*^9}, {
+  3.619190764060383*^9, 3.6191907817477922`*^9}, {3.619190822814487*^9, 
+  3.619190886137616*^9}, {3.61919099810598*^9, 3.61919103073596*^9}, {
+  3.6191911307517433`*^9, 3.619191175113269*^9}, {3.619191238129609*^9, 
+  3.619191248780106*^9}, {3.6191913185364447`*^9, 3.6191913317813*^9}, {
+  3.619191653829282*^9, 3.619191655822451*^9}, {3.6191916940130672`*^9, 
+  3.619191709974992*^9}, {3.6191917844402103`*^9, 3.619191786426705*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", "\[UndirectedEdge]", "4"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.6191910312211103`*^9, {3.61919113541007*^9, 3.619191143491108*^9}, 
+   3.6191911755551653`*^9, {3.61919124306315*^9, 3.619191249255075*^9}, 
+   3.619191334135474*^9, 3.619191460867199*^9, 3.6191916601595078`*^9, {
+   3.61919169687579*^9, 3.6191917103358727`*^9}, {3.6191917676296167`*^9, 
+   3.619191795211607*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"gr", "=", " ", 
+  RowBox[{"Append", "[", 
+   RowBox[{"gr", ",", 
+    RowBox[{
+     RowBox[{"g", "[", 
+      RowBox[{"[", 
+       RowBox[{"2", ",", "1"}], "]"}], "]"}], "<->", 
+     RowBox[{"g", "[", 
+      RowBox[{"[", 
+       RowBox[{"2", ",", "2"}], "]"}], "]"}]}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.619191662543812*^9, 3.619191674706345*^9}, {
+  3.6191917165404987`*^9, 3.6191917903365183`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"0", "\[UndirectedEdge]", "4"}], ",", 
+   RowBox[{"0", "\[UndirectedEdge]", "2"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.619191757949172*^9, 3.619191797173191*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Graph", "[", "gr", "]"}]], "Input",
+ CellChangeTimes->{{3.619191772189022*^9, 3.619191775834196*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{0, 4, 2}, {Null, {{1, 2}, {1, 3}}}]], Typeset`boxes, 
+    Typeset`boxes$s2d = GraphicsGroupBox[{{
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], 
+       LineBox[{{
+          DynamicLocation["VertexID$1", Automatic, Center], 
+          DynamicLocation["VertexID$2", Automatic, Center]}, {
+          DynamicLocation["VertexID$1", Automatic, Center], 
+          DynamicLocation["VertexID$3", Automatic, Center]}}]}, {
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], 
+       TagBox[
+        DiskBox[{1., 2.4492935982947064`*^-16}, 0.02261146496815286], 
+        "DynamicName", BoxID -> "VertexID$1"], 
+       TagBox[
+        DiskBox[{0., 3.6739403974420594`*^-16}, 0.02261146496815286], 
+        "DynamicName", BoxID -> "VertexID$2"], 
+       TagBox[
+        DiskBox[{2., 0.}, 0.02261146496815286], "DynamicName", BoxID -> 
+        "VertexID$3"]}}], $CellContext`flag}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      3, Typeset`graph, Typeset`boxes, $CellContext`flag], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {$CellContext`flag}},
+      ImageSizeCache->{{6.1800000000000015`, 
+       352.82000000000005`}, {-7.107199999999995, 2.5133045157272527`}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{$CellContext`flag}]],
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FrameTicks->None]], "Output",
+ CellChangeTimes->{{3.6191917763754463`*^9, 3.61919179856215*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ImportGraph", ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"data", ",", "edges", ",", "vertexes"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"data", "=", 
+       RowBox[{"Import", "[", 
+        RowBox[{
+        "\"\<~/Downloads/1/network-10000-2-100000.csv\>\"", ",", 
+         "\"\<Data\>\""}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"edges", "=", 
+       RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "2"}], ",", 
+        RowBox[{"i", "<=", 
+         RowBox[{"Length", "[", "data", "]"}]}], ",", 
+        RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"edges", "=", 
+         RowBox[{"Append", "[", 
+          RowBox[{"edges", ",", 
+           RowBox[{
+            RowBox[{"data", "[", 
+             RowBox[{"[", 
+              RowBox[{"i", ",", "1"}], "]"}], "]"}], "<->", " ", 
+            RowBox[{"data", "[", 
+             RowBox[{"[", 
+              RowBox[{"i", ",", "2"}], "]"}], "]"}]}]}], "]"}]}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"vertexes", "=", 
+       RowBox[{"Range", "[", 
+        RowBox[{"1", ",", 
+         RowBox[{
+          RowBox[{"data", "[", 
+           RowBox[{"[", 
+            RowBox[{"1", ",", "1"}], "]"}], "]"}], "-", "1"}]}], "]"}]}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{"myGrpah", "=", 
+       RowBox[{"Graph", "[", 
+        RowBox[{"vertexes", ",", "edges"}], "]"}]}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.619191504471225*^9, 3.619191531397579*^9}, {
+  3.619191806791951*^9, 3.6191918239537573`*^9}, {3.619191909529078*^9, 
+  3.619192016727072*^9}, {3.619192073746737*^9, 3.619192103879416*^9}, {
+  3.619192196232725*^9, 3.61919220302969*^9}, {3.619192235709385*^9, 
+  3.619192291427809*^9}, {3.6191924155470133`*^9, 3.619192511891036*^9}, {
+  3.619192644647502*^9, 3.619192649540371*^9}, {3.6192013628688107`*^9, 
+  3.619201396102984*^9}, {3.619201435342772*^9, 3.619201436831194*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["ImportGraph"], "Input",
+ CellChangeTimes->{{3.619192021340045*^9, 3.6191920232290277`*^9}, {
+  3.6192013877388897`*^9, 3.619201390941762*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Import", "::", "nffil"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"File not found during \[NoBreak]\\!\\(Import\\)\[NoBreak]. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/Import/nffil\\\", \
+ButtonNote -> \\\"Import::nffil\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.619201391872737*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "partd"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\($Failed \
+\[LeftDoubleBracket] \\(\\(1, 1\\)\\) \[RightDoubleBracket]\\)\[NoBreak] is \
+longer than depth of object. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/partd\\\", ButtonNote -> \
+\\\"Part::partd\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.619201392050345*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Part", "::", "partd"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Part specification \[NoBreak]\\!\\($Failed \
+\[LeftDoubleBracket] \\(\\(1, 1\\)\\) \[RightDoubleBracket]\\)\[NoBreak] is \
+longer than depth of object. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/partd\\\", ButtonNote -> \
+\\\"Part::partd\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.61920139205422*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Range", "::", "range"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Range specification in \[NoBreak]\\!\\(Range[\\(\\(1, \
+\\(\\(\\(\\(-1\\)\\) + \\(\\($Failed \[LeftDoubleBracket] \\(\\(1, 1\\)\\) \
+\[RightDoubleBracket]\\)\\)\\)\\)\\)\\)]\\)\[NoBreak] does not have \
+appropriate bounds. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/Range/range\\\", ButtonNote -> \
+\\\"Range::range\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.61920139205571*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"Range", "::", "range"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Range specification in \[NoBreak]\\!\\(Range[\\(\\(1, \
+\\(\\(\\(\\(-1\\)\\) + \\(\\($Failed \[LeftDoubleBracket] \\(\\(1, 1\\)\\) \
+\[RightDoubleBracket]\\)\\)\\)\\)\\)\\)]\\)\[NoBreak] does not have \
+appropriate bounds. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/Range/range\\\", ButtonNote -> \
+\\\"Range::range\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6192013920743237`*^9}],
+
+Cell[BoxData[
+ RowBox[{"Graph", "[", 
+  RowBox[{
+   RowBox[{"Range", "[", 
+    RowBox[{"1", ",", 
+     RowBox[{
+      RowBox[{"-", "1"}], "+", 
+      RowBox[{"$Failed", "\[LeftDoubleBracket]", 
+       RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}]}]}], "]"}], ",", 
+   RowBox[{"{", "}"}]}], "]"}]], "Output",
+ CellChangeTimes->{
+  3.6191920243190928`*^9, {3.619192082612237*^9, 3.6191921081486673`*^9}, 
+   3.619192205016502*^9, {3.6191922399026127`*^9, 3.619192293556602*^9}, 
+   3.619192419113172*^9, {3.619192469533032*^9, 3.619192515111796*^9}, 
+   3.619201392077285*^9}]
+}, Open  ]]
+},
+WindowSize->{1364, 747},
+WindowMargins->{{0, Automatic}, {2, Automatic}},
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 565, 10, 32, "Input"],
+Cell[1147, 34, 607, 15, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1791, 54, 769, 16, 32, "Input"],
+Cell[2563, 72, 429, 8, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3029, 85, 431, 12, 32, "Input"],
+Cell[3463, 99, 219, 5, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3719, 109, 125, 2, 32, "Input"],
+Cell[3847, 113, 1815, 42, 37, "Output"]
+}, Open  ]],
+Cell[5677, 158, 2131, 51, 209, "Input"],
+Cell[CellGroupData[{
+Cell[7833, 213, 156, 2, 32, "Input"],
+Cell[7992, 217, 438, 9, 23, "Message"],
+Cell[8433, 228, 528, 11, 23, "Message"],
+Cell[8964, 241, 527, 11, 23, "Message"],
+Cell[9494, 254, 598, 12, 23, "Message"],
+Cell[10095, 268, 601, 12, 23, "Message"],
+Cell[10699, 282, 579, 14, 32, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

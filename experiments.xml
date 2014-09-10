@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<!DOCTYPE experiments SYSTEM "behaviorspace.dtd">
+
+<experiments>
+	<experiment name="10" repetitions="1" runMetricsEveryStep="true">
+		<setup>setup</setup>
+		<go>go</go>
+		<final>make-links
+	write-network</final>
+		<enumeratedValueSet variable="graph-file-location">
+			<value value="&quot;/home/erikasv/graphs/&quot;"/>
+		</enumeratedValueSet>
+		<enumeratedValueSet variable="num-people">
+			<value value="10"/>
+		</enumeratedValueSet>
+		<steppedValueSet variable="stopTime" first="20" step="20" last="100"/>
+		<steppedValueSet variable="Execution-number" first="1" step="1" last="20"/>
+		<steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
+	</experiment>
+	
+	<experiment name="100" repetitions="1" runMetricsEveryStep="true">
+		<setup>setup</setup>
+		<go>go</go>
+		<final>make-links
+	write-network</final>
+		<enumeratedValueSet variable="graph-file-location">
+			<value value="&quot;/home/erikasv/graphs/&quot;"/>
+		</enumeratedValueSet>
+		<enumeratedValueSet variable="num-people">
+			<value value="100"/>
+		</enumeratedValueSet>
+		<steppedValueSet variable="stopTime" first="200" step="200" last="1000"/>
+		<steppedValueSet variable="Execution-number" first="1" step="1" last="20"/>
+		<steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
+	</experiment>
+	
+	<experiment name="1000" repetitions="1" runMetricsEveryStep="true">
+		<setup>setup</setup>
+		<go>go</go>
+		<final>make-links
+	write-network</final>
+		<enumeratedValueSet variable="graph-file-location">
+			<value value="&quot;/home/erikasv/graphs/&quot;"/>
+		</enumeratedValueSet>
+		<enumeratedValueSet variable="num-people">
+			<value value="1000"/>
+		</enumeratedValueSet>
+		<steppedValueSet variable="stopTime" first="2000" step="2000" last="10000"/>
+		<steppedValueSet variable="Execution-number" first="1" step="1" last="20"/>
+		<steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
+	</experiment>
+</experiments>

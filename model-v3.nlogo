@@ -35,10 +35,10 @@ to setup
   setup-people
   setup-documents
   
-  set location (word graph-file-location "network-" num-people "-" lim-capacity "-" stopTime ".g6")
+  set location (word graph-file-location execution-number "/network-" num-people "-" lim-capacity "-" stopTime)
 ;  print (word "Selection size: " num-selection)
   reset-ticks
-  reset-timer
+  ;reset-timer
 end
 
 to setup-documents
@@ -136,13 +136,17 @@ to make-links
       create-links-with other doc-voters
     ]
   ]
-  print timer
+  ;print timer
+end
+
+to write-network-csv
+  graph6:save-csv people links (word location ".csv")
 end
 
 to write-network
-  reset-timer
-  graph6:save-graph6 people links location
-  print timer
+  ;reset-timer
+  graph6:save-graph6 people links (word location ".g6")
+  ;print timer
 end
 
 to write-network-graphml
@@ -285,7 +289,7 @@ num-people
 num-people
 1
 100
-100
+5000
 1
 1
 NIL
@@ -297,16 +301,16 @@ INPUTBOX
 844
 70
 graph-file-location
-/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/
+/home/erikasv/Downloads/
 1
 0
 String
 
 BUTTON
-76
-213
-204
-246
+7
+214
+135
+247
 NIL
 write-network
 NIL
@@ -342,7 +346,7 @@ INPUTBOX
 179
 365
 lim-capacity
-1
+2
 1
 0
 Number
@@ -378,10 +382,38 @@ INPUTBOX
 181
 437
 stopTime
-1000
+100000
 1
 0
 Number
+
+INPUTBOX
+89
+449
+195
+509
+execution-number
+1
+1
+0
+Number
+
+BUTTON
+143
+214
+271
+247
+NIL
+write-network-csv
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -708,34 +740,74 @@ NetLogo 5.0.5
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
-    <setup>setup</setup>
-    <go>go</go>
-    <final>write-network</final>
-    <timeLimit steps="500"/>
-    <enumeratedValueSet variable="num-people">
-      <value value="500"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/vbucheli/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
-    </enumeratedValueSet>
-  </experiment>
   <experiment name="test-large-networks" repetitions="1" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <final>make-links
 write-network</final>
+    <steppedValueSet variable="stopTime" first="100" step="100" last="1000"/>
+    <steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="100"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="10-100" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/graphs/&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="10"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="stopTime">
-      <value value="1000"/>
+      <value value="100"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="Execution-number" first="1" step="1" last="2"/>
+    <steppedValueSet variable="lim-capacity" first="2" step="2" last="10"/>
+  </experiment>
+  <experiment name="small" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <enumeratedValueSet variable="stopTime">
+      <value value="10"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="lim-capacity">
       <value value="1"/>
     </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="10"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="graph-file-location">
-      <value value="&quot;/home/erikasv/github/Collective-intelligence--Analysis-and-modeling/graphs/model-v3/people10000/&quot;"/>
+      <value value="&quot;/home/erikasv/graphs/&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="execution-number">
+      <value value="1"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="test-large" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network-csv</final>
+    <enumeratedValueSet variable="stopTime">
+      <value value="100000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/Downloads/&quot;"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
-      <value value="10000"/>
+      <value value="5000"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
