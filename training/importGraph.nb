@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     12286,        337]
-NotebookOptionsPosition[     11294,        299]
-NotebookOutlinePosition[     11629,        314]
-CellTagsIndexPosition[     11586,        311]
+NotebookDataLength[     12333,        338]
+NotebookOptionsPosition[     11342,        300]
+NotebookOutlinePosition[     11676,        315]
+CellTagsIndexPosition[     11633,        312]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -168,7 +168,7 @@ Cell[BoxData[
       RowBox[{"data", "=", 
        RowBox[{"Import", "[", 
         RowBox[{
-        "\"\<~/Downloads/1/network-10000-2-100000.csv\>\"", ",", 
+        "\"\<~/Downloads/1/network-5000-2-100000.csv\>\"", ",", 
          "\"\<Data\>\""}], "]"}]}], ";", "\[IndentingNewLine]", 
       RowBox[{"edges", "=", 
        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
@@ -207,7 +207,8 @@ Cell[BoxData[
   3.619192196232725*^9, 3.61919220302969*^9}, {3.619192235709385*^9, 
   3.619192291427809*^9}, {3.6191924155470133`*^9, 3.619192511891036*^9}, {
   3.619192644647502*^9, 3.619192649540371*^9}, {3.6192013628688107`*^9, 
-  3.619201396102984*^9}, {3.619201435342772*^9, 3.619201436831194*^9}}],
+  3.619201396102984*^9}, {3.619201435342772*^9, 3.619201436831194*^9}, {
+  3.619355873961772*^9, 3.619355874243703*^9}}],
 
 Cell[CellGroupData[{
 
@@ -297,7 +298,7 @@ Cell[BoxData[
    3.619201392077285*^9}]
 }, Open  ]]
 },
-WindowSize->{1364, 747},
+WindowSize->{681, 747},
 WindowMargins->{{0, Automatic}, {2, Automatic}},
 FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
 StyleDefinitions->"Default.nb"
@@ -329,15 +330,15 @@ Cell[CellGroupData[{
 Cell[3719, 109, 125, 2, 32, "Input"],
 Cell[3847, 113, 1815, 42, 37, "Output"]
 }, Open  ]],
-Cell[5677, 158, 2131, 51, 209, "Input"],
+Cell[5677, 158, 2179, 52, 231, "Input"],
 Cell[CellGroupData[{
-Cell[7833, 213, 156, 2, 32, "Input"],
-Cell[7992, 217, 438, 9, 23, "Message"],
-Cell[8433, 228, 528, 11, 23, "Message"],
-Cell[8964, 241, 527, 11, 23, "Message"],
-Cell[9494, 254, 598, 12, 23, "Message"],
-Cell[10095, 268, 601, 12, 23, "Message"],
-Cell[10699, 282, 579, 14, 32, "Output"]
+Cell[7881, 214, 156, 2, 32, "Input"],
+Cell[8040, 218, 438, 9, 23, "Message"],
+Cell[8481, 229, 528, 11, 23, "Message"],
+Cell[9012, 242, 527, 11, 23, "Message"],
+Cell[9542, 255, 598, 12, 41, "Message"],
+Cell[10143, 269, 601, 12, 41, "Message"],
+Cell[10747, 283, 579, 14, 32, "Output"]
 }, Open  ]]
 }
 ]
