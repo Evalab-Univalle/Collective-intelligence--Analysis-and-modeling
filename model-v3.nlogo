@@ -289,7 +289,7 @@ num-people
 num-people
 1
 100
-5000
+300
 1
 1
 NIL
@@ -346,7 +346,7 @@ INPUTBOX
 179
 365
 lim-capacity
-2
+3
 1
 0
 Number
@@ -382,7 +382,7 @@ INPUTBOX
 181
 437
 stopTime
-100000
+3000
 1
 0
 Number
@@ -808,6 +808,24 @@ write-network-csv</final>
     </enumeratedValueSet>
     <enumeratedValueSet variable="num-people">
       <value value="5000"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="300" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <final>make-links
+write-network</final>
+    <enumeratedValueSet variable="stopTime">
+      <value value="3000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="lim-capacity">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="graph-file-location">
+      <value value="&quot;/home/erikasv/Downloads/&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num-people">
+      <value value="300"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
