@@ -1,0 +1,1346 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+\usetheme{Warsaw}
+% or ...
+
+\setbeamercovered{transparent}
+% or whatever (possibly just delete it)
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman times
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Collective intelligence: Analysis and modeling
+\begin_inset Argument
+status open
+
+\begin_layout Plain Layout
+Collective intelligence
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subtitle
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Entorno sólo para poner un subtítulo al artículo
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+E.
+\begin_inset space ~
+\end_inset
+
+Suárez
+\begin_inset Flex InstituteMark
+status open
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ V.
+\begin_inset space ~
+\end_inset
+
+Bucheli
+\begin_inset Flex InstituteMark
+status open
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ R.
+\begin_inset space ~
+\end_inset
+
+Zarama
+\begin_inset Flex InstituteMark
+status collapsed
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ A.
+\begin_inset space ~
+\end_inset
+
+García
+\begin_inset Flex InstituteMark
+status open
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+
+
+\begin_inset Argument
+status collapsed
+
+\begin_layout Plain Layout
+Suárez, Bucheli, Zarama, García
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Institute
+\begin_inset Flex InstituteMark
+status collapsed
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+
+Escuela de Ingeniería de Sistemas y Computación
+\begin_inset Newline newline
+\end_inset
+
+Universidad del Valle
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Flex InstituteMark
+status collapsed
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+
+Departamento de Ingeniería Industrial
+\begin_inset Newline newline
+\end_inset
+
+Universidad de los Andes
+\begin_inset Argument
+status collapsed
+
+\begin_layout Plain Layout
+Universidades del Valle y de los Andes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+World Organization of Systems and Cybernetics, 2014
+\begin_inset Argument
+status collapsed
+
+\begin_layout Plain Layout
+WOSC 2014
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Si se dispone de un archivo como "institución-logo-nombrearchivo.xxx", donde
+ xxx es un formato gráfico aceptable por latex o pdflatex, entonces se puede
+ añadir un logotipo descomentando lo siguiente:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+pgfdeclareimage[height=0.5cm]{institution-logo}{institución-logo-nombrearchivo}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+logo{
+\backslash
+pgfuseimage{institution-logo}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Lo siguiente hace que se muestre un índice al inicio de cada subsección.
+ Suprímelo si no lo quieres.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+AtBeginSection[]{
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+frame<beamer>{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+frametitle{Outline}   
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+tableofcontents[currentsection] 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Si quieres descubrir todo en modo paso a paso, descomenta el siguiente comando:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+beamerdefaultoverlayspecification{<+->}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Outline
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Estructurar una exposición es una tarea difícil y la siguiente estructura
+ podría no ser adecuada.
+ Aquí hay unas reglas aplicadas a este caso: 
+\end_layout
+
+\begin_layout Itemize
+Exactamente dos o tres secciones (además del sumario).
+ 
+\end_layout
+
+\begin_layout Itemize
+Como máximo, tres subsecciones por sección.
+ 
+\end_layout
+
+\begin_layout Itemize
+Hablar entre 30
+\begin_inset space \thinspace{}
+\end_inset
+
+s y 2
+\begin_inset space \thinspace{}
+\end_inset
+
+min por diapositiva.
+ Así que debería haber entre 15 y 30 fotogramas para decirlo todo.
+\end_layout
+
+\begin_layout Itemize
+Es probable que la audiencia sepa bastante poco sobre el tema de la conferencia,
+ así pues, ¡*simplifique*!
+\end_layout
+
+\begin_layout Itemize
+En una exposición de 20min, conseguir transmitir las ideas principales es
+ bastante.
+ Deje fuera los detalles, aunque eso signifique ser menos preciso de lo
+ que podría parecer necesario.
+\end_layout
+
+\begin_layout Itemize
+Si se omiten detalles vitales para una demostración/implementación, dígalo
+ una vez.
+ Para la audiencia será suficiente.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Subsection
+Context
+\end_layout
+
+\begin_layout BeginFrame
+What is collective intelligence?
+\end_layout
+
+\begin_layout Itemize
+Collective intelligence can be understood as the capacity of a group of
+ people to collaborate in order to achieve goals in a complex context (Heylighen
+, 2013).
+\end_layout
+
+\begin_layout Itemize
+Collective intelligence is distributed within a network where each interaction
+ continually aggregates value.
+ It is coordinated in real time, developed through the effective mobilization
+ and reciprocity of competencies (Lévy, 1994).
+\end_layout
+
+\begin_layout Itemize
+Collective intelligence can be seen as the capacity of a human community
+ to evolve towards higher order complexity thought, problem solving and
+ integration through collaboration and innovation (Pór, 1995).
+\end_layout
+
+\begin_layout BeginFrame
+What is collective intelligence?
+\end_layout
+
+\begin_layout Standard
+The capacity of a collective system to evolve towards higher order complexity
+ through networks of individual capacities.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In this paper, we propose an operative definition of collective intelligence,
+ based on which it is possible to compute measurements and modeling.
+ Thus, collective intelligence is defined—more or less successfully—as the
+ capacity of a collective system to evolve towards higher order complexity
+ through networks of individual capacities.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Motivation
+\end_layout
+
+\begin_layout BeginFrame
+Organization around knowledge
+\end_layout
+
+\begin_layout Standard
+Understand new forms of knowledge production:
+\end_layout
+
+\begin_layout Itemize
+Wikipedia: Collective encyclopedia.
+\end_layout
+
+\begin_layout Itemize
+Crowdsourcing: Problem-solving and production network.
+\end_layout
+
+\begin_layout Itemize
+Open Government.
+\end_layout
+
+\begin_layout Itemize
+Crowdfunding: Funding network.
+\end_layout
+
+\begin_layout Standard
+An attempt to measure the collective intelligence.
+\end_layout
+
+\begin_layout Section
+Proposal
+\end_layout
+
+\begin_layout Subsection
+Approach
+\end_layout
+
+\begin_layout BeginFrame
+Analysis of structural properties of networks
+\end_layout
+
+\begin_layout Block
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Measurements:
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Clustering coefficient.
+\end_layout
+
+\begin_layout Itemize
+Average path length.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Networks:
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Data from the activity Wiki-ITRB at the course PeSO at the Universidad de
+ Los Andes, Bogotá, Colombia.
+\end_layout
+
+\begin_layout Itemize
+An agent-based model of collective intelligence based on wiki systems.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Wiki-ITRB
+\end_layout
+
+\begin_layout BeginFrame
+Wiki-ITRB
+\end_layout
+
+\begin_layout Itemize
+The purpose of the Wiki-ITRB is to collectively write ITRB (Informe Técnico
+ de Revisión Bibliográfica—Technical Reports of Literature Reviews) documents.
+\end_layout
+
+\begin_layout Itemize
+ITRB documents propose one question for a given topic, and students then
+ include arguments, author positions and opinions about the proposed question.
+\end_layout
+
+\begin_layout Itemize
+Students participated in the writing and modification of several documents
+ and each one decided to be the author of a subset of documents, which she
+ or he edited and evaluated.
+ 
+\end_layout
+
+\begin_layout BeginFrame
+Wiki-ITRB
+\end_layout
+
+\begin_layout Itemize
+The participation of students in the Wiki-ITRB is stored up over time.
+\end_layout
+
+\begin_layout Itemize
+A network from the aggregation of connected authors via co-authored documents
+ over time is constructed.
+\end_layout
+
+\begin_layout Subsection
+Model
+\end_layout
+
+\begin_layout BeginFrame
+Agents
+\end_layout
+
+\begin_layout Block
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+People:
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Agent edition capacity.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Documents:
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Selection's probability.
+\end_layout
+
+\begin_layout Itemize
+Total edits.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+At the beginning of the simulation, every document has the same probability,
+ 1 per total number of documents.
+ And every agent have the same agent edition capacity.
+\end_layout
+
+\begin_layout BeginFrame
+Description
+\end_layout
+
+\begin_layout Standard
+Each time unit goes as follows:
+\end_layout
+
+\begin_layout Itemize
+One person is selected randomly.
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The person edits as many documents as agent edition capacity indicates.
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+The documents edited by the person are chosen according to documents' probabilit
+y.
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Every document edited increases by 1 its total edits.
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Probabilities of every document are updated including the edits made by
+ the person.
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+At the end it is constructed a network of co-author editions, where an edge
+ connects two people who have made editions to the same document.
+\end_layout
+
+\begin_layout BeginFrame
+Experimental design
+\end_layout
+
+\begin_layout Standard
+The probability of connection between two agents, given a determined number
+ of agents, depends on the simulation time and the agent edition capacity.
+\end_layout
+
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Itemize
+Total agents (
+\begin_inset Flex Alert
+status collapsed
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+
+): 
+\begin_inset Formula $[10^{1}-10^{3}]$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Time simulation (
+\begin_inset Flex Alert
+status collapsed
+
+\begin_layout Plain Layout
+T
+\end_layout
+
+\end_inset
+
+): 
+\begin_inset Formula $[2*A-10*A]$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Agent edition capacity (
+\begin_inset Flex Alert
+status collapsed
+
+\begin_layout Plain Layout
+K
+\end_layout
+
+\end_inset
+
+): 
+\begin_inset Formula $[1-10]$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Each simulation was run 80 times.
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout BeginFrame
+Networks
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename network-300-1500.pdf
+	lyxscale 10
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+T=1500 and K=3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename wiki-itrb.jpeg
+	lyxscale 10
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Wiki-ITRB
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename network-random-0.1.pdf
+	lyxscale 10
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Probability = 0.1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Networks with 300 nodes.
+ Results from the model (a), the Wiki-ITRB (b) and a random graph with Bernoulli
+ distribution (c).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Clustering coefficient
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{columns}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+column{1.1
+\backslash
+textwidth}
+\end_layout
+
+\end_inset
+
+
+\size scriptsize
+
+\begin_inset Graphics
+	filename figures/f1-a.pdf
+	lyxscale 10
+	scale 43
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/f1-b.pdf
+	lyxscale 10
+	scale 43
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size scriptsize
+\begin_inset Graphics
+	filename figures/f1-c.pdf
+	lyxscale 10
+	scale 43
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/f1-d.pdf
+	lyxscale 10
+	scale 43
+
+\end_inset
+
+
+\size default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{columns}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+While k increases, there is monotonic growth over time; however, this behavior
+ is not present for low values of k.
+ Thus, when k >= 3 and t >= 5 times the total number of agents, behavior
+ is expected to be consistent.
+ This shows how the values of individual edition capacity (k) and the time
+ simulations (t) are relevant in the design of measurements or design systems
+ based on collective intelligence.
+ The implications of this result are discussed below.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout BeginFrame
+Average path length
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{columns}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+column{1.1
+\backslash
+textwidth}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/f2-a.pdf
+	lyxscale 10
+	scale 43
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/f2-b.pdf
+	lyxscale 10
+	scale 43
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/f2-c.pdf
+	lyxscale 10
+	scale 43
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Graphics
+	filename figures/f2-d.pdf
+	lyxscale 10
+	scale 43
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{columns}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Discussion and future work
+\end_layout
+
+\begin_layout BeginFrame
+Discussion
+\end_layout
+
+\begin_layout Itemize
+It was constructed a framework to study networks resulting from interaction
+ rules at a micro level.
+ It allows for the study of collective intelligence based on a network science
+ approach.
+ 
+\end_layout
+
+\begin_layout Itemize
+The proposed model reproduces the behavior observed in the PeSO course;
+ this behavior is also described for small world networks.
+ From this, we interpret that collective intelligence emerges from cumulative
+ dynamics.
+ 
+\end_layout
+
+\begin_layout BeginFrame
+Discussion
+\end_layout
+
+\begin_layout Itemize
+Both the clustering coefficient and the average path length have consistent
+ values in terms of individual edition capacity (K) and time units (T),
+ where neither could be too large or too small.
+ Higher values of T implies that a lot of agents have connections and the
+ small world structure disappears.
+ Smaller values of K implies there is not growth over time and, therefore
+ there is not a self-organized system.
+\end_layout
+
+\begin_layout BeginFrame
+Future work
+\end_layout
+
+\begin_layout Itemize
+In-depth study of the proposed model: distribution of agent edition capacity
+ (k) and the computation of other measurements such as Small-World Characteristi
+c Q and robustness.
+ 
+\end_layout
+
+\begin_layout Itemize
+The model presented here is an accumulative system, where there is no loss
+ of information (no loss of nodes or edges).
+ It is proposed that in future work, a less accumulative system should be
+ examined.
+ 
+\end_layout
+
+\begin_layout Itemize
+It is necessary to develop a better understanding of collective intelligence
+ in order to investigate how teaching methodologies in higher education
+ can be designed to develop collective thinking.
+ 
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document
