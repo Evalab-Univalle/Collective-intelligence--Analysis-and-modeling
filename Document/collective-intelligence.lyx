@@ -501,7 +501,8 @@ Introduction
 
 \begin_layout Subsection
 Context
-\end_layout
+\begin_inset Note Note
+status open
 
 \begin_layout BeginFrame
 What is collective intelligence?
@@ -524,6 +525,11 @@ Collective intelligence is distributed within a network where each interaction
 Collective intelligence can be seen as the capacity of a human community
  to evolve towards higher order complexity thought, problem solving and
  integration through collaboration and innovation (Pór, 1995).
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout BeginFrame
@@ -1278,6 +1284,10 @@ end{columns}
 Discussion and future work
 \end_layout
 
+\begin_layout Subsection
+Discussion
+\end_layout
+
 \begin_layout BeginFrame
 Discussion
 \end_layout
@@ -1312,6 +1322,10 @@ Both the clustering coefficient and the average path length have consistent
  there is not a self-organized system.
 \end_layout
 
+\begin_layout Subsection
+Future work
+\end_layout
+
 \begin_layout BeginFrame
 Future work
 \end_layout
@@ -1336,6 +1350,47 @@ It is necessary to develop a better understanding of collective intelligence
  in order to investigate how teaching methodologies in higher education
  can be designed to develop collective thinking.
  
+\end_layout
+
+\begin_layout BeginFrame
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Flex Structure
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+
+\size huge
+Thank You
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Contact:
+\end_layout
+
+\begin_layout Standard
+victor.bucheli@correounivalle.edu.co
+\end_layout
+
+\begin_layout Standard
+erika.suarez@correounivalle.edu.co
+\end_layout
+
+\begin_layout Standard
+rzarama@uniandes.edu.co
+\end_layout
+
+\begin_layout Standard
+angel.garcia@correounivalle.edu.co
 \end_layout
 
 \begin_layout EndFrame
