@@ -693,11 +693,17 @@ Wiki-ITRB
 \begin_layout Itemize
 The purpose of the Wiki-ITRB is to collectively write ITRB (Informe Técnico
  de Revisión Bibliográfica—Technical Reports of Literature Reviews) documents.
-\end_layout
+\begin_inset Note Note
+status open
 
-\begin_layout Itemize
+\begin_layout Plain Layout
 ITRB documents propose one question for a given topic, and students then
  include arguments, author positions and opinions about the proposed question.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
@@ -705,10 +711,6 @@ Students participated in the writing and modification of several documents
  and each one decided to be the author of a subset of documents, which she
  or he edited and evaluated.
  
-\end_layout
-
-\begin_layout BeginFrame
-Wiki-ITRB
 \end_layout
 
 \begin_layout Itemize
@@ -819,54 +821,24 @@ Each time unit goes as follows:
 One person is selected randomly.
 \end_layout
 
-\begin_deeper
-\begin_layout Pause
-
-\end_layout
-
-\end_deeper
 \begin_layout Itemize
 The person edits as many documents as agent edition capacity indicates.
 \end_layout
 
-\begin_deeper
-\begin_layout Pause
-
-\end_layout
-
-\end_deeper
 \begin_layout Itemize
 The documents edited by the person are chosen according to documents' probabilit
 y.
 \end_layout
 
-\begin_deeper
-\begin_layout Pause
-
-\end_layout
-
-\end_deeper
 \begin_layout Itemize
 Every document edited increases by 1 its total edits.
 \end_layout
 
-\begin_deeper
-\begin_layout Pause
-
-\end_layout
-
-\end_deeper
 \begin_layout Itemize
 Probabilities of every document are updated including the edits made by
  the person.
 \end_layout
 
-\begin_deeper
-\begin_layout Pause
-
-\end_layout
-
-\end_deeper
 \begin_layout Standard
 At the end it is constructed a network of co-author editions, where an edge
  connects two people who have made editions to the same document.
@@ -879,10 +851,6 @@ Experimental design
 \begin_layout Standard
 The probability of connection between two agents, given a determined number
  of agents, depends on the simulation time and the agent edition capacity.
-\end_layout
-
-\begin_layout Pause
-
 \end_layout
 
 \begin_layout Itemize
@@ -903,12 +871,6 @@ A
 
 \end_layout
 
-\begin_deeper
-\begin_layout Pause
-
-\end_layout
-
-\end_deeper
 \begin_layout Itemize
 Time simulation (
 \begin_inset Flex Alert
@@ -927,12 +889,6 @@ T
 
 \end_layout
 
-\begin_deeper
-\begin_layout Pause
-
-\end_layout
-
-\end_deeper
 \begin_layout Itemize
 Agent edition capacity (
 \begin_inset Flex Alert
@@ -951,12 +907,6 @@ K
 
 \end_layout
 
-\begin_deeper
-\begin_layout Pause
-
-\end_layout
-
-\end_deeper
 \begin_layout Standard
 Each simulation was run 80 times.
 \end_layout
